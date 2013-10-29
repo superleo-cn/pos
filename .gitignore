@@ -1,0 +1,16 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Folder or System Files
+/eclipse
+/.settings
+/modules
+/.project
+/.classpath
+/temp
+/tmp
+/logs
