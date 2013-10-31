@@ -1,0 +1,136 @@
+#{extends '/layout/default.html' /} 
+#{set title:'User List' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	// current page
+	var currentPage = 0;
+	var isLastPage = true;
+	
+	var navigationAdd = '@{Users.view()}';
+	
+	$(document).on("pageinit", function() {
+		enableScroll();
+		loadUserList();
+		//search users
+		$("#queryForm").submit(function(event) {
+			event.preventDefault();
+			resetUserList();
+		});
+	});	
+	
+	function resetUserList(){
+		currentPage = 0;
+		isLastPage = false;
+		$('#list').empty();
+		loadUserList();
+	}
+	
+	function loadUserList(){
+		$.ajax({
+			url: "@{Users.list()}",
+            dataType: "json",
+            data:{"queryName" : $("#queryName").val(), "pagination.currentPage" : currentPage},
+            async: true,
+            type: "post",
+            beforeSend: function() {
+            	$.mobile.showPageLoadingMsg(true);
+            },
+            complete: function() {
+            	$.mobile.hidePageLoadingMsg();
+            },
+            success: function (data) {
+            	if(data && data.recordList && data.recordList.length > 0){
+    				$(data.recordList).each(function(i){
+    					var html = "<li>";
+    					html += "<a href='@{Users.view()}/" + this.id + "' data-ajax='false'>";
+    					html += "<h3>" + this.realname + "</h3>";
+    					html += "<p class='topic'><strong>" + this.usertype + "</strong></p>";
+    					html += "<p class='ui-li-aside'><strong>Status:" + this.status ? "Active" : "Inactive" + "</strong></p>";
+    					html += "</a>";
+    					html += "<a href='javascript:deleteDialog(" + this.id + ")' class='delete'>Delete</a>";
+    					html += "</li>";
+    					$("#list").append(html);
+    				});
+    				$('#list').listview('refresh');
+    				currentPage++;
+    				isLastPage = false;
+    			}else{
+    				isLastPage = true;
+    			}
+            	
+            },
+            error: function (request,error) {
+                //alert('Network error has occurred please try again!');
+            }
+        });
+		
+	}
+	
+	function deleteUser(id){
+		$.ajax({
+			url: "@{Users.delete()}/" + id,
+            dataType: "json",
+            data:{},
+            async: false,
+            type: "get",
+            beforeSend: function() {
+            },
+            complete: function() {
+            },
+            success: function (data) {
+            	resetUserList();
+            	showMessage(data.messages);
+            },
+            error: function (request,error) {
+                //alert('Network error has occurred please try again!');
+            }
+        });
+	}
+	
+	function enableScroll(){
+        var timer    = setInterval(function () { scrollOK = true; }, 100);
+        var scrollOK = true;
+        var count    = 10;
+
+        $(window).scroll(function () {
+            if (scrollOK) {
+                scrollOK = false;
+                if ($(this).scrollTop() + $(this).height() >= ($(document).height() - count)) {
+                   	// Load content here 
+                   	if(!isLastPage){
+                		loadUserList();
+                   	}else{
+                   		showMessage('No more records found');
+                   	}
+                }
+            }
+        });
+	}
+	
+	function deleteDialog(id){
+		$("#confirm").popup("open");
+        // Proceed when the user confirms
+        $("#confirm #yes").one("click", function(){
+        	deleteUser(id);
+            $("#confirm #cancel").off();
+            
+        });
+        // Remove active state and unbind when the cancel button is clicked
+        $("#confirm #cancel").one("click", function(){
+            $("#confirm #yes").off();
+        });
+	}
+
+	</script>
+#{/set} 
+
+<form id="queryForm">
+	<div style="height:70px;">
+		<input type="search" name="queryName" id="queryName" value="" placeholder="Search The User Name...">
+	</div>
+	
+	<ul id="list" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="c">
+		
+	</ul>
+</form>

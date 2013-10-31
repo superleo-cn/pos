@@ -3,8 +3,15 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
-
+GET     /                                       Home.index
+# Login page
+GET     /login                                	Auth.index
+POST	/login									Auth.login
+# User Operation
+*		/users									Users.index
+*		/users/list								Users.list
+*		/users/view/{id}						Users.view
+*		/users/delete/{id}						Users.delete
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

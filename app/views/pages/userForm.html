@@ -1,0 +1,73 @@
+#{extends '/layout/default.html' /} 
+#{set title:'User Form' /}
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	
+	actionSave = function(form){
+        $.post("@{Users.store()}", $(form).serialize(), function (response) {
+            window.location.href = "@{Users.index()}";
+        });
+	};
+	
+	$(document).on("pageinit", function() {
+		var status = '${user?.status}';
+		$("#status").val(status).slider("refresh");
+	});	
+	
+	
+	
+	</script>
+#{/set} 
+
+<form id="form" method="post">
+	<input type="hidden" name="user.id" value="${user?.id}" />
+	<h2>User Form</h2>
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">User Name:</label>
+		#{if user?.id == null || user?.id == 0}
+			<input type="text" name="user.username" id="username" value="${user?.username}" required>
+		#{/if}
+		#{else}
+			${user?.username}
+		#{/else}
+		
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Real Name:</label>
+		<input type="text" name="user.realname" id="realname" value="${user?.realname}" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">User Type:</label>
+		#{select 'user.usertype', value:user?.usertype, id:'usertype'}
+			#{option 'admin'}Admin#{/option}
+			#{option 'operator'}Operator#{/option}
+		#{/select}
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="status">Status:</label>
+		<select name="user.status" id="status" data-role="slider">
+		    <option value="false">Off</option>
+		    <option value="true">On</option>
+		</select>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<fieldset data-role="controlgroup">
+	        <legend>Access Rights:</legend>
+	        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+	        <label for="checkbox-v-2a">Home</label>
+	        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+	        <label for="checkbox-v-2b">Manage</label>
+	        <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+	        <label for="checkbox-v-2c">Transaction</label>
+	    </fieldset>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<input type="submit" data-theme="b" value="Save">
+	</div>
+</form>

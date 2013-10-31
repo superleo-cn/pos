@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>  
+	<head>
+		<title>Fish ball - #{get 'title' /}</title>
+		<meta charset="${_response_encoding}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+		#{include 'includes/javascript.html' /}
+		#{get 'moreStyles' /}
+
+		<script type='text/javascript'>
+		// global variable
+		var callbackPageInit;
+		var currentPage = 0;
+		var navigationAdd,navigationBack;
+		var actionSave,actionDelete;
+		var isLastPage = true;
+		var scrollOK = false;
+        var count    = 10;
+        var afterScrollCallback;
+
+			$(document).on("pageinit", function() {
+				console.log('Page Init');
+
+                $('.addButton').on('click',function(){
+                    $.mobile.changePage(navigationAdd,{reloadPage :true});
+                });
+
+                $('.backButton').on('click',function(){
+                    $.mobile.changePage(navigationBack,{reloadPage :true});
+                });
+
+                
+
+                $('.saveButton').on('click',function(){
+                    actionSave($('#form'));
+                });
+
+
+				$("a[data-ajax='false']").on("click", function(){
+					//$.mobile.showPageLoadingMsg();	
+				});
+
+				if(typeof callbackPageInit!='undefined') {
+					console.log('Callback page init');
+                	callbackPageInit();
+				}
+			});	
+			
+			$(document).on("pageshow", function(event,ui) {
+
+				$(ui.prevPage).remove();
+				//display error messages
+				#{errors}
+					showPopup('${error}')
+				#{/errors}
+				#{if flash.errors}
+					showPopup('${flash.errors}')
+				#{/if}
+
+			});	
+
+			$(window).scroll(function () {
+		        if (scrollOK) {
+		            if ($(this).scrollTop() + $(this).height() >= ($(document).height() - count)) {
+		               	// Load content here 
+		               	if(!isLastPage && typeof afterScrollCallback!='undefined'){
+		            		afterScrollCallback();
+		               	}else{
+		               		scrollOK = false;
+		               		showMessage('No more records found');
+		               	}
+		            }
+		        }
+		    });
+
+		</script>
+	</head>
+  	<body>
+
+
+  		<div data-role="page" id="page" data-dom-cache="false">
+           #{get 'moreScripts' /}
+  			<div data-role="header" data-theme="c" data-position="fixed">
+  			  <h1>#{get 'title' /}</h1>
+              #{if !navigation?.noback}
+                  <a class="backButton" data-role="button"  data-icon="arrow-l" data-theme="c">Back</a>
+              #{/if}
+              #{if navigation?.add}
+                <a class="addButton" data-role="button" data-icon="plus" data-theme="c" class="ui-btn-right">Add</a>
+              #{/if}
+              #{if navigation?.save}
+                <a class="saveButton" data-role="button" data-icon="check" data-theme="c"  class="ui-btn-right">Save</a>
+              #{/if}
+            </div>
+
+			<div data-role="content"  data-theme="c">
+				#{doLayout /}	
+			</div>
+           #{if session?.username}
+              <div data-role="footer" data-position="fixed" data-theme="c">
+                  <div data-role="navbar" data-iconpos="top">
+                      <ul>
+                          <li><a data-icon="home" href="@{Home.index()}">Home</a></li>
+                          <li><a data-icon="star" href="#">Me</a></li>
+                          <li><a data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
+                      </ul>
+                  </div>
+              </div>
+           #{/if}
+			<!-- /panel -->
+
+		    <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
+				<p id="question">Are you sure you want to delete</p>
+			   	<div class="ui-grid-a">
+			    	<div class="ui-block-a">
+			       		<a id="yes" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Yes</a>
+			      	</div>
+			        <div class="ui-block-b">
+			        	<a id="cancel" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Cancel</a>
+			      	</div>
+				</div>
+			</div><!-- /popup -->
+  		</div>
+	</body>
+</html>
+

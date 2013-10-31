@@ -1,0 +1,9 @@
+#{extends '/layout/default.html' /} 
+#{set title:'Login' /}
+
+<form id="loginForm" method="post" action="@{Auth.login()}" data-ajax="false">
+	<p>&{'login.tip'}</p>
+	<input type="text" name="user.username" id="username" value="${user?.username}" placeholder="&{'login.label.username'}" required>
+	<input type="password" name="user.password" id="password" value="${user?.username}" placeholder="&{'login.label.password'}" required>
+	<input type="submit" value="&{'login.btn.login'}">
+</form>
