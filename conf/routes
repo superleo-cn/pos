@@ -12,6 +12,13 @@ POST	/login									Auth.login
 *		/users/list								Users.list
 *		/users/view/{id}						Users.view
 *		/users/delete/{id}						Users.delete
+# Food Operation
+*		/foods/listJson/{id}					Foods.listJson
+# Consumption Operation 
+*		/consumptions/listJson/{id}				Consumptions.listJson
+# Cash Operation 
+*		/cashs/listJson/{id}					Cashs.listJson
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

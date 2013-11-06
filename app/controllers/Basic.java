@@ -27,7 +27,7 @@ public class Basic extends Controller {
 	static void checkAuthentification() {
 		if (StringUtils.isEmpty(session.get(Constants.CURRENT_USERNAME))) {
 			// flash.put("error", "You need login first");
-			Auth.index();
+			//Auth.index();
 		}
 		// TODO: refactor
 		// Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(),

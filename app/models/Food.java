@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -19,31 +22,45 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
+import constants.Constants;
+
 @Entity
-@Table(name = "tb_shop")
-public class Shop {
+@Table(name = "tb_food")
+public class Food {
 	@Id
 	public Long id;
-	@Required(message = "Shop name cannot be empty")
+
+	@Required(message = "Food name cannot be empty")
 	public String name;
+
+	@Required(message = "Food price cannot be empty")
+	public Float price;
+
+	public String picture;
+
+	@Transient
+	public String getPictureUrl() {
+		return Constants.WEBSITE_URL + picture;
+	}
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
 
-	@Required(message = "Expiry date cannot be empty")
-	public Date expiryDate;
+	@ManyToOne
+	@JoinColumn(name = "shop_id", referencedColumnName = "id")
+	public Shop shop;
 
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
-		ExpressionList expList = Ebean.find(Shop.class).where();
+		ExpressionList expList = Ebean.find(Food.class).where();
 		if (StringUtils.isNotEmpty(queryName)) {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("name", "%" + queryName + "%");
 		}
-		PagingList<Shop> pagingList = expList.findPagingList(pagination.pageSize);
+		PagingList<Food> pagingList = expList.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
 		Page page = pagingList.getPage(pagination.currentPage);
 		pagination.recordList = page.getList();
@@ -52,30 +69,28 @@ public class Shop {
 		return pagination;
 	}
 
-	public static Shop view(Integer id) {
+	public static Food view(Integer id) {
 		if (id != null) {
-			return Ebean.find(Shop.class, id);
+			return Ebean.find(Food.class, id);
 		}
 		return null;
 	}
 
-	public static void store(Shop shop) {
-		if (shop.id != null && shop.id > 0) {
-			Shop newUser = Ebean.find(Shop.class, shop.id);
-			try {
-				PropertyUtils.copyProperties(newUser, shop);
-				newUser.modifiedDate = new Date();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Ebean.update(newUser);
-		} else {
-			Ebean.save(shop);
+	public static List<Food> listByShop(Long id) {
+		if (id != null) {
+			List<Food> foods = Ebean.find(Food.class).select("id, name, price, picture").where().eq("status", true)
+					.findList();
+			CollectionUtils.forAllDo(foods, new Closure() {
+				public void execute(Object o) {
+					if (o != null) {
+						Food food = (Food) o;
+						food.picture = Constants.PICTURE_URL + food.picture;
+					}
+				}
+			});
+			return foods;
 		}
+		return null;
 	}
 
-	public static boolean delete(Integer id) {
-		Integer flag = Ebean.delete(Shop.class, id);
-		return (flag > 0) ? true : false;
-	}
 }

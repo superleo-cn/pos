@@ -1,5 +1,11 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table tb_cash;
+
+drop table tb_consumption;
+
+drop table tb_food;
+
 drop table tb_shop;
 
 drop table tb_user;

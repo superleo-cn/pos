@@ -2,21 +2,29 @@ package constants;
 
 public class Constants {
 	
+	// website URL
+	public static String WEBSITE_URL = "http://localhost:9000/";
+	public static String PICTURE_URL = WEBSITE_URL + "public/upload/";
+	
 	// code status
 	public static String HTTP_CODE = "code";
 	public static String CODE_SUCCESS = "200";
 	public static String CODE_NOT_FOUND = "404";
 	public static String CODE_FAILURE = "500";
 	public static String DATAS = "datas";
+	public static String STATUS = "status";
+	public static String MESSAGE = "message";
 	public static String COUNT = "count";
 	public static String HAVE_MORE = "havemore";
 	
 	public static String SUCCESS = "1";
 	public static String FAILURE = "0";
+	public static String ERROR = "-1";
 
 	// current user info
-	public static String USERTYPE_MGR = "MGR";
-	public static String USERTYPE_RDT = "RDT";
+	public static String USERTYPE_ADMIN = "ADMIN";
+	public static String USERTYPE_OPERATOR = "OPERATOR";
+	public static String USERTYPE_CACHER = "CACHIER";
 
 	// current user info
 	public static String CURRENT_USERID = "userid";
