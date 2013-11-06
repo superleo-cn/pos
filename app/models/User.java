@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -44,6 +45,8 @@ public class User {
 	public Boolean status;
 
 	public String userIp;
+	
+	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate, lastLoginDate;
 
@@ -77,7 +80,7 @@ public class User {
 		return pagination;
 	}
 
-	public static User view(Integer id) {
+	public static User view(Long id) {
 		if (id != null) {
 			return Ebean.find(User.class, id);
 		}

@@ -33,8 +33,11 @@ public class Food {
 	@Required(message = "Food name cannot be empty")
 	public String name;
 
-	@Required(message = "Food price cannot be empty")
-	public Float price;
+	@Required(message = "Food cost price cannot be empty")
+	public Float costPrice;
+	
+	@Required(message = "Food retail price cannot be empty")
+	public Float retailPrice;
 
 	public String picture;
 
@@ -49,6 +52,8 @@ public class Food {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
+	
+	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;
 
@@ -69,7 +74,7 @@ public class Food {
 		return pagination;
 	}
 
-	public static Food view(Integer id) {
+	public static Food view(Long id) {
 		if (id != null) {
 			return Ebean.find(Food.class, id);
 		}

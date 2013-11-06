@@ -39,6 +39,8 @@ public class Consumption {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
+	
+	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;
 
@@ -59,7 +61,7 @@ public class Consumption {
 		return pagination;
 	}
 
-	public static Consumption view(Integer id) {
+	public static Consumption view(Long id) {
 		if (id != null) {
 			return Ebean.find(Consumption.class, id);
 		}

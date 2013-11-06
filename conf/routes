@@ -18,6 +18,10 @@ POST	/login									Auth.login
 *		/consumptions/listJson/{id}				Consumptions.listJson
 # Cash Operation 
 *		/cashs/listJson/{id}					Cashs.listJson
+# Transaction Operation 
+POST	/transactions/store						Transactions.store
+# ConsumeTransaction Operation 
+POST	/consumeTransactions/store				ConsumeTransactions.store
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

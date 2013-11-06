@@ -24,6 +24,7 @@ import com.avaje.ebean.PagingList;
 public class Shop {
 	@Id
 	public Long id;
+	
 	@Required(message = "Shop name cannot be empty")
 	public String name;
 
@@ -33,6 +34,8 @@ public class Shop {
 	@Required(message = "Expiry date cannot be empty")
 	public Date expiryDate;
 
+	public String createBy, modifiedBy;
+	
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */

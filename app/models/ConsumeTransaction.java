@@ -25,34 +25,34 @@ import com.avaje.ebean.PagingList;
 import constants.Constants;
 
 @Entity
-@Table(name = "tb_cash")
-public class Cash {
+@Table(name = "tb_consume_transaction")
+public class ConsumeTransaction {
 	@Id
 	public Long id;
-	
-	@Required(message = "Cash name cannot be empty")
-	public String name;
 
-	@Required(message = "Status cannot be empty")
-	public Boolean status;
-	
 	@ManyToOne
-	@JoinColumn(name = "shop_id", referencedColumnName = "id")
-	public Shop shop;
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	public User user;
+
+	@ManyToOne
+	@JoinColumn(name = "consumption_id", referencedColumnName = "id")
+	public Consumption consumption;
+
+	public Float price;
 
 	public String createBy, modifiedBy;
-	
+
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
-		ExpressionList expList = Ebean.find(Cash.class).where();
+		ExpressionList expList = Ebean.find(ConsumeTransaction.class).where();
 		if (StringUtils.isNotEmpty(queryName)) {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("name", "%" + queryName + "%");
 		}
-		PagingList<Cash> pagingList = expList.findPagingList(pagination.pageSize);
+		PagingList<ConsumeTransaction> pagingList = expList.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
 		Page page = pagingList.getPage(pagination.currentPage);
 		pagination.recordList = page.getList();
@@ -61,37 +61,38 @@ public class Cash {
 		return pagination;
 	}
 
-	public static Cash view(Integer id) {
+	public static ConsumeTransaction view(Integer id) {
 		if (id != null) {
-			return Ebean.find(Cash.class, id);
+			return Ebean.find(ConsumeTransaction.class, id);
 		}
 		return null;
 	}
 
-	public static void store(Cash cash) {
-		if (cash.id != null && cash.id > 0) {
-			Cash newCash = Ebean.find(Cash.class, cash.id);
-			try {
-				PropertyUtils.copyProperties(newCash, cash);
-				newCash.modifiedDate = new Date();
-			} catch (Exception e) {
-				e.printStackTrace();
+	public static boolean store(ConsumeTransaction consumeTransaction) {
+		if (consumeTransaction.id == null || consumeTransaction.id == 0) {
+			if (consumeTransaction.consumption != null && consumeTransaction.consumption.id != null
+					&& consumeTransaction.user != null && consumeTransaction.user.id != null) {
+				Consumption consumption = Consumption.view(consumeTransaction.consumption.id);
+				User user = User.view(consumeTransaction.user.id);
+				if (consumption != null && user != null) {
+					consumeTransaction.createBy = user.username;
+					consumeTransaction.createDate = new Date();
+					Ebean.save(consumeTransaction);
+					return true;
+				}
 			}
-			Ebean.update(newCash);
-		} else {
-			Ebean.save(cash);
 		}
+		return false;
 	}
 
 	public static boolean delete(Integer id) {
-		Integer flag = Ebean.delete(Cash.class, id);
+		Integer flag = Ebean.delete(ConsumeTransaction.class, id);
 		return (flag > 0) ? true : false;
 	}
-	
-	public static List<Cash> listByShop(Long id) {
+
+	public static List<ConsumeTransaction> listByShop(Long id) {
 		if (id != null) {
-			return Ebean.find(Cash.class).select("id, name, price, picture").where().eq("status", true)
-					.findList();
+			return Ebean.find(ConsumeTransaction.class).where().eq("status", true).findList();
 		}
 		return null;
 	}

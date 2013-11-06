@@ -20,7 +20,7 @@ public class Users extends Basic {
 		renderJSON(pagination);
 	}
 
-	public static void view(Integer id) {
+	public static void view(Long id) {
 		User user = User.view(id);
 		render(Pages.USER_FORM, user);
 	}
