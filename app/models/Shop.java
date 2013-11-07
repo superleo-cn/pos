@@ -77,7 +77,7 @@ public class Shop {
 		}
 	}
 
-	public static boolean delete(Integer id) {
+	public static boolean delete(Long id) {
 		Integer flag = Ebean.delete(Shop.class, id);
 		return (flag > 0) ? true : false;
 	}

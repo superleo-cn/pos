@@ -6,7 +6,7 @@
 GET     /                                       Home.index
 # Login page
 GET     /login                                	Auth.index
-POST	/login									Auth.login
+POST	/loginJson								Auth.loginJson
 # User Operation
 *		/users									Users.index
 *		/users/list								Users.list
@@ -22,6 +22,8 @@ POST	/login									Auth.login
 POST	/transactions/store						Transactions.store
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/store				ConsumeTransactions.store
+# CashTransaction Operation 
+POST	/cashTransactions/store					CashTransactions.store
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

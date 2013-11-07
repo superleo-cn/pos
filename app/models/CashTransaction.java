@@ -25,8 +25,8 @@ import com.avaje.ebean.PagingList;
 import constants.Constants;
 
 @Entity
-@Table(name = "tb_transaction")
-public class Transaction {
+@Table(name = "tb_cash_transaction")
+public class CashTransaction {
 	@Id
 	public Long id;
 
@@ -39,18 +39,14 @@ public class Transaction {
 	public Shop shop;
 
 	@ManyToOne
-	@JoinColumn(name = "food_id", referencedColumnName = "id")
-	public Food food;
+	@JoinColumn(name = "cash_id", referencedColumnName = "id")
+	public Cash cash;
 
-	public Float costPrice;
-
-	public Float retailPrice;
+	public Float price;
 
 	public Integer quantity;
 
-	public Float totalCostPrice;
-
-	public Float totalRetailPrice;
+	public Float totalPrice;
 
 	public String createBy, modifiedBy;
 
@@ -59,12 +55,12 @@ public class Transaction {
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
-		ExpressionList expList = Ebean.find(Transaction.class).where();
+		ExpressionList expList = Ebean.find(CashTransaction.class).where();
 		if (StringUtils.isNotEmpty(queryName)) {
 			queryName = StringUtils.trimToNull(queryName);
 			expList.where().ilike("name", "%" + queryName + "%");
 		}
-		PagingList<Transaction> pagingList = expList.findPagingList(pagination.pageSize);
+		PagingList<CashTransaction> pagingList = expList.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
 		Page page = pagingList.getPage(pagination.currentPage);
 		pagination.recordList = page.getList();
@@ -73,29 +69,25 @@ public class Transaction {
 		return pagination;
 	}
 
-	public static Transaction view(Long id) {
+	public static CashTransaction view(Long id) {
 		if (id != null) {
-			return Ebean.find(Transaction.class, id);
+			return Ebean.find(CashTransaction.class, id);
 		}
 		return null;
 	}
 
-	public static boolean store(Transaction transaction) {
-		if (transaction.id == null || transaction.id == 0) {
-			if (transaction.food != null && transaction.user != null && transaction.food.id != null
-					&& transaction.user.id != null) {
-				Food food = Food.view(transaction.food.id);
-				User user = User.view(transaction.user.id);
-				if (food != null && transaction.quantity != null) {
-					Float totalCostPrice = food.costPrice * transaction.quantity;
-					Float totalRetailPrice = food.retailPrice * transaction.quantity;
-					transaction.costPrice = food.costPrice;
-					transaction.retailPrice = food.retailPrice;
-					transaction.totalCostPrice = totalCostPrice;
-					transaction.totalRetailPrice = totalRetailPrice;
-					transaction.createBy = user.username;
-					transaction.createDate = new Date();
-					Ebean.save(transaction);
+	public static boolean store(CashTransaction cashTransaction) {
+		if (cashTransaction.id == null || cashTransaction.id == 0) {
+			if (cashTransaction.cash != null && cashTransaction.cash.id != null && cashTransaction.user != null
+					&& cashTransaction.user.id != null) {
+				Cash cash = Cash.view(cashTransaction.cash.id);
+				User user = User.view(cashTransaction.user.id);
+				if (cash != null && user != null) {
+					cashTransaction.price = cash.price;
+					cashTransaction.totalPrice = cashTransaction.price * cashTransaction.quantity;
+					cashTransaction.createBy = user.username;
+					cashTransaction.createDate = new Date();
+					Ebean.save(cashTransaction);
 					return true;
 				}
 			}
@@ -104,13 +96,13 @@ public class Transaction {
 	}
 
 	public static boolean delete(Long id) {
-		Integer flag = Ebean.delete(Transaction.class, id);
+		Integer flag = Ebean.delete(CashTransaction.class, id);
 		return (flag > 0) ? true : false;
 	}
 
-	public static List<Transaction> listByShop(Long id) {
+	public static List<CashTransaction> listByShop(Long id) {
 		if (id != null) {
-			return Ebean.find(Transaction.class).where().eq("status", true).findList();
+			return Ebean.find(CashTransaction.class).where().eq("status", true).findList();
 		}
 		return null;
 	}

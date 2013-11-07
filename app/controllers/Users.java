@@ -34,7 +34,7 @@ public class Users extends Basic {
 	}
 
 	@Transactional
-	public static void delete(Integer id) {
+	public static void delete(Long id) {
 		Map data = new HashMap();
 		if (User.delete(id)) {
 			data.put("messages", "Delete User Successfully.");

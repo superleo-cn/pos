@@ -46,6 +46,8 @@ public class User {
 
 	public String userIp;
 	
+	public String userMac;
+	
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate, lastLoginDate;
@@ -102,7 +104,7 @@ public class User {
 		}
 	}
 
-	public static boolean delete(Integer id) {
+	public static boolean delete(Long id) {
 		Integer flag = Ebean.delete(User.class, id);
 		return (flag > 0) ? true : false;
 	}

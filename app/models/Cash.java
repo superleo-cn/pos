@@ -30,8 +30,8 @@ public class Cash {
 	@Id
 	public Long id;
 	
-	@Required(message = "Cash name cannot be empty")
-	public String name;
+	@Required(message = "Cash price cannot be empty")
+	public Float price;
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
@@ -61,7 +61,7 @@ public class Cash {
 		return pagination;
 	}
 
-	public static Cash view(Integer id) {
+	public static Cash view(Long id) {
 		if (id != null) {
 			return Ebean.find(Cash.class, id);
 		}
@@ -83,7 +83,7 @@ public class Cash {
 		}
 	}
 
-	public static boolean delete(Integer id) {
+	public static boolean delete(Long id) {
 		Integer flag = Ebean.delete(Cash.class, id);
 		return (flag > 0) ? true : false;
 	}

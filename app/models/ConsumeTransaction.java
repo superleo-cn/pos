@@ -35,6 +35,10 @@ public class ConsumeTransaction {
 	public User user;
 
 	@ManyToOne
+	@JoinColumn(name = "shop_id", referencedColumnName = "id")
+	public Shop shop;
+
+	@ManyToOne
 	@JoinColumn(name = "consumption_id", referencedColumnName = "id")
 	public Consumption consumption;
 
@@ -61,7 +65,7 @@ public class ConsumeTransaction {
 		return pagination;
 	}
 
-	public static ConsumeTransaction view(Integer id) {
+	public static ConsumeTransaction view(Long id) {
 		if (id != null) {
 			return Ebean.find(ConsumeTransaction.class, id);
 		}
@@ -85,7 +89,7 @@ public class ConsumeTransaction {
 		return false;
 	}
 
-	public static boolean delete(Integer id) {
+	public static boolean delete(Long id) {
 		Integer flag = Ebean.delete(ConsumeTransaction.class, id);
 		return (flag > 0) ? true : false;
 	}
