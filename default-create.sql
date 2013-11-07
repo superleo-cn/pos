@@ -102,6 +102,7 @@ create table tb_user (
   usertype                  varchar(255),
   status                    tinyint(1) default 0,
   user_ip                   varchar(255),
+  user_mac                  varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,

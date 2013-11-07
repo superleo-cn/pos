@@ -55,7 +55,7 @@ public class Shop {
 		return pagination;
 	}
 
-	public static Shop view(Integer id) {
+	public static Shop view(Long id) {
 		if (id != null) {
 			return Ebean.find(Shop.class, id);
 		}

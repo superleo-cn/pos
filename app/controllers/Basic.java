@@ -89,8 +89,6 @@ public class Basic extends Controller {
 
 	@Before(only = { "Home.index", "Auth.index", "Auth.login" })
 	public static void navigationNoBack() {
-
-		System.out.println("x");
 		Map navigation = (Map) renderArgs.get("navigation");
 		if (navigation == null)
 			navigation = new HashMap();
