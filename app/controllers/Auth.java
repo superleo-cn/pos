@@ -29,16 +29,18 @@ public class Auth extends Basic {
 			User dbUser = User.login(user);
 			if (dbUser != null) {
 				datas.add(dbUser);
-				result.put(Constants.STATUS, Constants.SUCCESS);
+				result.put(Constants.CODE, Constants.SUCCESS);
+				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);
 			} else {
-				result.put(Constants.STATUS, Constants.FAILURE);
+				result.put(Constants.CODE, Constants.FAILURE);
+				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
 				result.put(Constants.DATAS, datas);
 			}
 		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.FAILURE);
+			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, Messages.LOGIN_ERROR);
-			logger.error(Messages.LOGIN_MESSAGE, new Object[] { user.username, e });
+			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
 
 		}
 		renderJSON(result);

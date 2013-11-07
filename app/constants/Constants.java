@@ -7,7 +7,7 @@ public class Constants {
 	public static String PICTURE_URL = WEBSITE_URL + "public/upload/";
 	
 	// code status
-	public static String HTTP_CODE = "code";
+	public static String CODE = "code";
 	public static String CODE_SUCCESS = "200";
 	public static String CODE_NOT_FOUND = "404";
 	public static String CODE_FAILURE = "500";
@@ -16,6 +16,7 @@ public class Constants {
 	public static String MESSAGE = "message";
 	public static String COUNT = "count";
 	public static String HAVE_MORE = "havemore";
+	public static String NA = "N.A.";
 	
 	public static String SUCCESS = "1";
 	public static String FAILURE = "0";
