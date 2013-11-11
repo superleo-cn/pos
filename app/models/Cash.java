@@ -39,6 +39,8 @@ public class Cash {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
+	
+	public Integer position;
 
 	public String createBy, modifiedBy;
 	

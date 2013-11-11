@@ -46,9 +46,13 @@ public class Transaction {
 
 	public Float retailPrice;
 
+	public Float discount;
+
 	public Integer quantity;
 
 	public Float totalCostPrice;
+
+	public Float totalDiscount;
 
 	public Float totalRetailPrice;
 
@@ -89,10 +93,12 @@ public class Transaction {
 				if (food != null && transaction.quantity != null) {
 					Float totalCostPrice = food.costPrice * transaction.quantity;
 					Float totalRetailPrice = food.retailPrice * transaction.quantity;
+					Float totalDiscount = transaction.discount * transaction.quantity;
 					transaction.costPrice = food.costPrice;
 					transaction.retailPrice = food.retailPrice;
 					transaction.totalCostPrice = totalCostPrice;
-					transaction.totalRetailPrice = totalRetailPrice;
+					transaction.totalDiscount = totalDiscount;
+					transaction.totalRetailPrice = totalRetailPrice - totalDiscount;
 					transaction.createBy = user.username;
 					transaction.createDate = new Date();
 					Ebean.save(transaction);
