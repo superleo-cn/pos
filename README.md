@@ -1,6 +1,11 @@
 pos 系统开发指南
 ===
 
+Database import step:
+1. default-create.sql
+2. data.sql
+3. view.sql (Just now create 1st sql for report 1)
+
 Android接口开发说明请参见连接：https://github.com/superleo-cn/pos/wiki
 
 1. 密码生成策略:
