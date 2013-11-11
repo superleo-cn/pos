@@ -53,6 +53,8 @@ public class Food {
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
 	
+	public Integer position;
+	
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;

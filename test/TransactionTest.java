@@ -17,12 +17,14 @@ public class TransactionTest extends FunctionalTest {
 		String shopId = "1";
 		String foodId = "1";
 		String quantity = "10";
+		String discount = "0.5";
 		// Http.Request req = newRequest();
 		Map<String, String> params = new HashMap<>();
 		params.put("transaction.user.id", userId);
 		params.put("transaction.shop.id", shopId);
 		params.put("transaction.quantity", quantity);
 		params.put("transaction.food.id", foodId);
+		params.put("transaction.discount", discount);
 
 		Response response = POST("/transactions/store", params);
 		assertIsOk(response);
