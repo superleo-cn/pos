@@ -129,8 +129,8 @@ public class User {
 			try {
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
 						newUser.userIp, newUser.userMac });
-				newUser.userIp = user.userIp;
-				newUser.userMac = user.userMac;
+				newUser.userIp = "123";
+				newUser.userMac = "123";
 				newUser.modifiedDate = new Date();
 				Ebean.update(newUser);
 			} catch (Exception e) {
