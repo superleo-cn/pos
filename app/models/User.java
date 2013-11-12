@@ -98,9 +98,11 @@ public class User {
 		if (user.id != null && user.id > 0) {
 			User updateUser = Ebean.find(User.class, user.id);
 			try {
+				logger.info("[System]-[Info]-[Param User({}) IP is {}, Mac is {}]", new Object[] { user.id,
+						user.userIp, user.userMac });
 				MyPropertiesUtils.copyProperties(updateUser, user);
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { updateUser.username,
-						updateUser.userIp, updateUser.userMac });
+				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
+						updateUser.username, updateUser.userIp, updateUser.userMac });
 				updateUser.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();
