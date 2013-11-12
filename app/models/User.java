@@ -100,7 +100,10 @@ public class User {
 			try {
 				logger.info("[System]-[Info]-[Param User({}) IP is {}, Mac is {}]", new Object[] { user.id,
 						user.userIp, user.userMac });
-				MyPropertiesUtils.copyProperties(updateUser, user);
+				//MyPropertiesUtils.copyProperties(updateUser, user);
+				updateUser.userIp = user.userIp;
+				updateUser.userMac = user.userMac;
+				updateUser.lastLoginDate = new Date();
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
 						updateUser.username, updateUser.userIp, updateUser.userMac });
 				updateUser.modifiedDate = new Date();
