@@ -30,18 +30,4 @@ public class AuthTest extends FunctionalTest {
 
 	}
 
-	@Test
-	public void testPropertyBeanUtils() throws Exception {
-		String userId = "admin";
-		String shopId = "123";
-		String userIp = "192.168.1.100";
-		String userMac = "";// "b2:00:1f:2a:e3:c0";
-		// Http.Request req = newRequest();
-		User user = new User();
-		user.realname = "123";
-		User user2 = new User();
-		PropertyUtils.copyProperties(user2, user);
-		System.out.println(user2.realname);
-	}
-
 }

@@ -11,9 +11,6 @@ import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.annotation.Transactional;
-
 import constants.Constants;
 import constants.Messages;
 import constants.Pages;
@@ -36,7 +33,8 @@ public class Auth extends Basic {
 				paramUser.id = dbUser.id;
 				paramUser.userIp = user.userIp;
 				paramUser.userMac = user.userMac;
-				User.updateUserFromClient(paramUser);
+				paramUser.lastLoginDate = new Date();
+				User.store(paramUser);
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);

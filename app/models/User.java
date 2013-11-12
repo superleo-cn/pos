@@ -9,13 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import play.data.validation.Required;
+import utils.MyPropertiesUtils;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -63,7 +63,7 @@ public class User {
 	public static User login(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
 				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
-				.eq("status", Boolean.TRUE).findList();
+				.eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
@@ -96,44 +96,28 @@ public class User {
 	@Transactional
 	public static void store(User user) {
 		if (user.id != null && user.id > 0) {
-			User newUser = Ebean.find(User.class, user.id);
+			User updateUser = Ebean.find(User.class, user.id);
 			try {
-				logger.info("[System]-[Info]-[DB User({}) IP is {}, Mac is {}]", new Object[] { user.username,
-						user.userIp, user.userMac });
-				PropertyUtils.copyProperties(newUser, user);
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
-						newUser.userIp, newUser.userMac });
-				newUser.modifiedDate = new Date();
+				MyPropertiesUtils.copyProperties(updateUser, user);
+				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { updateUser.username,
+						updateUser.userIp, updateUser.userMac });
+				updateUser.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			Ebean.update(newUser);
+			Ebean.update(updateUser);
 		} else {
 			Ebean.save(user);
 		}
 	}
 
 	@Transactional
-	public static void updateUserFromClient(User user) {
-		if (user.id != null && user.id > 0) {
-			User newUser = Ebean.find(User.class, user.id);
-			try {
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
-						newUser.userIp, newUser.userMac });
-				newUser.userIp = user.userIp;
-				newUser.userMac = user.userMac;
-				newUser.lastLoginDate = new Date();
-				newUser.modifiedDate = new Date();
-				Ebean.update(newUser);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 	public static boolean delete(Long id) {
-		Integer flag = Ebean.delete(User.class, id);
-		return (flag > 0) ? true : false;
+		User user = Ebean.find(User.class, id);
+		user.status = false;
+		user.modifiedDate = new Date();
+		Ebean.update(user);
+		return true;
 	}
 
 }
