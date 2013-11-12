@@ -22,6 +22,11 @@ import constants.Constants;
 
 @With(value = { TimeInterceptor.class, ConstantsInterceptor.class })
 public class Basic extends Controller {
+	
+	@Before
+	public static void allowOrign(){
+		response.setHeader("Access-Control-Allow-Origin", "*");
+	}
 
 	@Before(unless = { "Auth.index", "Auth.login", "Auth.logout" })
 	static void checkAuthentification() {

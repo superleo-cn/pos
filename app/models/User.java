@@ -102,6 +102,7 @@ public class User {
 				logger.info("[System]-[Info]-[DB User({}) IP is {}, Mac is {}]", new Object[] { user.username,
 						user.userIp, user.userMac });
 				PropertyUtils.copyProperties(newUser, user);
+				logger.info("[System]-[Info]-[Update is same {}]", user == newUser);
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
 						newUser.userIp, newUser.userMac });
 				newUser.modifiedDate = new Date();
