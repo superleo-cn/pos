@@ -32,10 +32,11 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			User dbUser = User.login(user);
 			if (dbUser != null) {
-				dbUser.userIp = user.userIp;
-				dbUser.userMac = user.userMac;
-				dbUser.lastLoginDate = new Date();
-				User.updateUserFromClient(dbUser);
+				User paramUser = new User();
+				paramUser.userIp = user.userIp;
+				paramUser.userMac = user.userMac;
+				paramUser.lastLoginDate = new Date();
+				User.updateUserFromClient(paramUser);
 				datas.add(User.viewWithoutPassword(user.id));
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
