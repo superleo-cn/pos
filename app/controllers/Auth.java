@@ -11,6 +11,7 @@ import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
@@ -32,13 +33,14 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			User dbUser = User.login(user);
 			if (dbUser != null) {
-				datas.add(dbUser);
+				
 				dbUser.userIp = user.userIp;
 				dbUser.userMac = user.userMac;
 				dbUser.lastLoginDate = new Date();
 				logger.info("[System]-[Info]-[User({}) IP is {}, Mac is {}]", new Object[] { user.username,
 						user.userIp, user.userMac });
 				User.store(dbUser);
+				datas.add(User.viewWithoutPassword(user.id));
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);

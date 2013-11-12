@@ -32,7 +32,7 @@ import controllers.Foods;
 public class User {
 
 	final static Logger logger = LoggerFactory.getLogger(User.class);
-	
+
 	@Id
 	public Long id;
 
@@ -51,9 +51,9 @@ public class User {
 	public Boolean status;
 
 	public String userIp;
-	
+
 	public String userMac;
-	
+
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate, lastLoginDate;
@@ -64,8 +64,9 @@ public class User {
 
 	/* the following are service methods */
 	public static User login(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where()
-				.eq("username", user.username).eq("password", user.password).eq("status", Boolean.TRUE).findList();
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
+				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
+				.eq("status", Boolean.TRUE).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
@@ -95,6 +96,15 @@ public class User {
 		return null;
 	}
 
+	public static User viewWithoutPassword(Long id) {
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
+				.fetch("shop", "id").where().eq("status", Boolean.TRUE).eq("id", id).findList();
+		if (CollectionUtils.size(users) > 0) {
+			return users.get(0);
+		}
+		return null;
+	}
+
 	public static void store(User user) {
 		if (user.id != null && user.id > 0) {
 			User newUser = Ebean.find(User.class, user.id);
@@ -102,6 +112,7 @@ public class User {
 				logger.info("[System]-[Info]-[DB User({}) IP is {}, Mac is {}]", new Object[] { user.username,
 						user.userIp, user.userMac });
 				PropertyUtils.copyProperties(newUser, user);
+				logger.info("[System]-[Info]-[Update is same {}]", user == newUser);
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
 						newUser.userIp, newUser.userMac });
 				newUser.modifiedDate = new Date();

@@ -1,19 +1,17 @@
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.junit.*;
+import models.User;
 
-import play.Logger;
-import play.test.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import models.*;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.junit.Test;
+
+import play.mvc.Http.Response;
+import play.test.FunctionalTest;
 
 public class AuthTest extends FunctionalTest {
 
-	@Test
+	@Test(timeout = 400000)
 	public void testLogin() {
 		String userId = "admin";
 		String shopId = "123";
