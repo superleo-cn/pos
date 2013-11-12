@@ -36,7 +36,6 @@ public class Auth extends Basic {
 				paramUser.id = dbUser.id;
 				paramUser.userIp = user.userIp;
 				paramUser.userMac = user.userMac;
-				paramUser.lastLoginDate = new Date();
 				User.updateUserFromClient(paramUser);
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);

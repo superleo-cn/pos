@@ -93,15 +93,6 @@ public class User {
 		return null;
 	}
 
-	public static User viewWithoutPassword(Long id) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-				.fetch("shop", "id").where().eq("status", Boolean.TRUE).eq("id", id).findList();
-		if (CollectionUtils.size(users) > 0) {
-			return users.get(0);
-		}
-		return null;
-	}
-
 	@Transactional
 	public static void store(User user) {
 		if (user.id != null && user.id > 0) {
@@ -129,8 +120,9 @@ public class User {
 			try {
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
 						newUser.userIp, newUser.userMac });
-				newUser.userIp = "123";
-				newUser.userMac = "123";
+				newUser.userIp = user.userIp;
+				newUser.userMac = user.userMac;
+				newUser.lastLoginDate = new Date();
 				newUser.modifiedDate = new Date();
 				Ebean.update(newUser);
 			} catch (Exception e) {
