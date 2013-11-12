@@ -33,6 +33,7 @@ public class Auth extends Basic {
 			User dbUser = User.login(user);
 			if (dbUser != null) {
 				User paramUser = new User();
+				paramUser.id = dbUser.id;
 				paramUser.userIp = user.userIp;
 				paramUser.userMac = user.userMac;
 				paramUser.lastLoginDate = new Date();
