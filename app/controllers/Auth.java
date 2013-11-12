@@ -11,6 +11,8 @@ import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.avaje.ebean.annotation.Transactional;
+
 import constants.Constants;
 import constants.Messages;
 import constants.Pages;
@@ -23,6 +25,7 @@ public class Auth extends Basic {
 		render(Pages.LOGIN);
 	}
 
+	@Transactional
 	public static void loginJson(User user) {
 		Map result = new HashMap();
 		try {

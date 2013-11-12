@@ -1,6 +1,8 @@
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.*;
 
 import play.Logger;
@@ -16,7 +18,7 @@ public class AuthTest extends FunctionalTest {
 		String userId = "admin";
 		String shopId = "123";
 		String userIp = "192.168.1.100";
-		String userMac = "";//"b2:00:1f:2a:e3:c0";
+		String userMac = "";// "b2:00:1f:2a:e3:c0";
 		// Http.Request req = newRequest();
 		Map<String, String> params = new HashMap<>();
 		params.put("user.username", userId);
@@ -28,6 +30,20 @@ public class AuthTest extends FunctionalTest {
 		// assertContentType("text/html", response);
 		// assertCharset(play.Play.defaultWebEncoding, response);
 
+	}
+
+	@Test
+	public void testPropertyBeanUtils() throws Exception {
+		String userId = "admin";
+		String shopId = "123";
+		String userIp = "192.168.1.100";
+		String userMac = "";// "b2:00:1f:2a:e3:c0";
+		// Http.Request req = newRequest();
+		User user = new User();
+		user.realname = "123";
+		User user2 = new User();
+		PropertyUtils.copyProperties(user2, user);
+		System.out.println(user2.realname);
 	}
 
 }
