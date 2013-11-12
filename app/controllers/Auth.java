@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,10 @@ public class Auth extends Basic {
 			User dbUser = User.login(user);
 			if (dbUser != null) {
 				datas.add(dbUser);
+				dbUser.userIp = user.userIp;
+				dbUser.userMac = user.userMac;
+				dbUser.lastLoginDate = new Date();
+				User.store(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);
