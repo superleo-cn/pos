@@ -16,7 +16,7 @@ public class AuthTest extends FunctionalTest {
 		String userId = "admin";
 		String shopId = "123";
 		String userIp = "192.168.1.100";
-		String userMac = "b2:00:1f:2a:e3:c0";
+		String userMac = "";//"b2:00:1f:2a:e3:c0";
 		// Http.Request req = newRequest();
 		Map<String, String> params = new HashMap<>();
 		params.put("user.username", userId);

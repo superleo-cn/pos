@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import play.data.validation.Required;
 import utils.Pagination;
@@ -23,10 +25,14 @@ import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 import com.google.gson.annotations.Expose;
 
+import controllers.Foods;
+
 @Entity
 @Table(name = "tb_user")
 public class User {
 
+	final static Logger logger = LoggerFactory.getLogger(User.class);
+	
 	@Id
 	public Long id;
 
@@ -93,7 +99,11 @@ public class User {
 		if (user.id != null && user.id > 0) {
 			User newUser = Ebean.find(User.class, user.id);
 			try {
+				logger.info("[System]-[Info]-[DB User({}) IP is {}, Mac is {}]", new Object[] { user.username,
+						user.userIp, user.userMac });
 				PropertyUtils.copyProperties(newUser, user);
+				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { newUser.username,
+						newUser.userIp, newUser.userMac });
 				newUser.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();
