@@ -26,20 +26,16 @@ public class Auth extends Basic {
 		render(Pages.LOGIN);
 	}
 
-	@Transactional
 	public static void loginJson(User user) {
 		Map result = new HashMap();
 		try {
 			List datas = new ArrayList();
 			User dbUser = User.login(user);
 			if (dbUser != null) {
-				
 				dbUser.userIp = user.userIp;
 				dbUser.userMac = user.userMac;
 				dbUser.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[User({}) IP is {}, Mac is {}]", new Object[] { user.username,
-						user.userIp, user.userMac });
-				User.store(dbUser);
+				User.updateUserFromClient(dbUser);
 				datas.add(User.viewWithoutPassword(user.id));
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
