@@ -34,6 +34,8 @@ public class Auth extends Basic {
 				paramUser.userIp = user.userIp;
 				paramUser.userMac = user.userMac;
 				paramUser.lastLoginDate = new Date();
+				logger.info("[System]-[Info]-[Param User({}) IP is {}, Mac is {}]", new Object[] { paramUser.id,
+						paramUser.userIp, paramUser.userMac });
 				User.store(paramUser);
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
