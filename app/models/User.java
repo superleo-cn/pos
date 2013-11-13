@@ -115,29 +115,6 @@ public class User {
 		}
 	}
 
-	public static void store2(User user) {
-		if (user.id != null && user.id > 0) {
-			try {
-				User user2 = Ebean.find(User.class, 1L);
-				MyPropertiesUtils.copyProperties(user2, user);
-				System.out.println("store2 ->" + user2.username);
-				System.out.println("store2 ->" + user2.id);
-				System.out.println("store2 ->" + user2.realname);
-				System.out.println("store2 ->" + user2.createDate);
-				System.out.println("store2 ->" + user2.password);
-				System.out.println("store2 ->" + user2.userIp);
-				System.out.println("store2 ->" + user2.userMac);
-				user2.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { user2.username,
-						user2.userIp, user2.userMac });
-				user2.modifiedDate = new Date();
-				Ebean.update(user2);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 	@Transactional
 	public static boolean delete(Long id) {
 		User user = Ebean.find(User.class, id);
