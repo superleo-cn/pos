@@ -124,13 +124,13 @@ public class User {
 			try {
 				User user2 = Ebean.find(User.class, 1L);
 				MyPropertiesUtils.copyProperties(user2, user);
-				System.out.println("store2 ->" + user.username);
-				System.out.println("store2 ->" + user.id);
-				System.out.println("store2 ->" + user.realname);
-				System.out.println("store2 ->" + user.createDate);
-				System.out.println("store2 ->" + user.password);
-				System.out.println("store2 ->" + user.userIp);
-				System.out.println("store2 ->" + user.userMac);
+				System.out.println("store2 ->" + user2.username);
+				System.out.println("store2 ->" + user2.id);
+				System.out.println("store2 ->" + user2.realname);
+				System.out.println("store2 ->" + user2.createDate);
+				System.out.println("store2 ->" + user2.password);
+				System.out.println("store2 ->" + user2.userIp);
+				System.out.println("store2 ->" + user2.userMac);
 				user2.lastLoginDate = new Date();
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
 						user2.username, user2.userIp, user2.userMac });
