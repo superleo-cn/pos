@@ -1,0 +1,94 @@
+ 
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Daftar Users</h3>
+        <div class="row-fluid">
+            <div class="span3">
+                <input type="text" placeholder="Username" class="span12" id="username">
+            </div>
+            <div class="span3">
+                <input type="text" placeholder="Nama Karyawan" class="span12" id="namaKaryawan">
+            </div>
+        </div>
+        <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Nama Karyawan</th>
+                    <th>Akses</th>
+                    <th>Terakhir Login</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody></table>
+
+        </div>
+    </div>
+    <script>
+
+    var oTable = $('#privia_grid').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        "sPaginationType": "bootstrap_alt",
+        "sAjaxDataProp" : "data",
+        "aoColumnDefs": [
+            {
+                // `data` refers to the data for the cell (defined by `mData`, which
+                // defaults to the column being worked with, in this case is the first
+                // Using `row[0]` is equivalent.
+                "mRender": function ( data, type, row ) {
+                    
+                    return '<a href="#/users/edit/'+data+'">Ubah</a>';
+                },
+                "aTargets": [ 5 ]
+            }
+            ,    {
+                "mRender": function ( data, type, row ) {
+                    if(data)
+                    return data.nama;
+                    else return '';
+                },
+                "aTargets": [1  ]
+            }
+            ,    {
+                "mRender": function ( data, type, row ) {
+                    if(data)
+                    return moment(data).fromNow();
+                    else return '';
+                },
+                "aTargets": [3 ]
+            },
+            ],
+        "aoColumns": [
+        { "mData": "username" },
+        { "mData": "karyawan" },
+        { "mData": "akses" },
+        { "mData": "tglTerakhirLogin" },
+        { "mData": "status" },
+        { "mData": "_id" }
+        ],
+        "sAjaxSource": "/api/users"
+    } );
+
+   $('#username').keyup( function() { 
+      
+         var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,0);
+       },1000);
+        
+    } );
+
+
+   $('#namaKaryawan').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,1);
+       },1000);
+    });
+    </script>

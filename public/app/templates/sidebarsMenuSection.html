@@ -1,0 +1,55 @@
+<div id="side_accordion" class="accordion">
+ <%
+ if(_.contains(akses,'admin')) {
+ %>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a href="#/analisis" class="accordion-toggle">
+            <i class="icon-signal"></i> Analisis
+        </a>
+    </div>
+</div>
+<%
+ }
+ %>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a href="#collapseTwo" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+            <i class="icon-th"></i> Report
+        </a>
+    </div>
+    <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
+        <div class="accordion-inner">
+            <ul class="nav nav-list">
+                <li><a href="#/reportTransaction">Transaction</a></li>
+                <li><a href="#/reportCashierClosing">Cashier Closing</a></li>
+                <li><a href="#/reportLoginAudit">Login Audit</a></li>
+                <li><a href="#/reportPL">P & L</a></li>
+               
+            </ul>
+        </div>
+    </div>
+</div>
+<%
+ if(_.contains(akses,'admin')) {
+ %>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a href="#collapseThree" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+            <i class="icon-list"></i> Laporan
+        </a>
+    </div>
+    <div class="accordion-body collapse" id="collapseThree">
+        <div class="accordion-inner">
+            <ul class="nav nav-list">
+                <li><a href="#constructionModal" data-toggle="modal">Keuntungan</a></li>
+                <li><a href="#constructionModal" data-toggle="modal">Transaksi Leasing</a></li>
+                <li><a href="#constructionModal" data-toggle="modal">Karyawan</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+ <%
+ }
+ %>

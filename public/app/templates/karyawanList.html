@@ -1,0 +1,97 @@
+ 
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Daftar Karyawan</h3>
+        <div class="row-fluid">
+             <div class="span2">
+                <input type="text" placeholder="Nama Karyawan" class="span12" id="namaKaryawan">
+            </div>
+             <div class="span2">
+                <input type="text" placeholder="Nama Cabang" class="span12" id="namaCabang">
+            </div>
+        </div>
+        <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
+            <thead>
+                <tr>
+                    <th width=80>Profile</th>
+                    <th>Username</th>
+                    <th>Nama Karyawan</th>
+                    <th>Cabang</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody></table>
+
+        </div>
+    </div>
+    <script>
+
+    var oTable = $('#privia_grid').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        "sPaginationType": "bootstrap_alt",
+        "sAjaxDataProp" : "data",
+        "aoColumnDefs": [
+            {
+                // `data` refers to the data for the cell (defined by `mData`, which
+                // defaults to the column being worked with, in this case is the first
+                // Using `row[0]` is equivalent.
+                "mRender": function ( data, type, row ) {
+                    if(data!='') 
+                        return '<img src="/thumbnail/'+data+'" class="thumbnail" />';
+                    return '<img src="/img/80x80.gif"  class="thumbnail" >';
+                },
+                "aTargets": [ 0 ]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return '<a href="#/karyawan/edit/'+data+'">Ubah</a>';
+                },
+                "aTargets": [5]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return data?data.username:'';
+                },
+                "aTargets": [1]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return data?data.namaCabang:'';
+                },
+                "aTargets": [3]
+            }
+            ],
+        "aoColumns": [
+        { "mData": "imgProfile" },
+        { "mData": "username" },
+        { "mData": "nama" },
+        { "mData": "cabang" },
+        { "mData": "status" },
+        { "mData": "_id" }
+        ],
+        "sAjaxSource": "/api/karyawan"
+    } );
+
+   
+   $('#namaKaryawan').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,2);
+       },1000);
+    });
+   $('#namaCabang').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,3);
+       },1000);
+    });
+    </script>

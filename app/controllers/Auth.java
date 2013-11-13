@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.converters.DateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import play.cache.Cache;
 import utils.MyPropertiesUtils;
 import constants.Constants;
 import constants.Messages;
@@ -23,6 +24,7 @@ public class Auth extends Basic {
 	final static Logger logger = LoggerFactory.getLogger(Auth.class);
 
 	public static void index() {
+
 		render(Pages.LOGIN);
 	}
 
@@ -52,5 +54,13 @@ public class Auth extends Basic {
 		}
 		renderJSON(result);
 	}
+
+    public static void logout() {
+        Cache.delete(session.getId());
+        session.remove(Constants.CURRENT_USER_REALNAME);
+        session.remove(Constants.CURRENT_USERNAME);
+        session.remove(Constants.CURRENT_USERID);
+        index();
+    }
 
 }

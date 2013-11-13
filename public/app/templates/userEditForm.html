@@ -1,0 +1,41 @@
+<div class="row-fluid">
+	<div class="span12">
+		
+		<h3 class="heading">Form User</h3>
+
+  		<form id="userForm" method="post">
+  			<div class="formMessage">
+  				
+  			</div>
+			<input type="hidden" name="_id" value="<%= _id %>"> 
+			<div class="control-group">
+				<label>Username<span class="f_req">*</span></label>
+				<input type="text" name="username" id="username" value="<%= username %>" readonly>
+			</div>
+			<div class="control-group">
+				<a class="btn btn-primary" id="changePassword"> Ganti Password
+				</a>
+			</div>
+			<div class="control-group">
+			<div class="row-fluid">
+				
+					<label><span class="error_placement">Akses</span> <span class="f_req">*</span></label>
+					
+					<label class="checkbox inline">
+						<input type="checkbox" value="admin" name="akses" <%=_.contains(akses,'admin')?'checked':'' %> > Admin 
+					</label>
+					<label class="checkbox inline">
+						<input type="checkbox" value="sales" name="akses" <%=_.contains(akses,'sales')?'checked':'' %> > Sales
+					</label>
+				
+			</div>
+			</div>
+			<div class="form-actions">
+				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save
+				</button>
+			
+				<a class="btn cancel">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>

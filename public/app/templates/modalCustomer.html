@@ -1,0 +1,73 @@
+<div class="row-fluid">
+	<div class="span12">
+  		<form id="customerForm" method="post">
+            <input type="hidden" name="imgProfile" id="imgProfile" value="<%=imgProfile%>">
+  			<div class="formMessage">
+  			</div>
+
+            <fieldset title="Pemohon">
+              
+                <div class="row-fluid control-group">
+                    
+                        <div class="well">
+                            <h3>Form Customer</h3>
+                            <div class="control-group">
+                                <label for="noIdentitas">No Identitas<span class="f_req"></span></label>
+
+                                <div class="input-prepend">
+                                    <select name="tipeIdentitas" class="span4" id="tipeIdentitas">
+                                        <option>KTP</option>
+                                        <option>SIM</option>
+                                    </select>&nbsp;	<input type="text" name="noIdentitas" id="noIdentitas" class="span8" >
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label for="namaCustomer">Nama<span class="f_req">*</span></label>
+                                        <input type="text" name="namaCustomer" id="namaCustomer"  class="span12" />
+                                    </div>
+
+                                    <div class="span6">
+                                        <label>Jenis Kelamin<span class="f_req">*</span></label>
+                                        <label class="radio inline">
+                                            <input name="gender" value="L" type="radio">Laki
+                                        </label>
+                                        <label class="radio inline">
+                                            <input name="gender" value="P" type="radio">Perempuan
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span4">
+                                        <label>HP1 <span class="f_req">*</span></label>
+                                        <input type="text" name="telepon[hp1]" class="span12" value="<%=telepon.hp1%>">
+                                    </div>
+                                    <div class="span4">
+                                        <label>HP2 </label>
+                                        <input type="text" name="telepon[hp2]" class="span12" value="<%=telepon.hp2%>">
+                                    </div>
+                                    <div class="span4">
+                                        <label>Email</label>
+                                        <input type="text" name="email" class="span12" value="<%=email%>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                    </div>
+            </fieldset>
+
+			<div class="form-actions">
+				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+				<a class="btn cancel">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+     

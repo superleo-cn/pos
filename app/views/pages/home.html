@@ -5,47 +5,5 @@
 #{set 'moreScripts'} 
 	<script type='text/javascript'>
     console.log('Initialize home');
-    callbackPageInit=undefined;
-    scrollOK = false;
 	</script>
 #{/set} 
-
-<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
-    <h4>Management</h4>
-    <ul data-role="listview">
-        <li><a href="@{Customers.index()}" data-ajax="false"><img src="@{'/public/images/sample_01.jpg'}" /><h2>Customer</h2></a></li>
-        <li><a href="@{Suppliers.index()}" data-ajax="false"><img src="@{'/public/images/sample_02.jpg'}" /><h2>Supplier</h2></a></li>
-        <li><a href="#"><img src="@{'/public/images/sample_03.jpg'}" /><h2>Complaint</h2></a></li>
-    </ul>
-</div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
-    <h4>Inventory</h4>
-    <ul data-role="listview">
-        <li><a href="#"><img src="@{'/public/images/sample_04.png'}" class="ui-li-icon ui-corner-none"/>Product</a></li>
-        <li><a href="#"><img src="@{'/public/images/sample_04.png'}" class="ui-li-icon ui-corner-none"/>Consumable</a></li>
-        <li><a href="#"><img src="@{'/public/images/sample_04.png'}" class="ui-li-icon ui-corner-none"/>Raw Material</a></li>
-    </ul>
-</div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
-    <h4>HR</h4>
-    <ul data-role="listview">
-    	<li><a href="@{Users.index()}" data-ajax="false">Users</a></li>
-        <li><a href="@{Employees.index()}">Employee</a></li>
-        <li><a href="@{Appraisals.index()}">Appraisal</a></li>
-        <li><a href="#">Leaves</a></li>
-    </ul>
-</div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
-    <h4>Transaction</h4>
-    <ul data-role="listview">
-        <li><a href="#">Invoice</a></li>
-        <li><a href="#">Purchase Order</a></li>
-        <li><a href="#">Daily Usage (Raw)</a></li>
-    </ul>
-</div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
-    <h4>Report</h4>
-    <ul data-role="listview">
-        <li><a href="#">Report1</a></li>
-    </ul>
-</div>

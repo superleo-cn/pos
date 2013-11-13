@@ -1,0 +1,41 @@
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 0;  
+    border:none;
+} 
+
+h1 {
+  color: #000;
+  background: none;
+}
+
+header, nav, aside,.sidebar,.stepy-titles,.heading,.no-print,.btn {
+  display: none;
+}
+.step {border:0px !important;}
+
+body{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border:none;
+  line-height: 0.9;
+}
+
+small{
+	font-size:8px;
+	line-height:70% !important;
+}
+
+
+
+
+.signature {
+    position: fixed;
+    left:450px;
+    bottom:50px;
+    float:right;
+}

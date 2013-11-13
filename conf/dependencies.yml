@@ -3,3 +3,13 @@
 require:
     - play
     - play -> ebean 1.0.6
+    - net.sf.jasperreports -> jasperreports 5.0.4:
+             transitive: false
+    - org.apache.poi -> poi 3.7:
+             transitive: false
+    - commons-digester -> commons-digester 1.7:
+         transitive: false
+    - com.lowagie -> itext 2.1.7:
+         transitive: false
+    - net.sourceforge.jexcelapi -> jxl 2.6.10:
+         transitive: false
