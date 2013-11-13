@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -113,6 +115,26 @@ public class User {
 			Ebean.update(updateUser);
 		} else {
 			Ebean.save(user);
+		}
+	}
+	
+	public static void store2(User user) {
+		if (user.id != null && user.id > 0) {
+			try {
+				User user2 = new User();
+				user2.createDate = null;
+				user2.password = "qqq";
+				MyPropertiesUtils.copyProperties(user2, user);
+				System.out.println(user.username);
+				System.out.println(user.id);
+				System.out.println(user.realname);
+				System.out.println(user.createDate);
+				System.out.println(user.password);
+				//updateUser.userIp = user.userIp;
+				//updateUser.userMac = user.userMac;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

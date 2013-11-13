@@ -34,16 +34,8 @@ public class Auth extends Basic {
 				User user2 = new User();
 				user2.createDate = null;
 				user2.password = "qqq";
-				java.util.Date defaultValue = null;
-				DateConverter converter = new DateConverter(defaultValue);
-				ConvertUtils.register(converter, java.util.Date.class);
 
-				MyPropertiesUtils.copyProperties(user, user2);
-				System.out.println(user.username);
-				System.out.println(user.id);
-				System.out.println(user.realname);
-				System.out.println(user.createDate);
-				System.out.println(user.password);
+				User.store2(user);
 		
 		render(Pages.LOGIN);
 	}
