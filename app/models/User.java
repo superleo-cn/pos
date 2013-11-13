@@ -100,13 +100,10 @@ public class User {
 		if (user.id != null && user.id > 0) {
 			User updateUser = Ebean.find(User.class, user.id);
 			try {
-				logger.info("[System]-[Info]-[Param User({}) IP is {}, Mac is {}]", new Object[] { user.id,
-						user.userIp, user.userMac });
-				MyPropertiesUtils.copyProperties(updateUser, user);
-				//updateUser.userIp = user.userIp;
-				//updateUser.userMac = user.userMac;
+				updateUser.userIp = user.userIp;
+				updateUser.userMac = user.userMac;
 				updateUser.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
+				logger.info("[System]-[Info]-[User({}) Login, IP is {}, Mac is {}]", new Object[] {
 						updateUser.username, updateUser.userIp, updateUser.userMac });
 				updateUser.modifiedDate = new Date();
 			} catch (Exception e) {
@@ -117,7 +114,7 @@ public class User {
 			Ebean.save(user);
 		}
 	}
-	
+
 	public static void store2(User user) {
 		if (user.id != null && user.id > 0) {
 			try {
@@ -131,8 +128,8 @@ public class User {
 				System.out.println("store2 ->" + user2.userIp);
 				System.out.println("store2 ->" + user2.userMac);
 				user2.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
-						user2.username, user2.userIp, user2.userMac });
+				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] { user2.username,
+						user2.userIp, user2.userMac });
 				user2.modifiedDate = new Date();
 				Ebean.update(user2);
 			} catch (Exception e) {

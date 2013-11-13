@@ -23,30 +23,6 @@ public class Auth extends Basic {
 	final static Logger logger = LoggerFactory.getLogger(Auth.class);
 
 	public static void index() {
-		
-		// Http.Request req = newRequest();
-				User user = new User();
-				user.username = "admin";
-				user.id = 1L;
-				user.realname = "111111111";
-				user.createDate = new Date();
-				user.password = "123";
-				user.userIp = "IP_ADDRESS";
-				user.userMac = "MAC_ADDRESS";
-				User.store2(user);
-				
-				// Http.Request req = newRequest();
-				User user2 = new User();
-				user2.createDate = null;
-				user2.password = "qqq";
-				MyPropertiesUtils.copyProperties(user, user2);
-				System.out.println("==index :" + user.username);
-				System.out.println("==index :" + user.id);
-				System.out.println("==index :" + user.realname);
-				System.out.println("==index :" + user.createDate);
-				System.out.println("==index :" + user.password);
-				
-		
 		render(Pages.LOGIN);
 	}
 
@@ -56,14 +32,9 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			User dbUser = User.login(user);
 			if (dbUser != null) {
-				User paramUser = new User();
-				paramUser.id = dbUser.id;
-				paramUser.userIp = user.userIp;
-				paramUser.userMac = user.userMac;
-				paramUser.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[Param User({}) IP is {}, Mac is {}]", new Object[] { paramUser.id,
-						paramUser.userIp, paramUser.userMac });
-				User.store(paramUser);
+				user.id = dbUser.id;
+				user.lastLoginDate = new Date();
+				User.store(user);
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
