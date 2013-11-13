@@ -21,7 +21,7 @@ public class MyPropertiesUtils extends BeanUtils {
 		logger.info("[System]-[Debug]-[MyPropertiesUtils ({}) size is ({})]", new Object[] { actualEditable,
 				targetPds.length });
 		for (PropertyDescriptor targetPd : targetPds) {
-			logger.info("[System]-[Debug]-[MyPropertiesUtils peroperty is ({})]", new Object[] { targetPd.getName()});
+			logger.info("[System]-[Debug]-[MyPropertiesUtils peroperty is ({})]", new Object[] { targetPd.getName() });
 			if (targetPd.getWriteMethod() != null) {
 				PropertyDescriptor sourcePd = getPropertyDescriptor(source.getClass(), targetPd.getName());
 				if (sourcePd != null && sourcePd.getReadMethod() != null) {
