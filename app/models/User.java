@@ -135,6 +135,7 @@ public class User {
 				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
 						user2.username, user2.userIp, user2.userMac });
 				user2.modifiedDate = new Date();
+				Ebean.update(user2);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
