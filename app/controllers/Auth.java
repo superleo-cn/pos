@@ -26,15 +26,13 @@ public class Auth extends Basic {
 		
 		// Http.Request req = newRequest();
 				User user = new User();
-				user.username = "123";
+				user.username = "admin";
 				user.id = 1L;
-				user.realname = "111";
+				user.realname = "111111111";
 				user.createDate = new Date();
-				user.password = "password";
-				User user2 = new User();
-				user2.createDate = null;
-				user2.password = "qqq";
-
+				user.password = "123";
+				user.userIp = "IP_ADDRESS";
+				user.userMac = "MAC_ADDRESS";
 				User.store2(user);
 		
 		render(Pages.LOGIN);
