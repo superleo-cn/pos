@@ -8,9 +8,12 @@ import java.util.Map;
 
 import models.User;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utils.MyPropertiesUtils;
 import constants.Constants;
 import constants.Messages;
 import constants.Pages;
@@ -20,6 +23,28 @@ public class Auth extends Basic {
 	final static Logger logger = LoggerFactory.getLogger(Auth.class);
 
 	public static void index() {
+		
+		// Http.Request req = newRequest();
+				User user = new User();
+				user.username = "123";
+				user.id = 1L;
+				user.realname = "111";
+				user.createDate = new Date();
+				user.password = "password";
+				User user2 = new User();
+				user2.createDate = null;
+				user2.password = "qqq";
+				java.util.Date defaultValue = null;
+				DateConverter converter = new DateConverter(defaultValue);
+				ConvertUtils.register(converter, java.util.Date.class);
+
+				MyPropertiesUtils.copyProperties(user, user2);
+				System.out.println(user.username);
+				System.out.println(user.id);
+				System.out.println(user.realname);
+				System.out.println(user.createDate);
+				System.out.println(user.password);
+		
 		render(Pages.LOGIN);
 	}
 
