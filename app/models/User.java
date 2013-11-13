@@ -121,9 +121,7 @@ public class User {
 	public static void store2(User user) {
 		if (user.id != null && user.id > 0) {
 			try {
-				User user2 = new User();
-				user2.createDate = null;
-				user2.password = "qqq";
+				User user2 = Ebean.find(User.class, 1L);
 				MyPropertiesUtils.copyProperties(user2, user);
 				System.out.println("store2 ->" + user.username);
 				System.out.println("store2 ->" + user.id);
