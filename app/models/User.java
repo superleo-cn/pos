@@ -118,6 +118,7 @@ public class User {
 		}
 	}
 	
+	@Transactional
 	public static void store2(User user) {
 		if (user.id != null && user.id > 0) {
 			try {
