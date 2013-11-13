@@ -129,8 +129,10 @@ public class User {
 				System.out.println("store2 ->" + user.realname);
 				System.out.println("store2 ->" + user.createDate);
 				System.out.println("store2 ->" + user.password);
-				//updateUser.userIp = user.userIp;
-				//updateUser.userMac = user.userMac;
+				user2.lastLoginDate = new Date();
+				logger.info("[System]-[Info]-[Update User({}) IP is {}, Mac is {}]", new Object[] {
+						user2.username, user2.userIp, user2.userMac });
+				user2.modifiedDate = new Date();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
