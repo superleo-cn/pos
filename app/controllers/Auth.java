@@ -34,6 +34,18 @@ public class Auth extends Basic {
 				user.userIp = "IP_ADDRESS";
 				user.userMac = "MAC_ADDRESS";
 				User.store2(user);
+				
+				// Http.Request req = newRequest();
+				User user2 = new User();
+				user2.createDate = null;
+				user2.password = "qqq";
+				MyPropertiesUtils.copyProperties(user, user2);
+				System.out.println("==index :" + user.username);
+				System.out.println("==index :" + user.id);
+				System.out.println("==index :" + user.realname);
+				System.out.println("==index :" + user.createDate);
+				System.out.println("==index :" + user.password);
+				
 		
 		render(Pages.LOGIN);
 	}
