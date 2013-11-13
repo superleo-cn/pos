@@ -125,11 +125,11 @@ public class User {
 				user2.createDate = null;
 				user2.password = "qqq";
 				MyPropertiesUtils.copyProperties(user2, user);
-				System.out.println(user.username);
-				System.out.println(user.id);
-				System.out.println(user.realname);
-				System.out.println(user.createDate);
-				System.out.println(user.password);
+				System.out.println("store2 ->" + user.username);
+				System.out.println("store2 ->" + user.id);
+				System.out.println("store2 ->" + user.realname);
+				System.out.println("store2 ->" + user.createDate);
+				System.out.println("store2 ->" + user.password);
 				//updateUser.userIp = user.userIp;
 				//updateUser.userMac = user.userMac;
 			} catch (Exception e) {
