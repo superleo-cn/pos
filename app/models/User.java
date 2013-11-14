@@ -84,8 +84,6 @@ public class User {
 					if (StringUtils.equals(user.password, dbUser.password)) {
 						return dbUser;
 					}
-				} else {
-					return null;
 				}
 			} else {
 				return dbUser;
