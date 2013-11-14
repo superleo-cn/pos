@@ -79,11 +79,15 @@ public class User {
 				.fetch("shop", "id").where().eq("username", user.username).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			User dbUser = users.get(0);
-			if(StringUtils.equals(user.usertype, Constants.USERTYPE_ADMIN)){
-				if(StringUtils.equals(user.password, dbUser.password)){
-					return dbUser;
+			if (StringUtils.equals(dbUser.usertype, Constants.USERTYPE_ADMIN)) {
+				if (StringUtils.equals(user.usertype, Constants.USERTYPE_ADMIN)) {
+					if (StringUtils.equals(user.password, dbUser.password)) {
+						return dbUser;
+					}
+				} else {
+					return null;
 				}
-			}else{
+			} else {
 				return dbUser;
 			}
 		}
