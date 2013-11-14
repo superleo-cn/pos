@@ -68,6 +68,19 @@ create table tb_food (
   constraint pk_tb_food primary key (id))
 ;
 
+create table report_transaction (
+  serial_no                 integer,
+  item                      varchar(255),
+  shop                      varchar(255),
+  quantity                  integer,
+  total_price               double,
+  transaction_date          datetime,
+  retail_price              double,
+  total_discount            double,
+  total_pack                double,
+  foc                       varchar(255))
+;
+
 create table tb_shop (
   id                        bigint auto_increment not null,
   name                      varchar(255),

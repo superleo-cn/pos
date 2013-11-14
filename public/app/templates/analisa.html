@@ -1,0 +1,358 @@
+<div class="row-fluid">
+    <div class="span6">
+        <h3 class="heading">Transaksi per Cabang</h3>
+        <div class="toolbar clearfix">
+          
+        </div>
+        <div id="graphPerCabang" style="height:270px;width:90%;margin:15px auto 0"></div>
+    </div>
+    <div class="span6">
+        <h3 class="heading">10 Peringkat Sales Tertinggi</h3>
+        <div id="graphPerSales" style="height:270px;width:90%;margin:15px auto 0"></div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Tren Transaksi Seluruh Cabang</h3>
+        <div id="graphTrenTransaksi" style="height:360px;width:90%;margin:15px auto 0"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+		
+var analisisDashboard = 
+ {
+ 	graphPerCabang : function() {
+			var elem = $('#graphPerCabang');
+            
+            var d1 = [
+				['Kelapa Gading',350],
+				['Central Park',22],
+				['Jembatan Dua',550],
+				['Serpong Mall',608],
+				['Pancoran',81],
+				['Pluit Village',591],
+				['Senayan City',510]
+			];
+			
+            // add 2h to match utc+2
+            //	for (var i = 0; i < d1.length; ++i) {d1[i][0] += 60 * 120 * 1000};
+            
+            var ds = new Array();
+         
+            ds.push({
+                data:d1,
+                bars: {
+                    show: true, 
+                    lineWidth : 2,
+                    fill: 1,
+					barWidth: 0.8,
+					align: "center"
+                }
+            });
+            
+            var options = {
+                grid:{
+                    hoverable:true
+                },
+                xaxis: {
+					mode: "categories",
+					tickLength: 0,
+					autoscaleMargin: 0.05,
+					labelWidth : 10
+				},
+                colors: [ "#b4dbeb", "#8cc7e0", "#64b4d5", "#3ca0ca", "#2d83a6", "#22637e", "#174356", "#0c242e" ]
+            };
+            
+            fl_c_plot = $.plot(elem, ds, options);
+            
+            // Create a tooltip on our chart
+            elem.qtip({
+                prerender: true,
+                content: 'Loading...', // Use a loading message primarily
+                position: {
+                    viewport: $(window), // Keep it visible within the window if possible
+                    target: 'mouse', // Position it in relation to the mouse
+                    adjust: { x: 7 } // ...but adjust it a bit so it doesn't overlap it.
+                },
+                show: false, // We'll show it programatically, so no show event is needed
+                style: {
+                    classes: 'ui-tooltip-shadow ui-tooltip-tipsy',
+                    tip: false // Remove the default tip.
+                }
+            });
+         
+            // Bind the plot hover
+            elem.on('plothover', function(event, coords, item) {
+                // Grab the API reference
+                var self = $(this),
+                    api = $(this).qtip(),
+                    previousPoint, content,
+         
+                // Setup a visually pleasing rounding function
+                round = function(x) { return Math.round(x * 1000) / 1000; };
+         
+                // If we weren't passed the item object, hide the tooltip and remove cached point data
+                if(!item) {
+                    api.cache.point = false;
+                    return api.hide(event);
+                }
+				
+                // Proceed only if the data point has changed
+                previousPoint = api.cache.point;
+                if(previousPoint !== item.seriesIndex)
+                {
+                    // Update the cached point data
+                    api.cache.point = item.seriesIndex;
+					
+                    // Setup new content
+                    content = ' Rp. '+ round(item.datapoint[1]);
+         
+                    // Update the tooltip content
+                    api.set('content.text', content);
+         
+                    // Make sure we don't get problems with animations
+                    api.elements.tooltip.stop(1, 1);
+         
+                    // Show the tooltip, passing the coordinates
+                    api.show(coords);
+                }
+            });
+            
+        },
+        graphPerSales : function() {
+			var elem = $('#graphPerSales');
+            
+            var d1 = [
+				['Rini',350],
+				['Tuti',22],
+				['Lala',550],
+				['Budi',608],
+				['Mimi',81]
+			];
+			
+			var data = [
+				{
+					label: "Rini",
+					data: 560
+				},
+				{
+					label: "Tuti",
+					data: 360
+				},
+                {
+					label: "Lala",
+					data: 320
+				},
+				{
+					label: "Budi",
+					data: 280
+				},
+				{
+					label: "Mimi",
+					data: 160
+				}
+			];
+			
+            // add 2h to match utc+2
+            //	for (var i = 0; i < d1.length; ++i) {d1[i][0] += 60 * 120 * 1000};
+            
+            var ds = new Array();
+         
+            ds.push({
+                label: "Transaksi",
+                data:d1
+            });
+            
+            var options = {
+                grid:{
+                    hoverable:true
+                },
+               	series: {
+					pie: { 
+						show: true
+					}
+				}
+            };
+            
+            fl_c_plot = $.plot(elem, data, options);
+            
+            // Create a tooltip on our chart
+            elem.qtip({
+                prerender: true,
+                content: 'Loading...', // Use a loading message primarily
+                position: {
+                    viewport: $(window), // Keep it visible within the window if possible
+                    target: 'mouse', // Position it in relation to the mouse
+                    adjust: { x: 7 } // ...but adjust it a bit so it doesn't overlap it.
+                },
+                show: false, // We'll show it programatically, so no show event is needed
+                style: {
+                    classes: 'ui-tooltip-shadow ui-tooltip-tipsy',
+                    tip: false // Remove the default tip.
+                }
+            });
+         
+            // Bind the plot hover
+            elem.on('plothover', function(event, coords, item) {
+                // Grab the API reference
+                var self = $(this),
+                    api = $(this).qtip(),
+                    previousPoint, content,
+         
+                // Setup a visually pleasing rounding function
+                round = function(x) { return Math.round(x * 1000) / 1000; };
+         
+                // If we weren't passed the item object, hide the tooltip and remove cached point data
+                if(!item) {
+                    api.cache.point = false;
+                    return api.hide(event);
+                }
+				
+                // Proceed only if the data point has changed
+                previousPoint = api.cache.point;
+                if(previousPoint !== item.seriesIndex)
+                {
+                    // Update the cached point data
+                    api.cache.point = item.seriesIndex;
+					console.log(item.datapoint[1][0][1]);
+                    // Setup new content
+                    content = item.series.label +': Rp. '+item.datapoint[1][0][1]+' ('+ round(item.datapoint[0]*1,2)+'%)';
+         
+                    // Update the tooltip content
+                    api.set('content.text', content);
+         
+                    // Make sure we don't get problems with animations
+                    api.elements.tooltip.stop(1, 1);
+         
+                    // Show the tooltip, passing the coordinates
+                    api.show(coords);
+                }
+            });
+            
+        },
+        graphTrenTransaksi : function() {
+			var elem = $('#graphTrenTransaksi');
+            
+            var d1 = [
+				[new Date('05/23/2012').getTime(),350],
+				[new Date('05/24/2012').getTime(),422],
+				[new Date('05/25/2012').getTime(),550],
+				[new Date('05/26/2012').getTime(),608],
+				[new Date('05/27/2012').getTime(),681],
+				[new Date('05/28/2012').getTime(),591],
+				[new Date('05/29/2012').getTime(),510]
+			];
+
+			var d2 = [
+				[new Date('05/23/2012').getTime(),150],
+				[new Date('05/24/2012').getTime(),22],
+				[new Date('05/25/2012').getTime(),50],
+				[new Date('05/26/2012').getTime(),408],
+				[new Date('05/27/2012').getTime(),881],
+				[new Date('05/28/2012').getTime(),491],
+				[new Date('05/29/2012').getTime(),910]
+			];
+			
+            // add 2h to match utc+2
+            for (var i = 0; i < d1.length; ++i) {d1[i][0] += 60 * 120 * 1000};
+            
+            var ds = new Array();
+         
+            ds.push({
+                label: "Kelapa Gading",
+                data:d1,
+                lines: {
+                    show: true, 
+                    order: 1,
+                    lineWidth : 2,
+                    fill: 0
+                }
+            });
+
+             ds.push({
+                label: "Central Park",
+                data:d2,
+                lines: {
+                    show: true, 
+                    order: 1,
+                    lineWidth : 2,
+                    fill: 0
+                }
+            });
+            
+            var options = {
+                grid:{
+                    hoverable:true
+                },
+                xaxis: {
+					mode: "time",
+					minTickSize: [1, "day"],
+					autoscaleMargin: 0.10
+				},
+                colors: [ "#b4dbeb", "#fcc7e0", "#64b4d5", "#3ca0ca", "#2d83a6", "#22637e", "#174356", "#0c242e" ]
+            };
+            
+            fl_c_plot = $.plot(elem, ds, options);
+            
+            // Create a tooltip on our chart
+            elem.qtip({
+                prerender: true,
+                content: 'Loading...', // Use a loading message primarily
+                position: {
+                    viewport: $(window), // Keep it visible within the window if possible
+                    target: 'mouse', // Position it in relation to the mouse
+                    adjust: { x: 7 } // ...but adjust it a bit so it doesn't overlap it.
+                },
+                show: false, // We'll show it programatically, so no show event is needed
+                style: {
+                    classes: 'ui-tooltip-shadow ui-tooltip-tipsy',
+                    tip: false // Remove the default tip.
+                }
+            });
+         
+            // Bind the plot hover
+            elem.on('plothover', function(event, coords, item) {
+                // Grab the API reference
+                var self = $(this),
+                    api = $(this).qtip(),
+                    previousPoint, content,
+         
+                // Setup a visually pleasing rounding function
+                round = function(x) { return Math.round(x * 1000) / 1000; };
+         
+                // If we weren't passed the item object, hide the tooltip and remove cached point data
+                if(!item) {
+                    api.cache.point = false;
+                    return api.hide(event);
+                }
+				
+                // Proceed only if the data point has changed
+                previousPoint = api.cache.point;
+                if(previousPoint !== item.seriesIndex)
+                {
+                    // Update the cached point data
+                    api.cache.point = item.seriesIndex;
+					
+                    // Setup new content
+                    content = item.series.label +': Rp. '+ round(item.datapoint[1]);
+         
+                    // Update the tooltip content
+                    api.set('content.text', content);
+         
+                    // Make sure we don't get problems with animations
+                    api.elements.tooltip.stop(1, 1);
+         
+                    // Show the tooltip, passing the coordinates
+                    api.show(coords);
+                }
+            });
+            
+        }
+    };
+
+    analisisDashboard.graphPerCabang();
+    analisisDashboard.graphPerSales();
+    analisisDashboard.graphTrenTransaksi();
+</script>

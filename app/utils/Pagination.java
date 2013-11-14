@@ -17,4 +17,8 @@ public class Pagination {
 	public Pagination() {
 	}
 
+    public long getITotalDisplayRecords() {
+        return recordCount;
+    }
+
 }

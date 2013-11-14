@@ -1,0 +1,47 @@
+<div class="row-fluid">
+	<div class="span12">
+		
+		<h3 class="heading">Form User</h3>
+
+  		<form id="userForm" method="post">
+  			<div class="formMessage">
+  				
+  			</div>
+			<div class="control-group">
+				<label>Username<span class="f_req">*</span></label>
+				<input type="text" name="username" id="username" >
+			</div>
+			<div class="control-group" id="passwordSection">
+				<div class="row-fluid">
+					<div class="span3">
+				<label>Password<span class="f_req">*</span></label>
+				<input type="password" name="password">
+			</div>
+			<div class="span3">
+				<label>Konfirmasi Password<span class="f_req">*</span></label>
+				<input type="password" name="confirmPassword">
+			</div>
+				</div>
+
+			</div>
+			<div class="control-group">
+			<div class="row-fluid">
+				
+					<label><span class="error_placement">Akses</span> <span class="f_req">*</span></label>
+					
+					<label class="checkbox inline">
+						<input type="checkbox" value="admin" name="akses" > Admin 
+					</label>
+					<label class="checkbox inline">
+						<input type="checkbox" value="sales" name="akses"> Sales
+					</label>
+				
+			</div>
+			</div>
+			<div class="form-actions">
+				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+				<a class="btn cancel">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>

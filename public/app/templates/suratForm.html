@@ -1,0 +1,772 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">Permohonan Leasing</h3>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<form id="validate_wizard" class="stepy-wizzard form-horizontal">
+					<fieldset title="Pemohon">
+						<legend class="hide">Informasi Pemohon</legend>
+						<div class="row-fluid control-group">
+							<div class="span5">
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Pemohon</span></p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Kantor<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span6">
+												<label>Warga Negara<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Tempat Tinggal</span></p>
+									<div class="control-group">
+										<label for="v_email">Alamat:</label>
+
+										<textarea name="v_email" id="v_email" />
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>RT<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>RW <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Kelurahan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Kecamatan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+
+											<div class="span4">
+												<label>Kotamadya<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="span6">
+
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Kontak</span></p>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Tlpn. Rmh<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Tlpn. Kantor <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>HP1<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>HP2 <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Email<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Bank</span></p>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Bank<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>No Rekening <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Atas Nama<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						</fieldset>
+						<fieldset title="Penjamin">
+							<legend class="hide">Informasi Penjamin&hellip;</legend>
+							<div class="row-fluid control-group">
+							<div class="span5">
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Penjamin</span>
+									
+										<span class="label label-warning"><input type="checkbox" name="v_email" id="v_email"  /> Penjamin tidak datang</span>
+									</p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Hubungan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Tempat Tinggal</span></p>
+									<div class="control-group">
+										<label for="v_email">Alamat:</label>
+
+										<textarea name="v_email" id="v_email" />
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>RT<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>RW <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Kelurahan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Kecamatan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+
+											<div class="span4">
+												<label>Kotamadya<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="span6">
+
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Kontak</span></p>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>Tlpn. Rmh<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Tlpn. Kantor <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span4">
+												<label>HP1<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>HP2 <span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+											<div class="span4">
+												<label>Email<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+							</fieldset>
+							<fieldset title="Saksi">
+								<legend class="hide">Informasi Saksi&hellip;</legend>
+								<div class="row-fluid">
+								<div class="span6">
+								<div class="well">
+									<p><span class="label label-inverse">Informasi Saksi 1</span>
+									</p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Hubungan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+								</div>
+								<div class="span6">
+									<div class="well">
+									<p><span class="label label-inverse">Informasi Saksi 2</span>
+									</p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Hubungan<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+								</div>
+								</div>
+							</fieldset>
+							<fieldset title="Kendaraan">
+								<legend class="hide">Informasi Kendaraan&hellip;</legend>
+								<div class="row-fluid">
+								<div class="well">
+									<p><span class="label label-inverse">Informasi BPKB</span>
+										<span class="label label-warning"> <input type="checkbox" name="v_email" id="v_email"  /> Masih Kredit</span>
+									</p>
+									
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span3">
+												<label for="v_email">Kendaraan Roda:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">No Polisi:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">No. Mesin:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">No. Rangka:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span3">
+												<label for="v_email">Tahun Buat:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Warna:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Merk:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Type:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span3">
+												<label for="v_email">No. Faktur:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Nama Faktur:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">No. BPKB:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Nama BPKB:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span3">
+												<label for="v_email">Alamat BPKB:</label>
+												<textarea name="v_email" id="v_email" />
+											</div>
+											<div class="span3">
+												<label for="v_email">Catatan Tambahan:</label>
+												<input type="text" name="v_email" id="v_email" />
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="row-fluid">
+									<div class="span6">
+								<div class="well">
+									<p><span class="label label-inverse">BPKB Atas Nama Orang Lain</span></p>
+									<div class="row-fluid">
+									<div class="span5">
+									<div class="control-group">
+												<label for="v_email">Pemilik Sebelum:</label>
+												<input type="text" name="v_email" id="v_email" class="span12" />
+										</div>
+										<div class="control-group">
+												<label for="v_email">Cara Pembayaran:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+										<div class="control-group">
+												<label for="v_email">Tanggal Pembayaran:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+									</div>
+									<div class="span5">
+									<div class="control-group">
+												<label for="v_email">Nilai Pembelian:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+										<div class="control-group">
+												<label for="v_email">Kwitansi:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+										<div class="control-group">
+												<label for="v_email">Hari ini:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+									</div>
+								</div>
+							</div>
+								</div>
+								<div class="span6">
+
+<div class="well">
+									<p><span class="label label-inverse">Status Masih Kredit</span></p>
+									<div class="row-fluid">
+									<div class="span5">
+									<div class="control-group">
+												<label for="v_email">Leasing Sebelum:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+										<div class="control-group">
+												<label for="v_email">Cara Pelunasan:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+									</div>
+									<div class="span5">
+									<div class="control-group">
+												<label for="v_email">Nilai Terhutang:</label>
+												<input type="text" name="v_email" id="v_email" class="span12"  />
+										</div>
+									</div>
+								</div>
+							</div>
+								</div>
+							</div>
+								
+							</fieldset>
+							<fieldset title="Leasing">
+								<legend class="hide">Informasi Leasing&hellip;</legend>
+								<div class="well">
+								<div class="row-fluid">
+								<div class="span5">
+									<p><span class="label label-inverse">Informasi Leasing</span>
+
+										<span class="label label-warning">
+										<input type="checkbox" name="v_email" id="v_email"  /> Atas Nama Orang Lain</span>
+									</p>
+								
+
+								<div class="control-group">
+									<label for="v_message" class="control-label">Tanggal:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Penerimaan Bersih:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Lama Asuransi:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Total Terima:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Titipan uang:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Digunakan untuk:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Leasing ditunjuk:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Mulai Angsur:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text" class="input-mini">
+										<input name="v_message" id="v_message" type="text" class="input-small">
+									</div>
+								</div>
+									</div>
+									<div class="span6">
+										<div class="control-group">
+&nbsp;
+										</div>
+										<div class="control-group">
+									<label for="v_message" class="control-label">Hari Ini:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Cash Back:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Jenis Asuransi:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Jatuh Tempo:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Angsuran:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Biaya Pembatalan:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="v_message" class="control-label">Leasing ditunjuk:</label>
+									<div class="controls">
+										<input name="v_message" id="v_message" type="text">
+									</div>
+								</div>
+									</div>
+								</div>
+</div>
+<div class="row-fluid">
+								<div class="span6">
+								<div class="well">
+									<p><span class="label label-inverse">Pemberi Kuasa</span>
+									</p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Alamat<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+								</div>
+								<div class="span6">
+									<div class="well">
+									<p><span class="label label-inverse">Penerima Kuasa</span>
+									</p>
+									<div class="control-group">
+										<label for="v_password">No Identitas:</label>
+
+										<div class="input-prepend">
+											<select name="jenisIdentitas" class="span4">
+												<option>KTP</option>
+												<option>SIM</option>
+											</select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label for="v_email">Nama:</label>
+												<input type="text" name="v_email" id="v_email"  class="span12" />
+											</div>
+											<div class="span6">
+												<label >Jenis Kelamin:</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="L" type="radio">Laki
+												</label>
+												<label class="radio inline">
+													<input name="jenisKelamin" value="P" type="radio">Perempuan
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<div class="row-fluid">
+											<div class="span6">
+												<label>Alamat<span class="f_req">*</span></label>
+												<input type="text" name="reg_first_name" class="span12">
+											</div>
+										</div>	
+									</div>
+								</div>
+								</div>
+								</div>
+								<div class="row-fluid">
+
+								</div>
+							</fieldset>
+							<button type="button" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+						</form>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<script>
+		$(document).ready(function() {
+
+			$('#validate_wizard').stepy({
+				nextLabel:      'Forward <i class="icon-chevron-right icon-white"></i>',
+				backLabel:      '<i class="icon-chevron-left"></i> Backward',
+				block		: true,
+				errorImage	: true,
+				titleClick	: true,
+				validate	: true
+			});
+
+			$('.stepy-titles').each(function(){
+				$(this).children('li').each(function(index){
+					var myIndex = index + 1
+					$(this).append('<span class="stepNb">'+myIndex+'</span>');
+				})
+			});
+
+			var options = { 
+	        success:       showResponse  // post-submit callback 
+	        ,clearForm: true,
+	        beforeSubmit: preForm,
+	        url :'/leasing/save', 
+	        error : errorHandler
+	    }; 
+
+			$('#leasingForm').ajaxForm(options); 
+
+			function preForm(arr, $form, options) { 
+
+				return true;
+			}
+			function showResponse(responseText, statusText, xhr, $form) {
+				if(responseText.success) {
+
+					console.log('success');
+				}
+			}
+			function errorHandler(context, xhr, status, responseText) {
+				console.log(context.responseText);
+			}
+		});
+		</script>

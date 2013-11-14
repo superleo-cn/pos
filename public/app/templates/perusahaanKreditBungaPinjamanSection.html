@@ -1,0 +1,34 @@
+
+<div class="row-fluid">
+	<div class="span3">
+		<input type="text" name="bungaPinjaman[][jenis]" class="span12" value="<%=jenis%>"> 
+	</div>		
+	<div class="controls controls-row span3">
+		<select name="bungaPinjaman[][tahunMulai]" class="span6">
+			<option value="">Sebelum</option>
+			 <% _.each(_.range(2000,2013,1), function(i) { %>  <option value="<%= i %>" <%= (tahunMulai==i?'selected':'') %>><%= i %></option> <% }); %>
+		</select>
+		<select name="bungaPinjaman[][tahunAkhir]" class="span6">
+			<option value="">Sesudah</option>
+			 <% _.each(_.range(2000,2013,1), function(i) { %>  <option value="<%= i %>" <%= (tahunAkhir==i?'selected':'') %>><%= i %></option> <% }); %>
+		</select>
+	</div>
+	<div class="span1">
+		<input type="text" name="bungaPinjaman[][dp]" class="span8" value="<%=dp%>"> %
+	</div>
+	<div class="span1">
+		<input type="text" name="bungaPinjaman[][thn1]" class="span8" value="<%=thn1%>"> %
+	</div>
+	<div class="span1">
+		<input type="text" name="bungaPinjaman[][thn2]" class="span8" value="<%=thn2%>"> %
+	</div>
+	<div class="span1">
+		<input type="text" name="bungaPinjaman[][thn3]" class="span8" value="<%=thn3%>"> %
+	</div>
+	<div class="span1">
+		<input type="text" name="bungaPinjaman[][thn4]" class="span8" value="<%=thn4%>"> %
+	</div>
+	<div class="span1">
+		<a class="btn removeBungaPinjaman" id=""><i class="splashy-remove"></i></a>
+	</div>
+</div>	

@@ -1,0 +1,229 @@
+<div class="row-fluid">
+<div class="span12">
+<h3 class="heading">Pengajuan Proposal</h3>
+
+<div class="row-fluid">
+<div class="span12">
+<form id="quoteForm" class="stepy-wizzard form-horizontal"  method="post">
+<div class="formMessage">
+            </div>
+
+    <input type="hidden" name="admInsurance" id="admInsurance">
+    <input type="hidden" name="cashBack" id="cashBack">
+    <input type="hidden" name="carDepreciation" id="carDepreciation">
+    <input type="hidden" name="pengurangTerakhir" id="pengurangTerakhir">
+    <input type="hidden" name="pengurangDP" id="pengurangDP">
+    <input type="hidden" name="provisi" id="provisi" >
+    <input type="hidden" name="hargaOTR" id="hargaOTR" >
+    <input type="hidden" name="payPerMonth" id="payPerMonth" >
+    <input type="hidden" name="cashNCarry" id="cashNCarry" >
+<fieldset title="Pemohon">
+    <legend class="hide">Informasi Pemohon</legend>
+    <div class="row-fluid control-group">
+        <div class="span5">
+                        <div class="well">
+                            <p><span class="label label-inverse">Informasi Pemohon</span></p>
+                            <div class="control-group">
+                                <div data-provides="fileupload" class="fileupload fileupload-new">
+                                    <div style="max-width: 120px; max-height: 120px;" class="fileupload-new thumbnail">
+                                        <img src="<%=imgProfile!=''?'/thumbnail/'+imgProfile:'/img/80x80.gif'%>" alt="" id="thumbnail-profile"></div>
+                                    <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label for="kodeCustomer">Nama<span class="f_req">*</span>
+                                        <span class="right"><a class="btn" id="tambahCustomer">Tambah Customer</a></span></label>
+                                        <input type="text" name="kodeCustomer" id="kodeCustomer"  class="span12" value="<%=customer%>">
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label>Alamat</label>
+                                        <div id="quoteAlamat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label>Telepon</label>
+                                         <div id="quoteTelepon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="span6">
+
+                        <div class="well">
+                            <p><span class="label label-inverse">Informasi Kendaraan</span></p>
+
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span4">
+                                        <label for="kendaraanRoda">Kendaraan Roda:</label>
+                                         <select name="kendaraanRoda"  class="span12">
+                                            <option value="Mobil" <%=kendaraanRoda=='Mobil'?'checked':''%> >Mobil</option>
+                                            <option value="Truck" <%=kendaraanRoda=='Truck'?'checked':''%> >Truck</option>
+                                            <option value="Pick-Up" <%=kendaraanRoda=='Pick-Up'?'checked':''%> >Pick-Up</option>
+                                        </select> 
+                                    </div>
+                                    <div class="span4">
+                                       <label for="jenisKendaraan">Merk Kendaraan:</label>
+                                        <input type="text" name="jenisKendaraan" id="jenisKendaraan" value="<%=jenisKendaraan%>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span4">
+                                       <label for="namaKendaraan">Type Kendaraan:</label>
+                                        <input type="text" class="span12"  name="namaKendaraan" id="namaKendaraan" value="<%=namaKendaraan%>" />
+                                    </div>
+                                    <div class="span3">
+                                       <label for="tahunBuat">Tahun Buat:</label>
+                                         <input type="text" class="span8"  name="tahunBuat" id="tahunBuat" value="<%=tahunBuat%>" />
+                                    </div>
+                                    <div class="span5">
+                                        <label for="hargaOTR">Harga OTR:</label>
+                                        <input type="text"  class="span14 price" name="hargaOTRMask" id="hargaOTRMask" value="<%=hargaOTR%>"  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>            
+    </div>
+</fieldset>
+<fieldset title="Kredit">
+    <legend class="hide">Informasi Kredit&hellip;</legend>
+    <div class="row-fluid control-group">
+        <div class="span5">
+                <p><span class="label label-inverse">Informasi Kredit</span></p>
+                <div class="control-group">
+                    <div class="row-fluid">
+                    <div class="span6">
+                    <label for="perusahaanKredit">Perusahaan Kredit:</label>
+
+                    <input type="text" name="perusahaanKredit[_id]" id="perusahaanKredit" value="<%=perusahaanKredit._id%>" class="span12">
+                    </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label for="lamaPinjaman">Lama Pinjaman:</label>
+                            <input type="text" name="lamaPinjaman" id="lamaPinjaman"  class="span4 numeric" maxlength="2" value="<%=lamaPinjaman%>" /> tahun
+                        </div>
+                         <div class="span6 hide" id="kreditProtectionSection">
+                            <label for="lamaPinjaman">% Kredit Protection:</label>
+                            <input type="text" name="kreditProtection" id="kreditProtection"  class="span4 percentage" readonly value="<%=kreditProtection%>" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <label> % Suku Bunga Pinjaman<span class="f_req">*</span></label>
+                            <input name="bungaPinjaman" id="bungaPinjaman" class="span8" value="<%=bungaPinjaman%>">
+                            <input type="text" name="sukuBunga" id="sukuBunga" class="span3 percentage"  value="<%=sukuBunga%>">
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="control-group">
+                    <div class="row-fluid">
+                       
+                        <div class="span10">
+                            <label> % Asuransi <span class="f_req">*</span></label>
+                            <input name="bungaAsuransi" id="bungaAsuransi" class="span8" value="<%=bungaAsuransi%>">
+                            <input type="text" name="asstTlo" id="asstTlo" class="span3 percentage" value="<%=asstTlo%>">
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="span6">
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Cash Back<span class="f_req">*</span></label>
+                        <input type="text" name="cashBackMask" id="cashBackMask" class="span12 price"  value="<%=cashBack%>"  >
+                    </div>
+                    <div class="span4">
+                        <label>Car Depreciation <span class="f_req">*</span></label>
+                        <input type="text" name="carDepreciationMask" id="carDepreciationMask" class="span12 price"  value="<%=carDepreciation%>" >
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="row-fluid">
+                      <div class="span4">
+                        <label>% DP <span class="f_req">*</span></label>
+                        <input type="text" name="percentDP" id="percentDP" class="span12 percentage" value="<%=percentDP%>">
+                    </div>
+                    <div class="span4">
+                        <label>Pengurang DP<span class="f_req">*</span></label>
+                        <input type="text" name="pengurangDPMask" id="pengurangDPMask" class="span12 price" value="<%=pengurangDP%>" >
+                    </div>
+                   
+                </div>
+            </div>
+              <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Pengurang Terakhir<span class="f_req">*</span></label>
+                        <input type="text" name="pengurangTerakhirMask" id="pengurangTerakhirMask" class="span12 price" value="<%=pengurangTerakhir%>" >
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="row-fluid">
+                 <div class="span4">
+                        <label>Provisi <span class="f_req">*</span></label>
+                        <input type="text" name="provisiMask" id="provisiMask" class="span12 price" value="<%=provisi%>">
+                    </div>
+                    <div class="span4">
+                        <label>Adm & Polis Insurance<span class="f_req">*</span></label>
+                        <input type="text" name="admInsuranceMask" id="admInsuranceMask" class="span12 price" value="<%=admInsurance%>" >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</fieldset>
+<fieldset title="Summary">
+    <legend class="hide">Summary&hellip;</legend>
+    <div id="quotePrint">
+    </div>
+   
+</fieldset>
+
+<button type="button" class="finish btn btn-success saveKontrak hide" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i>Kontrak</button>
+<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i>Pending</button>
+    <button type="button" class="finish btn btn-inverse print" data-loading-text="Loading ..."><i class="splashy-printer"></i> Print</button>&nbsp;           
+</form>
+</div>
+</div>
+
+
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+       
+        
+    });
+</script>
