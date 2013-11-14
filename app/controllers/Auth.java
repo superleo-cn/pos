@@ -61,6 +61,7 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			User dbUser = User.loginAdminJson(user);
 			if (dbUser != null) {
+				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);
