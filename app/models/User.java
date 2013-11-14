@@ -78,16 +78,17 @@ public class User {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
 				.fetch("shop", "id").where().eq("username", user.username).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
-			User dbUser = users.get(0);
-			if (StringUtils.equals(dbUser.usertype, Constants.USERTYPE_ADMIN)) {
-				if (StringUtils.equals(user.usertype, Constants.USERTYPE_ADMIN)) {
-					if (StringUtils.equals(user.password, dbUser.password)) {
-						return dbUser;
-					}
-				}
-			} else {
-				return dbUser;
-			}
+			return users.get(0);
+		}
+		return null;
+	}
+
+	public static User loginAdminJson(User user) {
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
+				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
+				.eq("status", true).findList();
+		if (CollectionUtils.size(users) > 0) {
+			return users.get(0);
 		}
 		return null;
 	}

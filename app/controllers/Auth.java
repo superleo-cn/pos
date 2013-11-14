@@ -54,6 +54,29 @@ public class Auth extends Basic {
 		}
 		renderJSON(result);
 	}
+	
+	public static void loginAdminJson(User user) {
+		Map result = new HashMap();
+		try {
+			List datas = new ArrayList();
+			User dbUser = User.loginAdminJson(user);
+			if (dbUser != null) {
+				result.put(Constants.CODE, Constants.SUCCESS);
+				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
+				result.put(Constants.DATAS, datas);
+			} else {
+				result.put(Constants.CODE, Constants.FAILURE);
+				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
+				result.put(Constants.DATAS, datas);
+			}
+		} catch (Exception e) {
+			result.put(Constants.CODE, Constants.ERROR);
+			result.put(Constants.MESSAGE, Messages.LOGIN_ERROR);
+			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
+
+		}
+		renderJSON(result);
+	}
 
     public static void logout() {
         Cache.delete(session.getId());

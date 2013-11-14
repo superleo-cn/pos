@@ -8,6 +8,7 @@ GET     /home                                       Home.index
 # Login page
 GET     /login                                	Auth.index
 POST	/loginJson								Auth.loginJson
+POST	/loginAdminJson							Auth.loginAdminJson
 GET     /logout                                	Auth.logout
 # User Operation
 *		/users									Users.index
