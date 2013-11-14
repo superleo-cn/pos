@@ -26,6 +26,8 @@ import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 import com.avaje.ebean.annotation.Transactional;
 
+import constants.Constants;
+
 @Entity
 @Table(name = "tb_user")
 public class User {
@@ -62,7 +64,7 @@ public class User {
 	public Shop shop;
 
 	/* the following are service methods */
-	public static User login(User user) {
+	public static User loginPage(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
 				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
 				.eq("status", true).findList();
@@ -72,11 +74,18 @@ public class User {
 		return null;
 	}
 
-	public static User firstLogin(User user) {
+	public static User loginJson(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
 				.fetch("shop", "id").where().eq("username", user.username).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
-			return users.get(0);
+			User dbUser = users.get(0);
+			if(StringUtils.equals(user.usertype, Constants.USERTYPE_ADMIN)){
+				if(StringUtils.equals(user.password, dbUser.password)){
+					return dbUser;
+				}
+			}else{
+				return dbUser;
+			}
 		}
 		return null;
 	}

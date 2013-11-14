@@ -23,7 +23,7 @@ public class AuthTest extends FunctionalTest {
 		params.put("user.password", shopId);
 		params.put("user.userIp", userIp);
 		params.put("user.userMac", userMac);
-		Response response = POST("/loginJson", params);
+		Response response = POST("http://ec2-54-254-145-129.ap-southeast-1.compute.amazonaws.com:8080/loginJson", params);
 		assertIsOk(response);
 		// assertContentType("text/html", response);
 		// assertCharset(play.Play.defaultWebEncoding, response);

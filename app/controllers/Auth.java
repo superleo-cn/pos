@@ -32,7 +32,7 @@ public class Auth extends Basic {
 		Map result = new HashMap();
 		try {
 			List datas = new ArrayList();
-			User dbUser = User.firstLogin(user);
+			User dbUser = User.loginJson(user);
 			if (dbUser != null) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
