@@ -76,8 +76,8 @@
         $('#login_form').ajaxForm(options);
 
         function showResponse(responseText, statusText, xhr, $form) {
-
-                location.href="/home";
+				alert(responseText);
+                //location.href="/home";
 
         }
         function errorHandler(context, xhr, status, responseText) {
