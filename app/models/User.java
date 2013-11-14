@@ -72,6 +72,15 @@ public class User {
 		return null;
 	}
 
+	public static User firstLogin(User user) {
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
+				.fetch("shop", "id").where().eq("username", user.username).eq("status", true).findList();
+		if (CollectionUtils.size(users) > 0) {
+			return users.get(0);
+		}
+		return null;
+	}
+
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(User.class).where();
@@ -102,6 +111,7 @@ public class User {
 			try {
 				updateUser.userIp = user.userIp;
 				updateUser.userMac = user.userMac;
+				updateUser.password = user.password;
 				updateUser.lastLoginDate = new Date();
 				logger.info("[System]-[Info]-[User({}) Login, IP is {}, Mac is {}]", new Object[] {
 						updateUser.username, updateUser.userIp, updateUser.userMac });
