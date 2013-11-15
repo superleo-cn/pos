@@ -32,6 +32,9 @@ public class Food {
 
 	@Required(message = "Food name cannot be empty")
 	public String name;
+	
+	@Required(message = "Food type cannot be empty")
+	public String type;
 
 	@Required(message = "Food cost price cannot be empty")
 	public Float costPrice;
@@ -85,7 +88,7 @@ public class Food {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, name, price, picture").where().eq("status", true)
+			List<Food> foods = Ebean.find(Food.class).select("id, name, type, price, picture").where().eq("status", true)
 					.findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
