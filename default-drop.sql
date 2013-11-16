@@ -8,6 +8,8 @@ drop table tb_consume_transaction;
 
 drop table tb_consumption;
 
+drop table tb_daily_summary;
+
 drop table tb_food;
 
 drop table report_transaction;

@@ -46,15 +46,17 @@ public class Transaction {
 
 	public Float retailPrice;
 
-	public Float discount;
-
 	public Integer quantity;
 
 	public Float totalCostPrice;
 
 	public Float totalDiscount;
-
+	
+	public Float totalPackage;
+	
 	public Float totalRetailPrice;
+	
+	public Boolean freeOfCharge;
 
 	public String createBy, modifiedBy;
 
@@ -92,16 +94,20 @@ public class Transaction {
 				User user = User.view(transaction.user.id);
 				if (food != null && transaction.quantity != null) {
 					Float totalCostPrice = food.costPrice * transaction.quantity;
-					Float totalRetailPrice = food.retailPrice * transaction.quantity;
-					Float totalDiscount = transaction.discount * transaction.quantity;
+//					Float totalRetailPrice = food.retailPrice * transaction.quantity;
+//					Float totalDiscount = transaction.totalDiscount;
 					transaction.costPrice = food.costPrice;
 					transaction.retailPrice = food.retailPrice;
 					transaction.totalCostPrice = totalCostPrice;
-					transaction.totalDiscount = totalDiscount;
-					transaction.totalRetailPrice = totalRetailPrice - totalDiscount;
+//					transaction.totalDiscount = transaction.totalDiscount;
+//					transaction.totalRetailPrice = totalRetailPrice - totalDiscount;
 					transaction.createBy = user.username;
 					transaction.createDate = new Date();
+					try {
 					Ebean.save(transaction);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 					return true;
 				}
 			}
