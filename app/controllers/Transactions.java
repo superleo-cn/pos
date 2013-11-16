@@ -3,6 +3,8 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.avaje.ebean.annotation.Transactional;
 
 import models.Food;
@@ -17,7 +19,30 @@ public class Transactions extends Basic {
 	}
 
 	@Transactional
-	public static void store(Transaction transaction) {
+	public static void store(Transaction[] transactions) {
+		Map result = new HashMap();
+		String str = "";
+		try {
+			if (CollectionUtils.size(transactions) > 0) {
+
+				for (Transaction transaction : transactions) {
+					str += "[shopId = " + transaction.shop.id + "], [userId = " + transaction.user.id
+							+ "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
+							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = "
+							+ transaction.totalRetailPrice + "], [totalPackage = " + transaction.totalPackage
+							+ "], [totalPackage = " + transaction.freeOfCharge + "]\n";
+				}
+
+			}
+		} catch (Exception e) {
+			result.put(Constants.ERROR, Constants.FAILURE);
+			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
+		}
+		renderText(str);
+	}
+
+	@Transactional
+	public static void store2(Transaction transaction) {
 		Map result = new HashMap();
 		try {
 			Boolean flag = Transaction.store(transaction);
