@@ -25,7 +25,7 @@ GET     /logout                                	Auth.logout
 POST	/transactions/submit					Transactions.store
 
 # ConsumeTransaction Operation 
-POST	/consumeTransactions/store				ConsumeTransactions.store
+POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 
 POST	/cashTransactions/store					CashTransactions.store
 

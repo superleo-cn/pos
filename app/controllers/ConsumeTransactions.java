@@ -1,7 +1,13 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import models.ConsumeTransaction;
 import models.Transaction;
@@ -12,23 +18,42 @@ import constants.Constants;
 
 public class ConsumeTransactions extends Basic {
 
+	final static Logger logger = LoggerFactory.getLogger(ConsumeTransactions.class);
+
 	@Transactional
-	public static void store(ConsumeTransaction consumeTransaction) {
+	public static void store(ConsumeTransaction[] consumeTransactions) {
 		Map result = new HashMap();
+
 		try {
-			Boolean flag = ConsumeTransaction.store(consumeTransaction);
-			if (flag) {
-				result.put(Constants.STATUS, Constants.SUCCESS);
-				result.put(Constants.MESSAGE, "Transaction successfull.");
-			} else {
-				result.put(Constants.STATUS, Constants.FAILURE);
-				result.put(Constants.MESSAGE, "Transaction unsuccessfull.");
+			if (CollectionUtils.size(consumeTransactions) > 0) {
+				List datas = new ArrayList();
+				String str = "";
+				for (ConsumeTransaction transaction : consumeTransactions) {
+					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price + "]\n";
+					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
+					boolean flag = ConsumeTransaction.store(transaction);
+					if (!flag) {
+						datas.add(transaction.androidId);
+					}
+				}
+				result.put(Constants.DATAS, datas);
+				if (CollectionUtils.size(datas) == 0) {
+					result.put(Constants.STATUS, Constants.SUCCESS);
+					result.put(Constants.MESSAGE, "Transaction successfully.");
+				} else {
+					result.put(Constants.STATUS, Constants.FAILURE);
+					result.put(Constants.MESSAGE, "Transaction failed.");
+				}
 			}
+
 		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.FAILURE);
-			result.put(Constants.MESSAGE, "Transaction unsuccessfull. Error message is: " + e.getMessage());
+			String errMsg = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
+			result.put(Constants.CODE, Constants.ERROR);
+			result.put(Constants.MESSAGE, errMsg);
+			logger.error("[System]-[Info]-{}]", new Object[] { errMsg, e });
 		}
 		renderJSON(result);
 	}
-	
+
 }

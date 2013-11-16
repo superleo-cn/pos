@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Closure;
@@ -48,6 +49,9 @@ public class ConsumeTransaction {
 
 	public Date createDate, modifiedDate;
 
+	@Transient
+	public Long androidId;
+
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
@@ -73,18 +77,22 @@ public class ConsumeTransaction {
 	}
 
 	public static boolean store(ConsumeTransaction consumeTransaction) {
-		if (consumeTransaction.id == null || consumeTransaction.id == 0) {
-			if (consumeTransaction.consumption != null && consumeTransaction.consumption.id != null
-					&& consumeTransaction.user != null && consumeTransaction.user.id != null) {
-				Consumption consumption = Consumption.view(consumeTransaction.consumption.id);
-				User user = User.view(consumeTransaction.user.id);
-				if (consumption != null && user != null) {
-					consumeTransaction.createBy = user.username;
-					consumeTransaction.createDate = new Date();
-					Ebean.save(consumeTransaction);
-					return true;
+		try {
+			if (consumeTransaction.id == null || consumeTransaction.id == 0) {
+				if (consumeTransaction.consumption != null && consumeTransaction.consumption.id != null
+						&& consumeTransaction.user != null && consumeTransaction.user.id != null) {
+					Consumption consumption = Consumption.view(consumeTransaction.consumption.id);
+					User user = User.view(consumeTransaction.user.id);
+					if (consumption != null && user != null) {
+						consumeTransaction.createBy = user.username;
+						consumeTransaction.createDate = new Date();
+						Ebean.save(consumeTransaction);
+						return true;
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

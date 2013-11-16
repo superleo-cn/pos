@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Closure;
@@ -52,6 +53,9 @@ public class CashTransaction {
 
 	public Date createDate, modifiedDate;
 
+	@Transient
+	public Long androidId;
+
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
@@ -77,20 +81,24 @@ public class CashTransaction {
 	}
 
 	public static boolean store(CashTransaction cashTransaction) {
-		if (cashTransaction.id == null || cashTransaction.id == 0) {
-			if (cashTransaction.cash != null && cashTransaction.cash.id != null && cashTransaction.user != null
-					&& cashTransaction.user.id != null) {
-				Cash cash = Cash.view(cashTransaction.cash.id);
-				User user = User.view(cashTransaction.user.id);
-				if (cash != null && user != null) {
-					cashTransaction.price = cash.price;
-					cashTransaction.totalPrice = cashTransaction.price * cashTransaction.quantity;
-					cashTransaction.createBy = user.username;
-					cashTransaction.createDate = new Date();
-					Ebean.save(cashTransaction);
-					return true;
+		try {
+			if (cashTransaction.id == null || cashTransaction.id == 0) {
+				if (cashTransaction.cash != null && cashTransaction.cash.id != null && cashTransaction.user != null
+						&& cashTransaction.user.id != null) {
+					Cash cash = Cash.view(cashTransaction.cash.id);
+					User user = User.view(cashTransaction.user.id);
+					if (cash != null && user != null) {
+						cashTransaction.price = cash.price;
+						cashTransaction.totalPrice = cashTransaction.price * cashTransaction.quantity;
+						cashTransaction.createBy = user.username;
+						cashTransaction.createDate = new Date();
+						Ebean.save(cashTransaction);
+						return true;
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

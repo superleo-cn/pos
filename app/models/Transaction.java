@@ -93,33 +93,33 @@ public class Transaction {
 	}
 
 	public static boolean store(Transaction transaction) {
-		if (transaction.id == null || transaction.id == 0) {
-			if (transaction.food != null && transaction.user != null && transaction.food.id != null
-					&& transaction.user.id != null) {
-				Food food = Food.view(transaction.food.id);
-				User user = User.view(transaction.user.id);
-				if (food != null && transaction.quantity != null) {
-					Float totalCostPrice = food.costPrice * transaction.quantity;
-					// Float totalRetailPrice = food.retailPrice *
-					// transaction.quantity;
-					// Float totalDiscount = transaction.totalDiscount;
-					transaction.costPrice = food.costPrice;
-					transaction.retailPrice = food.retailPrice;
-					transaction.totalCostPrice = totalCostPrice;
-					// transaction.totalDiscount = transaction.totalDiscount;
-					// transaction.totalRetailPrice = totalRetailPrice -
-					// totalDiscount;
-					transaction.createBy = user.username;
-					transaction.createDate = new Date();
-					try {
+		try {
+			if (transaction.id == null || transaction.id == 0) {
+				if (transaction.food != null && transaction.user != null && transaction.food.id != null
+						&& transaction.user.id != null) {
+					Food food = Food.view(transaction.food.id);
+					User user = User.view(transaction.user.id);
+					if (food != null && transaction.quantity != null) {
+						Float totalCostPrice = food.costPrice * transaction.quantity;
+						// Float totalRetailPrice = food.retailPrice *
+						// transaction.quantity;
+						// Float totalDiscount = transaction.totalDiscount;
+						transaction.costPrice = food.costPrice;
+						transaction.retailPrice = food.retailPrice;
+						transaction.totalCostPrice = totalCostPrice;
+						// transaction.totalDiscount =
+						// transaction.totalDiscount;
+						// transaction.totalRetailPrice = totalRetailPrice -
+						// totalDiscount;
+						transaction.createBy = user.username;
+						transaction.createDate = new Date();
 						Ebean.save(transaction);
 						return true;
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
-
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
