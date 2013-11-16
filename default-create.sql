@@ -42,6 +42,7 @@ create table tb_consume_transaction (
 create table tb_consumption (
   id                        bigint auto_increment not null,
   name                      varchar(255),
+  name_zh                   varchar(255),
   status                    tinyint(1) default 0,
   shop_id                   bigint,
   position                  integer,
@@ -77,7 +78,9 @@ create table tb_daily_summary (
 
 create table tb_food (
   id                        bigint auto_increment not null,
+  sn                        varchar(255),
   name                      varchar(255),
+  name_zh                   varchar(255),
   type                      varchar(255),
   cost_price                float,
   retail_price              float,
@@ -130,6 +133,7 @@ create table tb_transaction (
   total_package             float,
   total_retail_price        float,
   free_of_charge            tinyint(1) default 0,
+  invoice                   varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,

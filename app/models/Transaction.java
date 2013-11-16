@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Closure;
@@ -64,6 +65,9 @@ public class Transaction {
 
 	public Date createDate, modifiedDate;
 
+	@Transient
+	public Long androidId;
+
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
@@ -109,10 +113,11 @@ public class Transaction {
 					transaction.createDate = new Date();
 					try {
 						Ebean.save(transaction);
+						return true;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					return true;
+
 				}
 			}
 		}

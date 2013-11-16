@@ -29,9 +29,15 @@ import constants.Constants;
 public class Food {
 	@Id
 	public Long id;
+	
+	@Required(message = "SN cannot be empty")
+	public String sn;
 
 	@Required(message = "Food name cannot be empty")
 	public String name;
+	
+	@Required(message = "Food chinese name cannot be empty")
+	public String nameZh;
 	
 	@Required(message = "Food type cannot be empty")
 	public String type;

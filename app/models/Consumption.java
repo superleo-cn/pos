@@ -32,6 +32,9 @@ public class Consumption {
 
 	@Required(message = "Consumption name cannot be empty")
 	public String name;
+	
+	@Required(message = "Consumption Chinese name cannot be empty")
+	public String name_zh;
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
