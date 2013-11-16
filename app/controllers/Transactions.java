@@ -34,6 +34,7 @@ public class Transactions extends Basic {
 		try {
 			Transaction t = transactions[0];
 			logger.info("[System]-[Info]-[{}]", t.id);
+			str = "result is " + t.id;
 		} catch (Exception e) {
 			result.put(Constants.ERROR, Constants.FAILURE);
 			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
