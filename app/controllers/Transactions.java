@@ -19,29 +19,6 @@ public class Transactions extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Transactions.class);
 
-	public static void listJson(Long id) {
-
-	}
-
-	public static void index() {
-		render("/pages/post.html");
-	}
-
-	@Transactional
-	public static void store1(Transaction[] transactions) {
-		Map result = new HashMap();
-		String str = "";
-		try {
-			Transaction t = transactions[0];
-			logger.info("[System]-[Info]-[{}]", t.id);
-			str = "result is " + t.id;
-		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.FAILURE);
-			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
-		}
-		renderText(str);
-	}
-
 	@Transactional
 	public static void store(Transaction[] transactions) {
 		Map result = new HashMap();
@@ -61,40 +38,22 @@ public class Transactions extends Basic {
 						datas.add(transaction.androidId);
 					}
 				}
-				if(CollectionUtils.size(datas) == 0){
+				
+				result.put(Constants.DATAS, datas);
+				if (CollectionUtils.size(datas) == 0) {
 					result.put(Constants.STATUS, Constants.SUCCESS);
-					result.put(Constants.MESSAGE, "Transaction successfull.");
-				}else{
-					result.put(Constants.STATUS, Constants.SUCCESS);
-					result.put(Constants.DATAS, datas);
+					result.put(Constants.MESSAGE, "Transaction successfully.");
+				} else {
+					result.put(Constants.STATUS, Constants.FAILURE);
 					result.put(Constants.MESSAGE, "Transaction failed.");
 				}
 			}
 
 		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.FAILURE);
-			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
+			result.put(Constants.ERROR, Constants.ERROR);
+			str = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
 		}
 		renderText(str);
-	}
-
-	@Transactional
-	public static void store2(Transaction transaction) {
-		Map result = new HashMap();
-		try {
-			Boolean flag = Transaction.store(transaction);
-			if (flag) {
-				result.put(Constants.STATUS, Constants.SUCCESS);
-				result.put(Constants.MESSAGE, "Transaction successfull.");
-			} else {
-				result.put(Constants.STATUS, Constants.FAILURE);
-				result.put(Constants.MESSAGE, "Transaction unsuccessfull.");
-			}
-		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.FAILURE);
-			result.put(Constants.MESSAGE, "Transaction unsuccessfull. Error message is: " + e.getMessage());
-		}
-		renderJSON(result);
 	}
 
 }
