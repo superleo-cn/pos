@@ -33,7 +33,7 @@ public class TransactionTest extends FunctionalTest {
 			params.put("transaction.totalPackage", totalPackage);
 			params.put("transaction.freeOfCharge", foc);
 
-			Response response = POST("/transactions/store", params);
+			Response response = POST("/transactions/store2", params);
 			assertIsOk(response);
 			// assertContentType("text/html", response);
 			// assertCharset(play.Play.defaultWebEncoding, response);

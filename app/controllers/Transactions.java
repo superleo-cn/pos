@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -11,8 +13,11 @@ import models.Food;
 import models.Transaction;
 import models.User;
 import constants.Constants;
+import constants.Messages;
 
 public class Transactions extends Basic {
+	
+	final static Logger logger = LoggerFactory.getLogger(Transactions.class);
 
 	public static void listJson(Long id) {
 
@@ -34,6 +39,7 @@ public class Transactions extends Basic {
 				}
 
 			}
+			logger.info("[System]-[Info]-[{}]", str);
 		} catch (Exception e) {
 			result.put(Constants.ERROR, Constants.FAILURE);
 			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
