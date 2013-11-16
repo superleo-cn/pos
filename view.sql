@@ -54,3 +54,26 @@ AND u.id = t.user_id
 AND f.id = t.food_id
 AND s.id = t.shop_id;
 
+--P & L we need 2 sqls, Net Profit (A-B-C)
+--sql 1
+SELECT
+    shop_id,
+     SUM(c_cash_collected) AS cash_collected  --get A Sales.
+    SUM(b_expenses)       AS expenses,   -- get C Expenses
+   
+FROM
+    tb_daily_summary
+WHERE
+    create_date BETWEEN '2013-11-01' AND '2013-21-31'
+GROUP BY
+    shop_id;
+--sql 2
+SELECT
+    shop_id,
+    SUM(total_cost_price) --get B Cost of Sales
+FROM
+    tb_transaction
+WHERE
+    create_date BETWEEN '2013-11-01' AND '2013-21-31'
+GROUP BY
+    shop_id    
