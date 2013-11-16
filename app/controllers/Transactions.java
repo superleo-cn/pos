@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
+import constants.Messages;
 
 public class Transactions extends Basic {
 
@@ -38,7 +39,7 @@ public class Transactions extends Basic {
 						datas.add(transaction.androidId);
 					}
 				}
-				
+
 				result.put(Constants.DATAS, datas);
 				if (CollectionUtils.size(datas) == 0) {
 					result.put(Constants.STATUS, Constants.SUCCESS);
@@ -50,10 +51,12 @@ public class Transactions extends Basic {
 			}
 
 		} catch (Exception e) {
-			result.put(Constants.ERROR, Constants.ERROR);
-			str = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
+			String errMsg = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
+			result.put(Constants.CODE, Constants.ERROR);
+			result.put(Constants.MESSAGE, errMsg);
+			logger.error("[System]-[Info]-{}]", new Object[] { errMsg, e });
 		}
-		renderText(str);
+		renderJSON(result);
 	}
 
 }
