@@ -22,7 +22,7 @@ GET     /logout                                	Auth.logout
 # Cash Operation 
 *		/cashs/listJson/{id}					Cashs.listJson
 # Transaction Operation 
-POST	/transactions/sumbit					Transactions.store
+POST	/transactions/submit					Transactions.store
 
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/store				ConsumeTransactions.store
