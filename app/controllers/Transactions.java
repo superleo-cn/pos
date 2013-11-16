@@ -32,7 +32,7 @@ public class Transactions extends Basic {
 							+ "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
 							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = "
 							+ transaction.totalRetailPrice + "], [totalPackage = " + transaction.totalPackage
-							+ "], [totalPackage = " + transaction.freeOfCharge + "]\n";
+							+ "], [freeOfCharge = " + transaction.freeOfCharge + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Transaction.store(transaction);
 					if (!flag) {
