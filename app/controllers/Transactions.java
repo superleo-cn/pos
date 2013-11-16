@@ -29,6 +29,7 @@ public class Transactions extends Basic {
 		String str = "";
 		try {
 			String[]  ids = params.getAll("id");
+			str = ids[0];
 			logger.info("[System]-[Info]-[{}]", ids[0]);
 		} catch (Exception e) {
 			result.put(Constants.ERROR, Constants.FAILURE);
