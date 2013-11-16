@@ -24,7 +24,21 @@ public class Transactions extends Basic {
 	}
 
 	@Transactional
-	public static void store(Transaction[] transactions) {
+	public static void store() {
+		Map result = new HashMap();
+		String str = "";
+		try {
+			String[]  ids = params.getAll("id");
+			logger.info("[System]-[Info]-[{}]", ids[0]);
+		} catch (Exception e) {
+			result.put(Constants.ERROR, Constants.FAILURE);
+			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();
+		}
+		renderText(str);
+	}
+	
+	@Transactional
+	public static void store3(Transaction[] transactions) {
 		Map result = new HashMap();
 		String str = "";
 		try {
