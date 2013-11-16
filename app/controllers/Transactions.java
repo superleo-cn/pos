@@ -28,7 +28,7 @@ public class Transactions extends Basic {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[shopId = " + transaction.shop.id + "], [userId = " + transaction.user.id
+					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id + "], [userId = " + transaction.user.id
 							+ "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
 							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = "
 							+ transaction.totalRetailPrice + "], [totalPackage = " + transaction.totalPackage
