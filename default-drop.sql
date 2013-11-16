@@ -1,5 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table tb_audit;
+
 drop table tb_cash;
 
 drop table tb_cash_transaction;

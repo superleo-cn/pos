@@ -4,6 +4,8 @@
 --drop table first
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table tb_audit;
+
 drop table tb_cash;
 
 drop table tb_cash_transaction;
@@ -178,6 +180,18 @@ create table tb_daily_summary (
   constraint pk_tb_daily_summary primary key (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table tb_audit (
+  id                        bigint auto_increment not null,
+  user_id                   bigint not null,
+  shop_id                   bigint not null,
+  action                    varchar(255),
+  create_by                 varchar(255),
+  modified_by               varchar(255),
+  create_date               datetime,
+  modified_date             datetime,
+  constraint pk_tb_audit primary key (id))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table report_transaction (
   serial_no                 integer,
   item                      varchar(255),
@@ -192,29 +206,37 @@ create table report_transaction (
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --create all the indexes
-alter table tb_cash add constraint fk_tb_cash_shop_1 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_cash_shop_1 on tb_cash (shop_id);
-alter table tb_cash_transaction add constraint fk_tb_cash_transaction_user_2 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
-create index ix_tb_cash_transaction_user_2 on tb_cash_transaction (user_id);
-alter table tb_cash_transaction add constraint fk_tb_cash_transaction_shop_3 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_cash_transaction_shop_3 on tb_cash_transaction (shop_id);
-alter table tb_cash_transaction add constraint fk_tb_cash_transaction_cash_4 foreign key (cash_id) references tb_cash (id) on delete restrict on update restrict;
-create index ix_tb_cash_transaction_cash_4 on tb_cash_transaction (cash_id);
-alter table tb_consume_transaction add constraint fk_tb_consume_transaction_user_5 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
-create index ix_tb_consume_transaction_user_5 on tb_consume_transaction (user_id);
-alter table tb_consume_transaction add constraint fk_tb_consume_transaction_shop_6 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_consume_transaction_shop_6 on tb_consume_transaction (shop_id);
-alter table tb_consume_transaction add constraint fk_tb_consume_transaction_cons_7 foreign key (consumption_id) references tb_consumption (id) on delete restrict on update restrict;
-create index ix_tb_consume_transaction_cons_7 on tb_consume_transaction (consumption_id);
-alter table tb_consumption add constraint fk_tb_consumption_shop_8 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_consumption_shop_8 on tb_consumption (shop_id);
-alter table tb_food add constraint fk_tb_food_shop_9 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_food_shop_9 on tb_food (shop_id);
-alter table tb_transaction add constraint fk_tb_transaction_user_10 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
-create index ix_tb_transaction_user_10 on tb_transaction (user_id);
-alter table tb_transaction add constraint fk_tb_transaction_shop_11 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_transaction_shop_11 on tb_transaction (shop_id);
-alter table tb_transaction add constraint fk_tb_transaction_food_12 foreign key (food_id) references tb_food (id) on delete restrict on update restrict;
-create index ix_tb_transaction_food_12 on tb_transaction (food_id);
-alter table tb_user add constraint fk_tb_user_shop_13 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_user_shop_13 on tb_user (shop_id);
+alter table tb_audit add constraint fk_tb_audit_user_1 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+create index ix_tb_audit_user_1 on tb_audit (user_id);
+alter table tb_audit add constraint fk_tb_audit_shop_2 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_audit_shop_2 on tb_audit (shop_id);
+alter table tb_cash add constraint fk_tb_cash_shop_3 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_cash_shop_3 on tb_cash (shop_id);
+alter table tb_cash_transaction add constraint fk_tb_cash_transaction_user_4 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+create index ix_tb_cash_transaction_user_4 on tb_cash_transaction (user_id);
+alter table tb_cash_transaction add constraint fk_tb_cash_transaction_shop_5 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_cash_transaction_shop_5 on tb_cash_transaction (shop_id);
+alter table tb_cash_transaction add constraint fk_tb_cash_transaction_cash_6 foreign key (cash_id) references tb_cash (id) on delete restrict on update restrict;
+create index ix_tb_cash_transaction_cash_6 on tb_cash_transaction (cash_id);
+alter table tb_consume_transaction add constraint fk_tb_consume_transaction_user_7 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+create index ix_tb_consume_transaction_user_7 on tb_consume_transaction (user_id);
+alter table tb_consume_transaction add constraint fk_tb_consume_transaction_shop_8 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_consume_transaction_shop_8 on tb_consume_transaction (shop_id);
+alter table tb_consume_transaction add constraint fk_tb_consume_transaction_cons_9 foreign key (consumption_id) references tb_consumption (id) on delete restrict on update restrict;
+create index ix_tb_consume_transaction_cons_9 on tb_consume_transaction (consumption_id);
+alter table tb_consumption add constraint fk_tb_consumption_shop_10 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_consumption_shop_10 on tb_consumption (shop_id);
+alter table tb_daily_summary add constraint fk_tb_daily_summary_shop_11 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_daily_summary_shop_11 on tb_daily_summary (shop_id);
+alter table tb_daily_summary add constraint fk_tb_daily_summary_user_12 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+create index ix_tb_daily_summary_user_12 on tb_daily_summary (user_id);
+alter table tb_food add constraint fk_tb_food_shop_13 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_food_shop_13 on tb_food (shop_id);
+alter table tb_transaction add constraint fk_tb_transaction_user_14 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+create index ix_tb_transaction_user_14 on tb_transaction (user_id);
+alter table tb_transaction add constraint fk_tb_transaction_shop_15 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_transaction_shop_15 on tb_transaction (shop_id);
+alter table tb_transaction add constraint fk_tb_transaction_food_16 foreign key (food_id) references tb_food (id) on delete restrict on update restrict;
+create index ix_tb_transaction_food_16 on tb_transaction (food_id);
+alter table tb_user add constraint fk_tb_user_shop_17 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
+create index ix_tb_user_shop_17 on tb_user (shop_id);
