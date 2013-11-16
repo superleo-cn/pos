@@ -34,10 +34,10 @@ public class Transactions extends Basic {
 							+ transaction.totalRetailPrice + "], [totalPackage = " + transaction.totalPackage
 							+ "], [totalPackage = " + transaction.freeOfCharge + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
-//					boolean flag = Transaction.store(transaction);
-//					if (!flag) {
-//						datas.add(transaction.androidId);
-//					}
+					boolean flag = Transaction.store(transaction);
+					if (!flag) {
+						datas.add(transaction.androidId);
+					}
 				}
 
 				result.put(Constants.DATAS, datas);
