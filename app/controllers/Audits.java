@@ -37,10 +37,10 @@ public class Audits extends Basic {
 				}
 				result.put(Constants.DATAS, datas);
 				if (CollectionUtils.size(datas) == 0) {
-					result.put(Constants.STATUS, Constants.SUCCESS);
+					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Audit successfully.");
 				} else {
-					result.put(Constants.STATUS, Constants.FAILURE);
+					result.put(Constants.CODE, Constants.FAILURE);
 					result.put(Constants.MESSAGE, "Audit failed.");
 				}
 			}

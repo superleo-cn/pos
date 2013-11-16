@@ -137,6 +137,7 @@ create table tb_transaction (
   total_package             float,
   total_retail_price        float,
   free_of_charge            tinyint(1) default 0,
+  invoice                   varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,
