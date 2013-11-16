@@ -22,15 +22,18 @@ public class Transactions extends Basic {
 	public static void listJson(Long id) {
 
 	}
+	
+	public static void index() {
+		render("/pages/post.html");
+	}
 
 	@Transactional
-	public static void store() {
+	public static void store(Transaction[] transactions) {
 		Map result = new HashMap();
 		String str = "";
 		try {
-			String[]  ids = params.getAll("id");
-			str = ids[0];
-			logger.info("[System]-[Info]-[{}]", ids[0]);
+			Transaction t = transactions[0];
+			logger.info("[System]-[Info]-[{}]", t.id);
 		} catch (Exception e) {
 			result.put(Constants.ERROR, Constants.FAILURE);
 			str = "Transaction unsuccessfull. Error message is: " + e.getMessage();

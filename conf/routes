@@ -24,6 +24,8 @@ GET     /logout                                	Auth.logout
 # Transaction Operation 
 POST	/transactions/store						Transactions.store
 POST	/transactions/store2					Transactions.store2
+GET		/transactions/index						Transactions.index
+
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/store				ConsumeTransactions.store
 # CashTransaction Operation 
