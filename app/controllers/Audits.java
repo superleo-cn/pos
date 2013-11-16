@@ -31,7 +31,7 @@ public class Audits extends Basic {
 							+ audit.user.id + "], [action = " + audit.action + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Audit.store(audit);
-					if (!flag) {
+					if (flag) {
 						datas.add(audit.androidId);
 					}
 				}

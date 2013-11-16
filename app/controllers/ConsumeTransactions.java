@@ -33,7 +33,7 @@ public class ConsumeTransactions extends Basic {
 							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = ConsumeTransaction.store(transaction);
-					if (!flag) {
+					if (flag) {
 						datas.add(transaction.androidId);
 					}
 				}

@@ -35,7 +35,7 @@ public class Transactions extends Basic {
 							+ "], [freeOfCharge = " + transaction.freeOfCharge + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Transaction.store(transaction);
-					if (!flag) {
+					if (flag) {
 						datas.add(transaction.androidId);
 					}
 				}

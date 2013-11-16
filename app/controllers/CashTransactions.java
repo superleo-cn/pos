@@ -35,7 +35,7 @@ public class CashTransactions extends Basic {
 							+ "], [quantity = " + transaction.quantity + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = CashTransaction.store(transaction);
-					if (!flag) {
+					if (flag) {
 						datas.add(transaction.androidId);
 					}
 				}
