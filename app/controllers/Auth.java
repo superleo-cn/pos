@@ -83,7 +83,6 @@ public class Auth extends Basic {
                 Audit audit = new Audit();
                 audit.action = "Login";
                 audit.user= dbUser;
-                audit.shop = dbUser.shop;
                 Audit.store(audit);
                 if(dbUser.shop!=null)
                 session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
