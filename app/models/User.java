@@ -1,7 +1,9 @@
 package models;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.avaje.ebean.*;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,10 +23,6 @@ import play.data.validation.Required;
 import utils.MyPropertiesUtils;
 import utils.Pagination;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
-import com.avaje.ebean.PagingList;
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
@@ -105,20 +104,44 @@ public class User {
 	}
 
 	public static Pagination search(String queryName, Pagination pagination) {
-		pagination = pagination == null ? new Pagination() : pagination;
-		ExpressionList expList = Ebean.find(User.class).where();
-		if (StringUtils.isNotEmpty(queryName)) {
-			queryName = StringUtils.trimToNull(queryName);
-			expList.where().ilike("realname", "%" + queryName + "%");
-		}
-		PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
-		pagingList.setFetchAhead(false);
-		Page page = pagingList.getPage(pagination.currentPage);
-		pagination.recordList = page.getList();
-		pagination.pageCount = page.getTotalPageCount();
-		pagination.recordCount = page.getTotalRowCount();
-		return pagination;
-	}
+        pagination = pagination == null ? new Pagination() : pagination;
+        ExpressionList expList = Ebean.find(User.class).where();
+        if (StringUtils.isNotEmpty(queryName)) {
+            queryName = StringUtils.trimToNull(queryName);
+            expList.where().ilike("realname", "%" + queryName + "%");
+        }
+        PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
+        pagingList.setFetchAhead(false);
+        Page page = pagingList.getPage(pagination.currentPage);
+        pagination.recordList = page.getList();
+        pagination.pageCount = page.getTotalPageCount();
+        pagination.recordCount = page.getTotalRowCount();
+        return pagination;
+    }
+
+    public static Pagination search(Map search, Pagination pagination) {
+        pagination = pagination == null ? new Pagination() : pagination;
+        ExpressionList expList = Ebean.find(User.class).where();
+        if (search.keySet()!=null) {
+            Iterator searchKeys = search.keySet().iterator();
+            while(searchKeys.hasNext()){
+                String key = (String) searchKeys.next();
+                String value = (String) search.get(key);
+                play.Logger.info("Value " + value);
+                if(StringUtils.isEmpty(value)) continue;
+
+                expList.where().eq(key,  value);
+            }
+        }
+        expList.select("realname");
+        PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
+        pagingList.setFetchAhead(false);
+        Page page = pagingList.getPage(pagination.currentPage);
+        pagination.recordList = page.getList();
+        pagination.pageCount = page.getTotalPageCount();
+        pagination.recordCount = page.getTotalRowCount();
+        return pagination;
+    }
 
 	public static User view(Long id) {
 		if (id != null) {

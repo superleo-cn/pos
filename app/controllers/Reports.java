@@ -28,6 +28,22 @@ import java.util.Map;
  */
 public class Reports extends Basic {
 
+    public static void shops() {
+        Pagination pagination = new Pagination();
+        pagination.currentPage = 0;
+        pagination.pageSize = 100;
+        renderJSON(Shop.search(null, pagination));
+    }
+
+
+    public static void cashiers() {
+        Pagination pagination = new Pagination();
+        pagination.currentPage = 0;
+        pagination.pageSize = 100;
+        Map<String,String> search = new HashMap<String, String>();
+        search.put("usertype","CACHIER");
+        renderJSON(User.search(search, pagination));
+    }
     public static void transaction() throws IOException {
 
         int currentPage = 1;
@@ -39,11 +55,14 @@ public class Reports extends Basic {
         pagination.pageSize = 10;
         Map searchs = new HashMap();
         String food =  request.params.get("sSearch_0");
-        if(StringUtils.isNotEmpty(food) && !"undefined".equalsIgnoreCase(food))
-            searchs.put("food",food);
+        if(StringUtils.isEmpty(food) || "undefined".equalsIgnoreCase(food) || "ALL".equalsIgnoreCase(food))
+            food="%";
+        searchs.put("food",food);
+
         String outlet =  request.params.get("sSearch_1");
-        if(StringUtils.isNotEmpty(outlet) && !"undefined".equalsIgnoreCase(outlet))
-            searchs.put("shopName",outlet);
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
+            outlet="%";
+        searchs.put("shopName",outlet);
         String dateFrom =  request.params.get("sSearch_2");
         if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
             dateFrom="2000-01-01";
@@ -71,7 +90,7 @@ public class Reports extends Basic {
         pagination.pageSize = 10;
         Map searchs = new HashMap();
         String outlet =  request.params.get("sSearch_1");
-        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
         searchs.put("shopName",outlet);
 
@@ -104,11 +123,11 @@ public class Reports extends Basic {
         pagination.pageSize = 10;
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
-        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier))
+        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))
             cashier="%";
         searchs.put("user.realname",cashier);
         String outlet =  request.params.get("sSearch_1");
-        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet)  || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
         searchs.put("shop.name",outlet);
 
@@ -140,11 +159,11 @@ public class Reports extends Basic {
         pagination.pageSize = 10;
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
-        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier))
+        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))
             cashier="%";
         searchs.put("realName",cashier);
         String outlet =  request.params.get("sSearch_1");
-        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet)  || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
         searchs.put("shopName",outlet);
 

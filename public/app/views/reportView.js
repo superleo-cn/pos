@@ -253,10 +253,56 @@ console.log(row);
                 } );
             }
 
-
-            $("#dateFrom").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
+            $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
             $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
 
+            var outlet = that.$el.find('#outlet');
+            if(outlet!=null) {
+                console.log(outlet);
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/shops',function(response){
+                    response.recordList.unshift({id:'ALL',name:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.name,name:obj.name};
+                    });
+                    outlet.select2({
+                        minimumResultsForSearch:-1,
+                        data:{
+                            results:record
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            return object.name;
+                        }
+                    });
+                });
+            }
+
+            var cashier = that.$el.find('#cashier');
+            if(cashier!=null) {
+                console.log(cashier);
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/cashiers',function(response){
+                    response.recordList.unshift({id:'ALL',realname:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.realname,name:obj.realname};
+                    });
+                    cashier.select2({
+                        minimumResultsForSearch:-1,
+                        data:{
+                            results:record
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            return object.name;
+                        }
+                    });
+                });
+            }
            // that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
 
 
