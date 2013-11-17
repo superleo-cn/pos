@@ -29,13 +29,45 @@ public class Auth extends Basic {
 
 		render(Pages.LOGIN);
 	}
-
-	public static void loginJson() {
+	
+	public static void loginJson(User user) {
 		Map result = new HashMap();
-
-        List datas = new ArrayList();
-        User user=new User();
 		try {
+			List datas = new ArrayList();
+			User dbUser = User.loginJson(user);
+			if (dbUser != null) {
+				user.id = dbUser.id;
+				user.lastLoginDate = new Date();
+				User.store(user);
+				/* login */
+				Audit audit = new Audit();
+                audit.action = "Login";
+                audit.user= dbUser;
+                audit.shop = dbUser.shop;
+                Audit.store(audit);
+				
+				datas.add(dbUser);
+				result.put(Constants.CODE, Constants.SUCCESS);
+				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
+				result.put(Constants.DATAS, datas);
+			} else {
+				result.put(Constants.CODE, Constants.FAILURE);
+				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
+				result.put(Constants.DATAS, datas);
+			}
+		} catch (Exception e) {
+			result.put(Constants.CODE, Constants.ERROR);
+			result.put(Constants.MESSAGE, Messages.LOGIN_ERROR);
+			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
+
+		}
+		renderJSON(result);
+	}
+
+	public static void loginJsonWiyanto(User user) {
+		Map result = new HashMap();
+		try {
+			List datas = new ArrayList();
 			user.username = request.params.get("username");
             user.password = request.params.get("password");
             User dbUser = User.loginJson(user);
@@ -44,7 +76,6 @@ public class Auth extends Basic {
 				user.lastLoginDate = new Date();
 				User.store(user);
 				datas.add(dbUser);
-
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);
@@ -55,7 +86,7 @@ public class Auth extends Basic {
                 audit.shop = dbUser.shop;
                 Audit.store(audit);
                 if(dbUser.shop!=null)
-                    session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
+                session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
 
                 session.put(Constants.CURRENT_USERID, dbUser.id);
                 session.put(Constants.CURRENT_USERNAME, dbUser.username);
@@ -68,7 +99,6 @@ public class Auth extends Basic {
 				result.put(Constants.CODE, Constants.FAILURE);
 				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
 				result.put(Constants.DATAS, datas);
-                error();
 			}
 		} catch (Exception e) {
 			result.put(Constants.CODE, Constants.ERROR);
