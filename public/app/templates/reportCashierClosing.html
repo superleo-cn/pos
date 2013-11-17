@@ -5,8 +5,8 @@
         <form id="reportForm">
         <div class="row-fluid">
             <div class="span3">
-                <label for="product">Product</label>
-                <input type="text" class="span10" id="product">
+                <label for="cashier">Cashier</label>
+                <input type="text" class="span10" id="cashier">
             </div>
             <div class="span3 adminFields">
                 <label for="outlet">Outlet</label>
@@ -22,8 +22,8 @@
             </div>
         </div>
             <div class="form-actions">
-                <a class="btn btn-primary" data-loading-text="Loading ...">Search</a>
-                <a class="btn btn-success" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Export <Transaction></Transaction></a>
+                <a class="btn btn-primary" data-loading-text="Loading ..." id="searchReport">Search</a>
+                <a class="btn btn-success" data-loading-text="Loading ..." id="exportCashierClosing"><i class="icon-ok icon-white"></i> Export <Transaction></Transaction></a>
             </div>
         </form>
         <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">

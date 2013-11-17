@@ -1,27 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" pageWidth="1000" pageHeight="595" orientation="Landscape" columnWidth="1000" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="no" class="java.lang.Long"/>
+	<field name="realName" class="java.lang.String"/>
+	<field name="shopName" class="java.lang.String"/>
+	<field name="openBalance" class="java.lang.Double"/>
+	<field name="expenses" class="java.lang.Double"/>
+	<field name="cashCollected" class="java.lang.Double"/>
+	<field name="dailyTurnover" class="java.lang.Double"/>
+	<field name="nextOpenBalance" class="java.lang.Double"/>
+	<field name="bringBackCash" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="47" height="20" uuid="5edcaba2-e801-4f12-a7b5-58465e3bd307"/>
+				<text><![CDATA[S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="0" width="177" height="20" uuid="63c2d2b8-02a4-4b1e-bc35-0b033d8d89e0"/>
+				<text><![CDATA[Cashier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="200" height="20" uuid="df393cdb-849d-483b-8811-3cd41dd0517d"/>
+				<text><![CDATA[Outlet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="0" width="93" height="20" uuid="88493062-78b9-4dd8-80ce-cee4c8c23aa2"/>
+				<text><![CDATA[Open Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="517" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
+				<text><![CDATA[Expenses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="610" y="0" width="93" height="20" uuid="12738d07-91ab-4471-95a1-ad1153a24360"/>
+				<text><![CDATA[Cash Collected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="703" y="0" width="93" height="20" uuid="b2de0c9f-bdc9-4ec7-b33c-c1d27ebea819"/>
+				<text><![CDATA[Daily Turnover]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="796" y="0" width="103" height="20" uuid="8a610188-7344-499f-b95e-bc096b255103"/>
+				<text><![CDATA[Next Open Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="899" y="0" width="101" height="20" uuid="4e637da6-2bfc-49ab-b763-2957555ebb22"/>
+				<text><![CDATA[Bring Back Cash]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="47" height="20" uuid="e1f34c5d-938f-412d-a5f9-dec2407ef119"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="0" width="177" height="20" uuid="f094d6dc-6b7b-4702-b3a1-16d94028b7cd"/>
+				<textFieldExpression><![CDATA[$F{realName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="200" height="20" uuid="24375e6b-d6b9-4d81-ba62-26242e45001d"/>
+				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="0" width="93" height="20" uuid="5a09c9b3-7819-4d94-8d61-ce11f7dfb514"/>
+				<textFieldExpression><![CDATA[$F{openBalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="517" y="0" width="93" height="20" uuid="045d35d9-f2fe-4fe1-9f2c-8167df6819a4"/>
+				<textFieldExpression><![CDATA[$F{expenses}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="0" width="93" height="20" uuid="bf4f6aa0-9940-4254-b70d-643256dec60d"/>
+				<textFieldExpression><![CDATA[$F{cashCollected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="703" y="0" width="93" height="20" uuid="00dd4939-9820-4f51-8c20-801a501d993f"/>
+				<textFieldExpression><![CDATA[$F{dailyTurnover}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="796" y="0" width="103" height="20" uuid="d7478eeb-6d29-4918-86ba-7e42fe641385"/>
+				<textFieldExpression><![CDATA[$F{nextOpenBalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="899" y="0" width="101" height="20" uuid="92cce2e3-3ae0-4c2f-9d08-94eb51aeb133"/>
+				<textFieldExpression><![CDATA[$F{bringBackCash}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

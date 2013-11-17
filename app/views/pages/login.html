@@ -73,7 +73,7 @@
 
         var options = {
             success: showResponse,
-            url :'@{Auth.loginJson()}',
+            url :'@{Auth.login()}',
             error : errorHandler
         };
         $('#login_form').ajaxForm(options);

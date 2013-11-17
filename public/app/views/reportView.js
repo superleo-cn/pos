@@ -18,6 +18,7 @@ define([
             "click #exportTransactionDetail" :"exportTransactionDetail",
             "click #exportTransactionSummary" :"exportTransactionSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
+            "click #exportCashierClosing" :"exportCashierClosing",
             "click #exportPL" :"exportPL"
         },
         exportTransactionDetail:function() {
@@ -26,8 +27,8 @@ define([
         exportTransactionSummary:function() {
             window.open("/reports/exportTransactionSummary");
         },
-        exportTransactionSummary:function() {
-            window.open("/reports/exportTransactionSummary");
+        exportCashierClosing:function() {
+            window.open("/reports/exportCashierClosing");
         },
         exportLoginAudit:function() {
             window.open("/reports/exportLoginAudit");
@@ -60,6 +61,20 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
 
                 that.oTable.fnMultiFilter({"no":cashier,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
+
+            }
+            else  if(page=='reportCashierClosing') {
+
+                var cashier = that.$el.find('#cashier').val();
+
+                var outlet = that.$el.find('#outlet').val();
+
+                var dateFrom = that.$el.find('#dateFrom').val();
+
+                var dateTo = that.$el.find('#dateTo').val();
+
+
+                that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"shopName":dateFrom,"openBalance":dateTo});
 
             }
             else  if(page=='reportPL') {
@@ -194,13 +209,13 @@ console.log(row);
 
                     "aoColumns": [
                         { "mData": "no" },
-                        { "mData": "item" },
-                        { "mData": "no" },
-                        { "mData": "totalQuantity" },
-                        { "mData": "no" },{ "mData": "no" },{ "mData": "no" },
-                        { "mData": "no" },{ "mData": "no" }
+                        { "mData": "realName" },
+                        { "mData": "shopName" },
+                        { "mData": "openBalance" },
+                        { "mData": "expenses" },{ "mData": "cashCollected" },{ "mData": "dailyTurnover" },
+                        { "mData": "nextOpenBalance" },{ "mData": "bringBackCash" }
                     ],
-                    "sAjaxSource": "/reports/transaction"
+                    "sAjaxSource": "/reports/cashierClosing"
                 } );
             }
             else if(page=='reportLoginAudit') {
