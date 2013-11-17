@@ -886,3 +886,5 @@
             opacity:0.9;
             filter:alpha(opacity=90);
         }
+
+        #privia_grid_filter {display:none;}

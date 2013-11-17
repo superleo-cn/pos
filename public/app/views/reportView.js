@@ -55,12 +55,12 @@ define([
             }
             else  if(page=='reportLoginAudit') {
 
-                var cashier = that.$el.find('#cashier').val();
+                var user = that.$el.find('#user').val();
                 var outlet = that.$el.find('#outlet').val();
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var dateTo = that.$el.find('#dateTo').val();
 
-                that.oTable.fnMultiFilter({"no":cashier,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
+                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
 
             }
             else  if(page=='reportCashierClosing') {
@@ -253,10 +253,80 @@ console.log(row);
                 } );
             }
 
-
-            $("#dateFrom").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
+            $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
             $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
 
+            var outlet = that.$el.find('#outlet');
+            if(outlet!=null) {
+                console.log(outlet);
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/shops',function(response){
+                    response.recordList.unshift({id:'ALL',name:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.name,name:obj.name};
+                    });
+                    outlet.select2({
+                        minimumResultsForSearch:-1,
+                        data:{
+                            results:record
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            return object.name;
+                        }
+                    });
+                });
+            }
+
+            var cashier = that.$el.find('#cashier');
+            if(cashier!=null) {
+                console.log(cashier);
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/cashiers',function(response){
+                    response.recordList.unshift({id:'ALL',realname:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.realname,name:obj.realname};
+                    });
+                    cashier.select2({
+                        minimumResultsForSearch:-1,
+                        data:{
+                            results:record
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            return object.name;
+                        }
+                    });
+                });
+            }
+
+            var user = that.$el.find('#user');
+            if(user!=null) {
+                console.log(user);
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/users',function(response){
+                    response.recordList.unshift({id:'ALL',realname:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.realname,name:obj.realname};
+                    });
+                    user.select2({
+                        minimumResultsForSearch:-1,
+                        data:{
+                            results:record
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            return object.name;
+                        }
+                    });
+                });
+            }
            // that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
 
 
