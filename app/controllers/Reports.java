@@ -39,9 +39,17 @@ public class Reports extends Basic {
     public static void cashiers() {
         Pagination pagination = new Pagination();
         pagination.currentPage = 0;
-        pagination.pageSize = 100;
+        pagination.pageSize = 1000;
         Map<String,String> search = new HashMap<String, String>();
         search.put("usertype","CASHIER");
+        renderJSON(User.search(search, pagination));
+    }
+
+    public static void users() {
+        Pagination pagination = new Pagination();
+        pagination.currentPage = 0;
+        pagination.pageSize = 1000;
+        Map<String,String> search = new HashMap<String, String>();
         renderJSON(User.search(search, pagination));
     }
     public static void transaction() throws IOException {
