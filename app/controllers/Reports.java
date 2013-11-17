@@ -41,7 +41,7 @@ public class Reports extends Basic {
         pagination.currentPage = 0;
         pagination.pageSize = 100;
         Map<String,String> search = new HashMap<String, String>();
-        search.put("usertype","CACHIER");
+        search.put("usertype","CASHIER");
         renderJSON(User.search(search, pagination));
     }
     public static void transaction() throws IOException {
