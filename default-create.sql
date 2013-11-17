@@ -107,6 +107,18 @@ create table tb_food (
   constraint pk_tb_food primary key (id))
 ;
 
+create table report_cashier_closing (
+  create_date               datetime,
+  shop_name                 varchar(255),
+  real_name                 varchar(255),
+  open_balance              double,
+  expenses                  double,
+  cash_collected            double,
+  daily_turnover            double,
+  next_open_balance         double,
+  bring_back_cash           double)
+;
+
 create table report_transaction_detail (
   create_date               datetime,
   food_name                 varchar(255),

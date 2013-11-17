@@ -29,10 +29,9 @@ public class Audit {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	public User user;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
-
 
 	public String createBy, modifiedBy;
 
