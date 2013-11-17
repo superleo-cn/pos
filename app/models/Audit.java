@@ -46,6 +46,14 @@ public class Audit {
     @Transient
     public String shopName,realName;
 
+    public String getAction() {
+        return action;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
 
     public String getRealName() {
         return realName;
