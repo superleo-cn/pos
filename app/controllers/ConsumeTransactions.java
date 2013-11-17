@@ -30,7 +30,7 @@ public class ConsumeTransactions extends Basic {
 				String str = "";
 				for (ConsumeTransaction transaction : consumeTransactions) {
 					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
-							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price + "]\n";
+							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price + "]";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = ConsumeTransaction.store(transaction);
 					if (flag) {
@@ -38,6 +38,7 @@ public class ConsumeTransactions extends Basic {
 					}
 				}
 				result.put(Constants.DATAS, datas);
+				logger.info("[System]-[Info]-[datas size is : {}, consumeTransactions size is {}]", datas.size(), consumeTransactions.length);
 				if (CollectionUtils.size(datas) == CollectionUtils.size(consumeTransactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
