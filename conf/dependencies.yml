@@ -13,3 +13,5 @@ require:
          transitive: false
     - net.sourceforge.jexcelapi -> jxl 2.6.10:
          transitive: false
+    - org.codehaus.jackson -> jackson-mapper-asl 1.9.13
+    - org.codehaus.jackson -> jackson-core-asl 1.9.13

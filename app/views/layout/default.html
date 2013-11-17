@@ -22,7 +22,6 @@
         #{include 'includes/sidebars.html' /}
     </div>
 
-
     #{if session?.username}
         <div data-role="footer" data-position="fixed" data-theme="c">
             <div data-role="navbar" data-iconpos="top">
@@ -34,8 +33,16 @@
             </div>
         </div>
     #{/if}
+
     </body>
     <script>
+
+        var userCredential = {
+          username:'${session?.username}',
+          realname:'${session?.userRealname}',
+          accessType:'OPERATOR'
+        };
+
         var tmpAkses = '{{currentUser.akses}}';
         if(tmpAkses=='') location.href='/login';
         var arrAkses=tmpAkses.split(",");

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.Audit;
+import models.Shop;
 import models.User;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -32,7 +34,9 @@ public class Auth extends Basic {
 		Map result = new HashMap();
 		try {
 			List datas = new ArrayList();
-			User dbUser = User.loginJson(user);
+			user.username = request.params.get("username");
+            user.password = request.params.get("password");
+            User dbUser = User.loginJson(user);
 			if (dbUser != null) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
@@ -41,6 +45,22 @@ public class Auth extends Basic {
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
 				result.put(Constants.DATAS, datas);
+
+                Audit audit = new Audit();
+                audit.action = "Login";
+                audit.user= dbUser;
+                audit.shop = dbUser.shop;
+                Audit.store(audit);
+                if(dbUser.shop!=null)
+                session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
+
+                session.put(Constants.CURRENT_USERID, dbUser.id);
+                session.put(Constants.CURRENT_USERNAME, dbUser.username);
+                session.put(Constants.CURRENT_USER_REALNAME, dbUser.realname);
+                session.put(Constants.CURRENT_USERTYPE, dbUser.usertype);
+
+                play.Logger.info("Login successfully");
+
 			} else {
 				result.put(Constants.CODE, Constants.FAILURE);
 				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
@@ -81,9 +101,30 @@ public class Auth extends Basic {
 
     public static void logout() {
         Cache.delete(session.getId());
+
+
+        String shopId = session.get(Constants.CURRENT_SHOPID);
+        if(shopId!=null) {
+
+            Audit audit = new Audit();
+            audit.action = "Logout";
+            User user = new User();
+            if(session.get(Constants.CURRENT_USERID)!=null) {
+                user.id= Long.valueOf(session.get(Constants.CURRENT_USERID));
+                audit.user= user;
+                Shop shop = new Shop();
+                shop.id = Long.valueOf(session.get(Constants.CURRENT_SHOPID));
+                audit.shop = shop;
+                Audit.store(audit);
+            }
+
+        }
+
         session.remove(Constants.CURRENT_USER_REALNAME);
         session.remove(Constants.CURRENT_USERNAME);
+        session.remove(Constants.CURRENT_USERTYPE);
         session.remove(Constants.CURRENT_USERID);
+
         index();
     }
 

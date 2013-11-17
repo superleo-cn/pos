@@ -3,47 +3,96 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<field name="no" class="java.lang.Long"/>
+	<field name="createDate" class="java.util.Date"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="retailPrice" class="java.lang.Double"/>
+	<field name="costPrice" class="java.lang.Double"/>
+	<field name="totalCostPrice" class="java.lang.Double"/>
+	<field name="totalDiscount" class="java.lang.Double"/>
+	<field name="totalRetailPrice" class="java.lang.Double"/>
+	<field name="quantity" class="java.lang.Long"/>
+	<field name="totalPackage" class="java.lang.Long"/>
+	<field name="freeOfCharge" class="java.lang.String"/>
+	<field name="shopName" class="java.lang.String"/>
 	<columnHeader>
-		<band height="33" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="13" width="73" height="20" uuid="f66c016e-7b11-44c5-b7fb-1a331894a2b5"/>
+				<reportElement x="0" y="0" width="32" height="20" uuid="f66c016e-7b11-44c5-b7fb-1a331894a2b5"/>
 				<text><![CDATA[S/N]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="73" y="13" width="73" height="20" uuid="5948c65b-7fa8-49e2-a3e8-00e365293b6e"/>
-				<text><![CDATA[DateTime]]></text>
+				<reportElement x="32" y="0" width="108" height="20" uuid="5948c65b-7fa8-49e2-a3e8-00e365293b6e"/>
+				<text><![CDATA[Date Time]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="13" width="116" height="20" uuid="fe8badc5-77f9-4e72-a9fd-2a76543c2870"/>
+				<reportElement x="140" y="0" width="157" height="20" uuid="fe8badc5-77f9-4e72-a9fd-2a76543c2870"/>
 				<text><![CDATA[Item]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="262" y="13" width="84" height="20" uuid="11b94277-2522-4045-a539-cab003c00926"/>
+				<reportElement x="297" y="0" width="80" height="20" uuid="11b94277-2522-4045-a539-cab003c00926"/>
 				<text><![CDATA[Retail Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="13" width="98" height="20" uuid="3c239b5c-06b9-4181-918a-27e76b63563d"/>
+				<reportElement x="377" y="0" width="80" height="20" uuid="3c239b5c-06b9-4181-918a-27e76b63563d"/>
 				<text><![CDATA[Total Discount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="444" y="13" width="73" height="20" uuid="852731d0-25ea-4487-bef4-c55521f53ea7"/>
+				<reportElement x="457" y="0" width="73" height="20" uuid="852731d0-25ea-4487-bef4-c55521f53ea7"/>
 				<text><![CDATA[Total Pack]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="517" y="13" width="41" height="20" uuid="6123d8f5-89ba-4448-ab33-56ff42fd3d30"/>
+				<reportElement x="530" y="0" width="41" height="20" uuid="6123d8f5-89ba-4448-ab33-56ff42fd3d30"/>
 				<text><![CDATA[FOC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="558" y="13" width="87" height="20" uuid="29b6c79c-637a-4435-9280-9e4e142a23e7"/>
+				<reportElement x="571" y="0" width="74" height="20" uuid="29b6c79c-637a-4435-9280-9e4e142a23e7"/>
 				<text><![CDATA[Total Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="645" y="13" width="119" height="20" uuid="b8a8757c-0145-4120-8873-0ad2c5083b2b"/>
-				<text><![CDATA[Shop]]></text>
+				<reportElement x="645" y="0" width="197" height="20" uuid="b8a8757c-0145-4120-8873-0ad2c5083b2b"/>
+				<text><![CDATA[Outlet]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="32" y="0" width="108" height="20" uuid="d7b6bd9a-9410-4d9d-96d8-7c7215063abf"/>
+				<textFieldExpression><![CDATA[$F{createDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="32" height="20" uuid="96464e5b-65a9-4a7b-87fb-f90eea21037f"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="157" height="20" uuid="a693070f-3576-4f20-978a-8156b3d7134d"/>
+				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="0" width="80" height="20" uuid="934a7e75-bb87-4c61-8a65-d74df7a97d08"/>
+				<textFieldExpression><![CDATA[$F{retailPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="0" width="80" height="20" uuid="9ef86db1-0edf-4fe5-9644-022706d7a48e"/>
+				<textFieldExpression><![CDATA[$F{totalDiscount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="73" height="20" uuid="ac5ca4de-d8fb-4739-8445-0ad905a99a8b"/>
+				<textFieldExpression><![CDATA[$F{totalPackage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="41" height="20" uuid="a1db686a-555f-473a-987e-4006f229d426"/>
+				<textFieldExpression><![CDATA[$F{freeOfCharge}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="571" y="0" width="74" height="20" uuid="39727ddb-62dd-4be7-b48a-03c667ef066e"/>
+				<textFieldExpression><![CDATA[$F{totalRetailPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="645" y="0" width="197" height="20" uuid="e4f734c4-840f-415c-8960-fa693d6195ff"/>
+				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 </jasperReport>

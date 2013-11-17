@@ -13,12 +13,13 @@ public class Pagination {
 	public long pageCount = 0; // page count
 	public int pageSize = 5; // page size
 	public int currentPage = 0; // current page
+    public Boolean all = false;
+    public Boolean zh = false;
+
+    public long iTotalDisplayRecords = 0;
+    public long iTotalRecords = 0;
 
 	public Pagination() {
 	}
-
-    public long getITotalDisplayRecords() {
-        return recordCount;
-    }
 
 }
