@@ -71,7 +71,7 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			user.username = request.params.get("username");
             user.password = request.params.get("password");
-            User dbUser = User.loginJson(user);
+            User dbUser = User.login(user);
 			if (dbUser != null) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
