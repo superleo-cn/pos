@@ -3,7 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<field name="no" class="java.lang.Long"/>
 	<field name="realName" class="java.lang.String"/>
 	<field name="shopName" class="java.lang.String"/>
 	<field name="action" class="java.lang.String"/>

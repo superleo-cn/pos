@@ -61,7 +61,7 @@ public class ReportTransactionSummary {
                     expList.where().ge("createDate",  value);
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate",  value);
+                    expList.where().le("createDate", value);
                 }
             }
         }
@@ -141,5 +141,33 @@ public class ReportTransactionSummary {
 
 
         return pagination;
+    }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public String getFoodNameZh() {
+        return foodNameZh;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public Long getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 }

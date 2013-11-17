@@ -99,4 +99,60 @@ public class ReportTransactionDetail {
         pagination.recordList = list;
         return pagination;
     }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public String getFoodNameZh() {
+        return foodNameZh;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public Double getRetailPrice() {
+        return retailPrice;
+    }
+
+    public Double getCostPrice() {
+        return costPrice;
+    }
+
+    public Double getTotalCostPrice() {
+        return totalCostPrice;
+    }
+
+    public Double getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public Double getTotalRetailPrice() {
+        return totalRetailPrice;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public Long getTotalPackage() {
+        return totalPackage;
+    }
+
+    public String getFreeOfCharge() {
+        return freeOfCharge;
+    }
 }
