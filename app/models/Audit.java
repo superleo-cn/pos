@@ -47,6 +47,9 @@ public class Audit {
     public String shopName,realName;
 
 
+    public String getRealName() {
+        return realName;
+    }
 
     /* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
