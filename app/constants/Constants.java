@@ -25,7 +25,7 @@ public class Constants {
 	// current user info
 	public static String USERTYPE_ADMIN = "ADMIN";
 	public static String USERTYPE_OPERATOR = "OPERATOR";
-	public static String USERTYPE_CACHER = "CACHIER";
+	public static String USERTYPE_CASHIER = "CASHIER";
 
 	// current user info
 	public static String CURRENT_USERID = "userid";
