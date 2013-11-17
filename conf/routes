@@ -28,7 +28,7 @@ POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 
 POST	/cashTransactions/submit				CashTransactions.store
 # CashTransaction Operation 
-POST	/dailySummarys/submit					DailySummarys.store 
+*		/dailySummarys/submit					DailySummarys.store
 
 # Audit Operation 
 POST	/audits/submit							Audits.store
