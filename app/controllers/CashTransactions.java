@@ -31,8 +31,8 @@ public class CashTransactions extends Basic {
 				String str = "";
 				for (CashTransaction transaction : cashTransactions) {
 					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
-							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price
-							+ "], [quantity = " + transaction.quantity + "]\n";
+							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.cash.price
+							+ "], [cashId = " + transaction.cash.id + "],[quantity = " + transaction.quantity + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = CashTransaction.store(transaction);
 					if (flag) {
