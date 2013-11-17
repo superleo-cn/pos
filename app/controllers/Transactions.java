@@ -41,7 +41,7 @@ public class Transactions extends Basic {
 				}
 
 				result.put(Constants.DATAS, datas);
-				if (CollectionUtils.size(datas) == 0) {
+				if (CollectionUtils.size(datas) == CollectionUtils.size(transactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
 				} else {
