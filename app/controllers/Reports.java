@@ -1,15 +1,26 @@
 package controllers;
 
-import models.ReportTransaction;
-import net.sf.jasperreports.engine.*;
+import models.Audit;
+import models.ReportPL;
+import models.ReportTransactionDetail;
+import models.ReportTransactionSummary;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import play.Logger;
+import utils.Pagination;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,42 +31,231 @@ import java.util.Arrays;
  */
 public class Reports extends Basic {
 
-    public static void transaction()  {
+    public static void transaction() throws IOException {
 
-        renderJSON(ReportTransaction.search("",null));
+        int currentPage = 1;
+        if(request.params.get("iDisplayStart")!="0") {
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+        }
+        Pagination pagination = new Pagination();
+        pagination.currentPage = currentPage;
+        pagination.pageSize = 10;
+        Map searchs = new HashMap();
+        String food =  request.params.get("sSearch_0");
+        if(StringUtils.isNotEmpty(food) && !"undefined".equalsIgnoreCase(food))
+            searchs.put("food",food);
+        String outlet =  request.params.get("sSearch_1");
+        if(StringUtils.isNotEmpty(outlet) && !"undefined".equalsIgnoreCase(outlet))
+            searchs.put("shopName",outlet);
+        String dateFrom =  request.params.get("sSearch_2");
+        if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
+            dateFrom="2000-01-01";
+        searchs.put("dateFrom",dateFrom);
+        String dateTo =  request.params.get("sSearch_3");
+        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+            dateTo="2222-01-01";
+        searchs.put("dateTo",dateTo);
+
+        session.put("reportTransactionSearchs",new ObjectMapper().writeValueAsString(searchs));
+
+        renderJSON(ReportTransactionSummary.search(searchs, pagination));
 
     }
-    public static void exportTransaction()  {
 
 
-        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/TransactionDetail.jasper");
+    public static void pl() throws IOException {
 
-        JRDataSource dataSource = new JRBeanCollectionDataSource(Arrays.asList("a"));
+        int currentPage = 1;
+        if(request.params.get("iDisplayStart")!="0") {
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+        }
+        Pagination pagination = new Pagination();
+        pagination.currentPage = currentPage;
+        pagination.pageSize = 10;
+        Map searchs = new HashMap();
+        String outlet =  request.params.get("sSearch_1");
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+            outlet="%";
+        searchs.put("shopName",outlet);
+
+        String dateFrom =  request.params.get("sSearch_2");
+        if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
+            dateFrom="2000-01-01";
+        searchs.put("dateFrom",dateFrom);
+
+        String dateTo =  request.params.get("sSearch_3");
+        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+            dateTo="2222-01-01";
+
+        searchs.put("dateTo",dateTo);
+
+        session.put("reportPlSearch",new ObjectMapper().writeValueAsString(searchs));
+
+        renderJSON(ReportPL.search(searchs, pagination));
+
+    }
+
+
+    public static void loginAudit() throws IOException {
+
+        int currentPage = 1;
+        if(request.params.get("iDisplayStart")!="0") {
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+        }
+        Pagination pagination = new Pagination();
+        pagination.currentPage = currentPage;
+        pagination.pageSize = 10;
+        Map searchs = new HashMap();
+        String cashier =  request.params.get("sSearch_0");
+        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier))
+            cashier="%";
+        searchs.put("user.realname",cashier);
+        String outlet =  request.params.get("sSearch_1");
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+            outlet="%";
+        searchs.put("shop.name",outlet);
+
+        String dateFrom =  request.params.get("sSearch_3");
+        if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
+            dateFrom="2000-01-01";
+        searchs.put("dateFrom",dateFrom);
+
+        String dateTo =  request.params.get("sSearch_4");
+        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+            dateTo="2222-01-01";
+
+        searchs.put("dateTo",dateTo);
+
+        session.put("loginAuditSearch",new ObjectMapper().writeValueAsString(searchs));
+
+        renderJSON(Audit.search(searchs, pagination));
+
+    }
+
+
+    public static void exportLoginAudit() throws IOException {
+
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/LoginAudit.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        Map searchs = new HashMap();
+        if(session.get("loginAuditSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("loginAuditSearch"), Map.class);
+
+        pagination = Audit.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
             print = JasperFillManager.fillReport(is, null, dataSource);
 
-            ByteArrayOutputStream outputByteArray = new ByteArrayOutputStream();
-            //OutputStream outputfile= new FileOutputStream(new File("c:/output/JasperReport.xls"));
+            exportXls(print,"LoginAudit.xls");
 
-            JRXlsExporter exporterXLS = new JRXlsExporter();
-            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
-            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, response.out);
-            //exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, "dx:/Dashboard2.xls" );
-            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
-            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
-            exporterXLS.exportReport();
-            response.setHeader("Content-Type","application/vnd.ms-excel");
-            response.setHeader("Content-Disposition"," attachment; filename=TransactionDetail.xls");
-            response.setHeader("Pragma" ,"no-cache");
-            response.setHeader("Expires","0");
-
-            Logger.info("A log mexxssage");
-        System.out.print("successssdf");
         } catch (JRException e) {
+            e.printStackTrace();
             Logger.error("Error",e);
         }
+    }
+
+
+    public static void exportPL() throws IOException {
+
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/PL.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        Map searchs = new HashMap();
+        if(session.get("reportPlSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("reportPlSearch"), Map.class);
+
+        pagination = ReportPL.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            exportXls(print,"PL.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+    public static void exportTransactionDetail() throws IOException {
+
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/TransactionDetail.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        Map searchs = new HashMap();
+        if(session.get("reportTransactionSearchs")!=null)
+            searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
+
+        pagination = ReportTransactionDetail.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            exportXls(print,"TransactionDetail.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+    public static void exportTransactionSummary() throws IOException {
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/TransactionSummary.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        Map searchs = new HashMap();
+        if(session.get("reportTransactionSearchs")!=null)
+            searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
+
+        Logger.info(searchs.toString());
+        pagination = ReportTransactionSummary.search(searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            exportXls(print,"TransactionSummary.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+    private static void exportXls(JasperPrint print,String fileName) throws JRException {
+        ByteArrayOutputStream outputByteArray = new ByteArrayOutputStream();
+
+        JRXlsExporter exporterXLS = new JRXlsExporter();
+        exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+        exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, response.out);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+        exporterXLS.exportReport();
+        response.setHeader("Content-Type","application/vnd.ms-excel");
+        response.setHeader("Content-Disposition"," attachment; filename="+fileName);
+        response.setHeader("Pragma" ,"no-cache");
+        response.setHeader("Expires","0");
     }
 }

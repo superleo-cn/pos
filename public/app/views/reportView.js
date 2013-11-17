@@ -14,14 +14,69 @@ define([
         events: {
             "click .save"   : "save",
             "click .saveKontrak"   : "save",
-            "click #exportTransaction" :"exportTransaction",
-            "click #tambahCustomer"   : "tambahCustomer"
+            "click #searchReport"   : "searchReport",
+            "click #exportTransactionDetail" :"exportTransactionDetail",
+            "click #exportTransactionSummary" :"exportTransactionSummary",
+            "click #exportLoginAudit" :"exportLoginAudit",
+            "click #exportPL" :"exportPL"
         },
-        exportTransaction:function() {
-          window.open("/reports/exportTransaction");
+        exportTransactionDetail:function() {
+          window.open("/reports/exportTransactionDetail");
+        },
+        exportTransactionSummary:function() {
+            window.open("/reports/exportTransactionSummary");
+        },
+        exportTransactionSummary:function() {
+            window.open("/reports/exportTransactionSummary");
+        },
+        exportLoginAudit:function() {
+            window.open("/reports/exportLoginAudit");
+        },
+        exportPL:function() {
+            window.open("/reports/exportPL");
+        },
+        searchReport:function() {
+            var page =this.page;
+            if(page=='reportTransaction') {
+              var item = that.$el.find('#item').val();
+                var outlet = that.$el.find('#outlet').val();
+                var dateFrom = that.$el.find('#dateFrom').val();
+                var timeFrom = that.$el.find('#timeFrom').val();
+                if(timeFrom!='' && dateFrom!='')
+                    dateFrom = dateFrom+' '+timeFrom;
+                var dateTo = that.$el.find('#dateTo').val();
+                var timeTo = that.$el.find('#timeTo').val();
+                if(timeTo!='' && dateTo!='')
+                    dateTo = dateTo+' '+timeTo;
+
+                that.oTable.fnMultiFilter({"no":item,"item":outlet,"shopName":dateFrom,"totalQuantity":dateTo});
+
+            }
+            else  if(page=='reportLoginAudit') {
+
+                var cashier = that.$el.find('#cashier').val();
+                var outlet = that.$el.find('#outlet').val();
+                var dateFrom = that.$el.find('#dateFrom').val();
+                var dateTo = that.$el.find('#dateTo').val();
+
+                that.oTable.fnMultiFilter({"no":cashier,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
+
+            }
+            else  if(page=='reportPL') {
+
+                var outlet = that.$el.find('#outlet').val();
+
+                var dateFrom = that.$el.find('#dateFrom').val();
+
+                var dateTo = that.$el.find('#dateTo').val();
+
+
+                that.oTable.fnMultiFilter({"shopName":outlet,"item":dateFrom,"amount":dateTo});
+
+            }
         },
         initialize:function(options){
-            console.log('initialize quote view ');
+            console.log('initialize report view ');
             this.$el.undelegate();
 
             var that = this;
@@ -29,29 +84,12 @@ define([
 
             this.listenTo(this.model,'error', function(model,e) {
                 var err;
-                try {
-                    var response = JSON.parse(e.responseText);
-                    err = response.err;
-                }catch(ex) {
-                    err =  e.responseText;
-                }
-                var alertError = $('#alertError').clone();
-                $('span',alertError).html('Terjadi masalah : '+err);
-                alertError.show().appendTo('.formMessage');
-                that.quoteForm.find('.save').button('reset');
 
 
             });
             this.listenTo(this.model,'sync', function(e) {
                 console.log('sukses');
-                if(!that.options.id)
-                    this.model.set(new Model().toJSON());
-                that.render('form',function(){
-                    var alertInfo = $('#alertInfo').clone();
-                    $('span',alertInfo).html('Sukses menyimpan Proposal');
-                    alertInfo.show().appendTo('.formMessage');
-                    that.quoteForm.find('.save').button('reset');
-                });
+
 
             });
 
@@ -105,111 +143,104 @@ define([
             if(cb) cb();
         },
         initializeForm:function(page){
+
             that=this;
+            that.page=page;
+
+            var accessType = userCredential.accessType;
+            if(accessType=='ADMIN' || accessType=='OPERATOR'){
+                that.$el.find('.adminFields').show();
+            }
+            else {
+                that.$el.find('.adminFields').hide();
+            }
             if(page=='reportTransaction') {
-                that.$el.find('#privia_grid').dataTable( {
+                    that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                    "aoColumnDefs": [
+                 /*   "aoColumnDefs": [
                         {
                             "mRender": function ( data, type, row ) {
-
-                                return '<a href="#/cabang/edit/'+data+'">Ubah</a>';
+console.log(row);
+                                return row;
                             },
-                            "aTargets": [4 ]
+                            "aTargets": [0 ]
                         }
-                    ],
+                    ],*/
                     "aoColumns": [
-                        { "mData": "S/N" },
-                        { "mData": "Item" },
-                        { "mData": "Shop" },
-                        { "mData": "Quantity" },
-                        { "mData": "Price" }
+                        { "mData": "no" },
+                        { "mData": "item" },
+                        { "mData": "shopName" },
+                        { "mData": "totalQuantity" },
+                        { "mData": "totalPrice" }
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
+
+                $('#timeFrom,#timeTo').timepicker({'defaultTime':false,'template':'modal',showMeridian:false});
+
             }
             else if(page=='reportCashierClosing') {
-                that.$el.find('#privia_grid').dataTable( {
+
+                that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                    "aoColumnDefs": [
-                        {
-                            "mRender": function ( data, type, row ) {
 
-                                return '<a href="#/cabang/edit/'+data+'">Ubah</a>';
-                            },
-                            "aTargets": [4 ]
-                        }
-                    ],
                     "aoColumns": [
-                        { "mData": "S/N" },
-                        { "mData": "Item" },
-                        { "mData": "Shop" },
-                        { "mData": "Quantity" },
-                        { "mData": "Price" }
+                        { "mData": "no" },
+                        { "mData": "item" },
+                        { "mData": "no" },
+                        { "mData": "totalQuantity" },
+                        { "mData": "no" },{ "mData": "no" },{ "mData": "no" },
+                        { "mData": "no" },{ "mData": "no" }
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
             }
             else if(page=='reportLoginAudit') {
-                that.$el.find('#privia_grid').dataTable( {
+                that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                    "aoColumnDefs": [
-                        {
-                            "mRender": function ( data, type, row ) {
 
-                                return '<a href="#/cabang/edit/'+data+'">Ubah</a>';
-                            },
-                            "aTargets": [4 ]
-                        }
-                    ],
                     "aoColumns": [
-                        { "mData": "S/N" },
-                        { "mData": "Item" },
-                        { "mData": "Shop" },
-                        { "mData": "Quantity" },
-                        { "mData": "Price" }
+                        { "mData": "no" },
+                        { "mData": "user.realname" },
+                        { "mData": "shop.name" },
+                        { "mData": "createDate" },
+                        { "mData": "action" }
                     ],
-                    "sAjaxSource": "/reports/transaction"
+                    "sAjaxSource": "/reports/loginAudit"
                 } );
             }
             else if(page=='reportPL') {
-                that.$el.find('#privia_grid').dataTable( {
+                that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                    "aoColumnDefs": [
-                        {
-                            "mRender": function ( data, type, row ) {
-
-                                return '<a href="#/cabang/edit/'+data+'">Ubah</a>';
-                            },
-                            "aTargets": [4 ]
-                        }
-                    ],
                     "aoColumns": [
-                        { "mData": "S/N" },
-                        { "mData": "Item" },
-                        { "mData": "Shop" },
-                        { "mData": "Quantity" },
-                        { "mData": "Price" }
+                        { "mData": "no" },
+                        { "mData": "shopName" },
+                        { "mData": "item" },
+                        { "mData": "amount" }
                     ],
-                    "sAjaxSource": "/reports/transaction"
+                    "sAjaxSource": "/reports/pl"
                 } );
             }
+
+
+            $("#dateFrom").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
+            $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
 
            // that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
 

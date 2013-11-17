@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PL" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="397e2ed5-3656-41b3-a67f-4b9fd4650597">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="no" class="java.lang.Long"/>
+	<field name="shopNAme" class="java.lang.String"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="48" height="20" uuid="1d59c10e-c2ba-40e1-8b8c-569e9c1ff45c"/>
+				<text><![CDATA[S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="0" width="193" height="20" uuid="b55aff52-9551-4562-906c-3cc3d6d0a771"/>
+				<text><![CDATA[Outlet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="0" width="203" height="20" uuid="03fa09d3-b6a9-40ed-892a-40ac195b7a51"/>
+				<text><![CDATA[item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="151" height="20" uuid="8d425bc0-538a-4188-81b4-b183a128b83c"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="48" height="20" uuid="9bd253e2-8a34-42ba-b78a-cac8015b1290"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="0" width="193" height="20" uuid="ee985416-c1fe-43e0-a221-603b2b01d083"/>
+				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="203" height="20" uuid="33b3829c-0700-4e7d-8e1c-44d2dd5da288"/>
+				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="151" height="20" uuid="f36de256-18d5-4013-a223-86713320b05c"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

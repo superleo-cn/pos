@@ -29,6 +29,7 @@ public class Constants {
 
 	// current user info
 	public static String CURRENT_USERID = "userid";
+    public static String CURRENT_SHOPID = "shopid";
 	public static String CURRENT_USERNAME = "username";
 	public static String CURRENT_USER_REALNAME = "userRealname";
 	public static String CURRENT_USERTYPE = "userType";

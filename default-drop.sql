@@ -14,7 +14,9 @@ drop table tb_daily_summary;
 
 drop table tb_food;
 
-drop table report_transaction;
+drop table tb_login_audit;
+
+drop table report_transaction_detail;
 
 drop table tb_shop;
 

@@ -9,6 +9,7 @@ require.config({
     "backbone.syphon" :"../lib/backbone.syphon",
     "util" : "../util.nganterin",
     "bootstrap" : "../bootstrap/js/bootstrap.min",
+    "bootstrap-timepicker" : "../lib/datepicker/bootstrap-timepicker.min",
     "jquery" : "/js/jquery.min",
     "jquery.ui" : "../lib/jquery-ui/jquery-ui-1.10.2.custom.min",
     "jquery.inputmask" : "/js/forms/jquery.inputmask.min",
@@ -79,6 +80,9 @@ require.config({
     'bootstrap' : {
       deps : ['jquery']
     },
+      'bootstrap-timepicker' : {
+          deps : ['bootstrap']
+      },
     'jquery.fineuploader' : {
       deps : ['jquery']
     },
@@ -111,10 +115,31 @@ require.config({
 
 require([
 
-'app','router','backbone','jquery.ui','jquery.validate','jquery.form','jquery.actual','bootstrap','jquery.serializeObject',
+'app','router','backbone','jquery.ui','jquery.validate','jquery.form','jquery.actual','bootstrap','bootstrap-timepicker',
+    'jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
 'backbone.syphon','jquery.inputmask','moment','gebo_common'], function(app,Router) {
+
+
+    $.fn.dataTableExt.oApi.fnMultiFilter = function( oSettings, oData ) {
+        for ( var key in oData )
+        {
+            if ( oData.hasOwnProperty(key) )
+            {
+                for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+                {
+                    if( oSettings.aoColumns[i].mData == key )
+                    {
+                        /* Add single column filter */
+                        oSettings.aoPreSearchCols[ i ].sSearch = oData[key];
+                        break;
+                    }
+                }
+            }
+        }
+        this.oApi._fnReDraw( oSettings );
+    };
 
  setTimeout('$("html").removeClass("js")',500);
 // $('#constructionModal').modal();

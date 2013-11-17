@@ -76,7 +76,7 @@ public class User {
 
 	public static User loginJson(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-				.fetch("shop", "id").where().eq("username", user.username).eq("shop.id", user.shop.id).eq("status", true)
+				.fetch("shop", "id").where().eq("username", user.username).eq("status", true)
 				.ne("usertype", Constants.USERTYPE_ADMIN).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);

@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LoginAudit" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f26c185f-5bd0-48b8-b535-e89999cc19a7">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LoginAudit" pageWidth="650" pageHeight="595" orientation="Landscape" columnWidth="650" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f26c185f-5bd0-48b8-b535-e89999cc19a7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<field name="no" class="java.lang.Long"/>
+	<field name="realName" class="java.lang.String"/>
+	<field name="shopName" class="java.lang.String"/>
+	<field name="action" class="java.lang.String"/>
+	<field name="createDate" class="java.util.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="41" width="100" height="20" uuid="8c82d619-94a6-4380-a1d6-4f2c810a7ed4"/>
-				<text><![CDATA[Static text]]></text>
+				<reportElement x="0" y="0" width="61" height="20" uuid="61216a44-ddb6-413e-911f-123b95462363"/>
+				<text><![CDATA[S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="0" width="168" height="20" uuid="5d502675-be69-4226-9a1c-61698bdc7d75"/>
+				<text><![CDATA[Cashier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="0" width="223" height="20" uuid="ec67db3f-1168-4284-b707-13152d14478e"/>
+				<text><![CDATA[Outlet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="100" height="20" uuid="603c55dc-e733-4f5d-ba2a-ec2fdf698c73"/>
+				<text><![CDATA[Date Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="552" y="0" width="98" height="20" uuid="1f8d7a18-c0f1-426e-91cd-0b7ffd143dc4"/>
+				<text><![CDATA[Action]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="61" height="20" uuid="d9949420-b7fb-4a58-a76c-bbf25bd3f9eb"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="0" width="168" height="20" uuid="a4ec5c85-8abd-4500-aabf-6e021aa1e35a"/>
+				<textFieldExpression><![CDATA[$F{realName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="0" width="223" height="20" uuid="3867c229-0fdd-41f8-951f-73305d790c9f"/>
+				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="0" width="100" height="20" uuid="b60f2e58-2210-4bfe-94ab-2c843a430cdf"/>
+				<textFieldExpression><![CDATA[$F{createDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="552" y="0" width="98" height="20" uuid="34dbf324-7218-4333-9909-2d36b22cdbc3"/>
+				<textFieldExpression><![CDATA[$F{action}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 </jasperReport>
