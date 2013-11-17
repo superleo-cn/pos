@@ -21,7 +21,7 @@ public class DailySummarys extends Basic {
 	final static Logger logger = LoggerFactory.getLogger(DailySummarys.class);
 
 	@Transactional
-	public static void store(DailySummary dailySummary) {
+	public static void submit(DailySummary dailySummary) {
 		Map result = new HashMap();
 
 		try {
