@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Audit;
-import models.ReportPL;
-import models.ReportTransactionDetail;
-import models.ReportTransactionSummary;
+import models.*;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -52,7 +49,7 @@ public class Reports extends Basic {
             dateFrom="2000-01-01";
         searchs.put("dateFrom",dateFrom);
         String dateTo =  request.params.get("sSearch_3");
-        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+        if(StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo ))
             dateTo="2222-01-01";
         searchs.put("dateTo",dateTo);
 
@@ -84,7 +81,7 @@ public class Reports extends Basic {
         searchs.put("dateFrom",dateFrom);
 
         String dateTo =  request.params.get("sSearch_3");
-        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+        if(StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo ))
             dateTo="2222-01-01";
 
         searchs.put("dateTo",dateTo);
@@ -132,6 +129,69 @@ public class Reports extends Basic {
 
     }
 
+    public static void cashierClosing() throws IOException {
+
+        int currentPage = 1;
+        if(request.params.get("iDisplayStart")!="0") {
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+        }
+        Pagination pagination = new Pagination();
+        pagination.currentPage = currentPage;
+        pagination.pageSize = 10;
+        Map searchs = new HashMap();
+        String cashier =  request.params.get("sSearch_0");
+        if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier))
+            cashier="%";
+        searchs.put("realName",cashier);
+        String outlet =  request.params.get("sSearch_1");
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet))
+            outlet="%";
+        searchs.put("shopName",outlet);
+
+        String dateFrom =  request.params.get("sSearch_3");
+        if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
+            dateFrom="2000-01-01";
+        searchs.put("dateFrom",dateFrom);
+
+        String dateTo =  request.params.get("sSearch_4");
+        if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
+            dateTo="2222-01-01";
+
+        searchs.put("dateTo",dateTo);
+
+        session.put("cashierClosingSearch",new ObjectMapper().writeValueAsString(searchs));
+
+        renderJSON(ReportCashierClosing.search(searchs, pagination));
+
+    }
+
+
+    public static void exportCashierClosing() throws IOException {
+
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/CashierClosing.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        Map searchs = new HashMap();
+        if(session.get("cashierClosingSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
+
+        pagination = ReportCashierClosing.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            exportXls(print,"CashierClosing.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
 
     public static void exportLoginAudit() throws IOException {
 

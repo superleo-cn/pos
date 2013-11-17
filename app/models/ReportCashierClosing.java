@@ -5,6 +5,7 @@ import com.avaje.ebean.annotation.Sql;
 import org.apache.commons.lang.StringUtils;
 import utils.Pagination;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.*;
@@ -17,18 +18,18 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Sql
 public class ReportCashierClosing {
 
     @Transient
     public Long no;
+
     public Date createDate;
-    public String foodName,foodNameZh,shopName;
 
-    @Transient
-    public String item;
+    public String shopName,realName;
 
-    public Double openBalance,expenses,cashCollected,dailyturnover,nextOpenBalance,bringCashBack;
+    public Double openBalance,expenses,cashCollected;
+
+    public Double dailyTurnover,nextOpenBalance,bringBackCash;
 
 
     /* the following are service methods */
@@ -45,21 +46,14 @@ public class ReportCashierClosing {
                 play.Logger.info("Value " + value);
                 if(StringUtils.isEmpty(value)) continue;
 
-                if(key.equalsIgnoreCase("food")) {
-
-                    expList.where().or(
-                            Expr.like("foodName", "%" + value + "%"),
-                            Expr.like("foodNameZh", "%" + value + "%")
-                    );
-                }
-                else if(key.equalsIgnoreCase("shopName")){
-                    expList.where().ilike(key, "%" + value+ "%");
+                if(key.equalsIgnoreCase("shopName") || key.equalsIgnoreCase("realName")){
+                    expList.where().ilike(key, "%" + value + "%");
                 }
                 else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("createDate",  value);
+                    expList.where().ge("createDate", value);
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate",  value);
+                    expList.where().le("createDate", value);
                 }
             }
         }
@@ -86,10 +80,7 @@ public class ReportCashierClosing {
             Long no = ((pagination.currentPage-1)*10)+1l;
             for(ReportCashierClosing report:list) {
                 report.no = no;
-                if(pagination.zh)
-                    report.item = report.foodNameZh;
-                else
-                    report.item = report.foodName;
+                if(report.dailyTurnover==null) report.dailyTurnover=0.0;
 
                 no++;
             }
@@ -97,5 +88,46 @@ public class ReportCashierClosing {
 
         pagination.recordList = list;
         return pagination;
+    }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public Double getOpenBalance() {
+        return openBalance;
+    }
+
+    public Double getExpenses() {
+        return expenses;
+    }
+
+    public Double getCashCollected() {
+        return cashCollected;
+    }
+
+    public Double getDailyTurnover() {
+        if(dailyTurnover==null) return 0.0;
+        return dailyTurnover;
+    }
+
+    public Double getNextOpenBalance() {
+        return nextOpenBalance;
+    }
+
+    public Double getBringBackCash() {
+        return bringBackCash;
     }
 }

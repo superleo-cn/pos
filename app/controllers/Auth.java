@@ -64,13 +64,14 @@ public class Auth extends Basic {
 		renderJSON(result);
 	}
 
-	public static void loginJsonWiyanto(User user) {
+	public static void login() {
 		Map result = new HashMap();
+        User user = new User();
 		try {
 			List datas = new ArrayList();
 			user.username = request.params.get("username");
             user.password = request.params.get("password");
-            User dbUser = User.loginJson(user);
+            User dbUser = User.login(user);
 			if (dbUser != null) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
@@ -95,9 +96,7 @@ public class Auth extends Basic {
                 play.Logger.info("Login successfully");
 
 			} else {
-				result.put(Constants.CODE, Constants.FAILURE);
-				result.put(Constants.MESSAGE, Messages.LOGIN_FAILURE);
-				result.put(Constants.DATAS, datas);
+				error();
 			}
 		} catch (Exception e) {
 			result.put(Constants.CODE, Constants.ERROR);

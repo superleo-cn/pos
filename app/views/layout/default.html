@@ -22,18 +22,6 @@
         #{include 'includes/sidebars.html' /}
     </div>
 
-    #{if session?.username}
-        <div data-role="footer" data-position="fixed" data-theme="c">
-            <div data-role="navbar" data-iconpos="top">
-                <ul>
-                    <li><a data-icon="home" href="@{Home.index()}">Home</a></li>
-                    <li><a data-icon="star" href="#">Me</a></li>
-                    <li><a data-icon="delete" href="@{Auth.logout()}" data-ajax="false">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    #{/if}
-
     </body>
     <script>
 

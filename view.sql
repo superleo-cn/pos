@@ -28,8 +28,8 @@ AND s.id = t.shop_id;
 
 --Report 2
 SELECT
-    s.id AS shop_id,
-    u.id AS user_id,
+    s.name AS shop_name,
+    u.realname AS real_name,
     d.a_open_balance,
     d.b_expenses,
     d.c_cash_collected,

@@ -121,7 +121,6 @@ require([
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
 'backbone.syphon','jquery.inputmask','moment','gebo_common'], function(app,Router) {
 
-
     $.fn.dataTableExt.oApi.fnMultiFilter = function( oSettings, oData ) {
         for ( var key in oData )
         {

@@ -211,7 +211,8 @@
 
 	/* login page */
 		.login_page {overflow:auto;
-			background: url(../img/background3.jpg) no-repeat center center fixed; 
+		background-color: #ddeeff;
+		/*	background: url(../img/background3.jpg) no-repeat center center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -851,7 +852,8 @@
 		@media (max-width: 479px) {
 			.login_page .login_box {width:100%}
 			.login_page {overflow:auto;
-			background: url(../img/background3_small.jpg) no-repeat center center fixed; 
+                background-color: #ddeeff;
+		/*	background: url(../img/background3_small.jpg) no-repeat center center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
