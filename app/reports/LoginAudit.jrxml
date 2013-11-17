@@ -39,7 +39,7 @@
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="61" height="20" uuid="d9949420-b7fb-4a58-a76c-bbf25bd3f9eb"/>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="61" y="0" width="168" height="20" uuid="a4ec5c85-8abd-4500-aabf-6e021aa1e35a"/>
