@@ -33,7 +33,7 @@ public class DailySummarys extends Basic {
 						+ dailySummary.cCashCollected + "], " + "[D.DailyTurnover = " + dailySummary.dDailyTurnover
 						+ "], [" + "[E.NextOpenBalance = " + dailySummary.eNextOpenBalance + "], "
 						+ "[F.BringBackCash = " + dailySummary.fBringBackCash + "], " + "[G.TotalBalance = "
-						+ dailySummary.gTotalBalance + "]\n";
+						+ dailySummary.gTotalBalance + "]";
 				logger.info("[System]-[Info]-[The DailySummary data is : {}]", str);
 				boolean flag = DailySummary.store(dailySummary);
 				result.put(Constants.DATAS, datas);

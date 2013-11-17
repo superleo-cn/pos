@@ -32,7 +32,7 @@ public class CashTransactions extends Basic {
 				for (CashTransaction transaction : cashTransactions) {
 					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.cash.price
-							+ "], [cashId = " + transaction.cash.id + "],[quantity = " + transaction.quantity + "]\n";
+							+ "], [cashId = " + transaction.cash.id + "],[quantity = " + transaction.quantity + "]";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = CashTransaction.store(transaction);
 					if (flag) {
@@ -40,6 +40,7 @@ public class CashTransactions extends Basic {
 					}
 				}
 				result.put(Constants.DATAS, datas);
+				logger.info("[System]-[Info]-[datas size is : {}, cashTransactions size is {}]", datas.size(), cashTransactions.length);
 				if (CollectionUtils.size(datas) == CollectionUtils.size(cashTransactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
