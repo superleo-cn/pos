@@ -19,7 +19,7 @@ import constants.Constants;
 
 public class CashTransactions extends Basic {
 
-	final static Logger logger = LoggerFactory.getLogger(Foods.class);
+	final static Logger logger = LoggerFactory.getLogger(CashTransactions.class);
 
 	@Transactional
 	public static void store(CashTransaction[] cashTransactions) {

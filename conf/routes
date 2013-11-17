@@ -26,7 +26,10 @@ POST	/transactions/submit					Transactions.store
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 
-POST	/cashTransactions/store					CashTransactions.store
+POST	/cashTransactions/submit				CashTransactions.store
+# CashTransaction Operation 
+POST	/dailySummarys/submit					DailySummarys.store
+
 # Audit Operation 
 POST	/audits/submit							Audits.store
 

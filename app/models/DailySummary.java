@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -68,4 +69,26 @@ public class DailySummary {
 
 	public Date createDate, modifiedDate;
 
+	@Transient
+	public Long androidId;
+
+	public static boolean store(DailySummary dailySummary) {
+		try {
+			if (dailySummary.id == null || dailySummary.id == 0) {
+				if (dailySummary.shop != null && dailySummary.shop.id != null && dailySummary.user != null
+						&& dailySummary.user.id != null) {
+					User user = User.view(dailySummary.user.id);
+					if (user != null) {
+						dailySummary.createBy = user.username;
+						dailySummary.createDate = new Date();
+						Ebean.save(dailySummary);
+						return true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
