@@ -84,6 +84,9 @@ public class Auth extends Basic {
                 Audit audit = new Audit();
                 audit.action = "Login";
                 audit.user= dbUser;
+                if(dbUser.shop != null){
+                	audit.shop = dbUser.shop;
+                }
                 Audit.store(audit);
                 if(dbUser.shop!=null)
                 session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
@@ -113,6 +116,10 @@ public class Auth extends Basic {
 			List datas = new ArrayList();
 			User dbUser = User.loginAdminJson(user);
 			if (dbUser != null) {
+				Audit audit = new Audit();
+                audit.action = "Login";
+                audit.user= dbUser;
+                Audit.store(audit);
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
