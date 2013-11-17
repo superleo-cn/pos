@@ -162,4 +162,20 @@ public class ReportPL {
         pagination.recordList = list;
         return pagination;
     }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
 }
