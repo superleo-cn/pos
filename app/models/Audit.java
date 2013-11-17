@@ -51,6 +51,9 @@ public class Audit {
         return realName;
     }
 
+    public String getShopName() {
+        return shopName;
+    }
     /* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
