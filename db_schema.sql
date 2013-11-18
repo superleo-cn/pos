@@ -184,7 +184,7 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;
 create table tb_audit (
   id                        bigint auto_increment not null,
   user_id                   bigint not null,
-  shop_id                   bigint not null,
+  shop_id                   bigint,
   action                    varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
