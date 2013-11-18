@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LoginAudit" pageWidth="650" pageHeight="595" orientation="Landscape" columnWidth="650" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f26c185f-5bd0-48b8-b535-e89999cc19a7">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LoginAudit" pageWidth="650" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="650" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f26c185f-5bd0-48b8-b535-e89999cc19a7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,22 +14,37 @@
 		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="61" height="20" uuid="61216a44-ddb6-413e-911f-123b95462363"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[S/N]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="61" y="0" width="168" height="20" uuid="5d502675-be69-4226-9a1c-61698bdc7d75"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Cashier]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="229" y="0" width="223" height="20" uuid="ec67db3f-1168-4284-b707-13152d14478e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Outlet]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="452" y="0" width="100" height="20" uuid="603c55dc-e733-4f5d-ba2a-ec2fdf698c73"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Date Time]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="552" y="0" width="98" height="20" uuid="1f8d7a18-c0f1-426e-91cd-0b7ffd143dc4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Action]]></text>
 			</staticText>
 		</band>

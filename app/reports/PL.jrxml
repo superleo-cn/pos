@@ -31,7 +31,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[item]]></text>
+				<text><![CDATA[Item]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="444" y="0" width="151" height="20" uuid="8d425bc0-538a-4188-81b4-b183a128b83c"/>

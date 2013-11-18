@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionDetail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1ee46721-8924-44b5-a59e-d8aec6837062">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionDetail" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1ee46721-8924-44b5-a59e-d8aec6837062">
+	<property name="ireport.zoom" value="0.7513148009015777"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
@@ -19,38 +19,65 @@
 		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="32" height="20" uuid="f66c016e-7b11-44c5-b7fb-1a331894a2b5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[S/N]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="32" y="0" width="108" height="20" uuid="5948c65b-7fa8-49e2-a3e8-00e365293b6e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Date Time]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="140" y="0" width="157" height="20" uuid="fe8badc5-77f9-4e72-a9fd-2a76543c2870"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Item]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="297" y="0" width="80" height="20" uuid="11b94277-2522-4045-a539-cab003c00926"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Retail Price]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="377" y="0" width="80" height="20" uuid="3c239b5c-06b9-4181-918a-27e76b63563d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Total Discount]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="457" y="0" width="73" height="20" uuid="852731d0-25ea-4487-bef4-c55521f53ea7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Total Pack]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="530" y="0" width="41" height="20" uuid="6123d8f5-89ba-4448-ab33-56ff42fd3d30"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[FOC]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="571" y="0" width="74" height="20" uuid="29b6c79c-637a-4435-9280-9e4e142a23e7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Total Price]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="645" y="0" width="197" height="20" uuid="b8a8757c-0145-4120-8873-0ad2c5083b2b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Outlet]]></text>
 			</staticText>
 		</band>
