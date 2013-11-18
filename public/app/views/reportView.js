@@ -258,7 +258,7 @@ console.log(row);
 
             var outlet = that.$el.find('#outlet');
             if(outlet!=null) {
-                console.log(outlet);
+                outlet.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/shops',function(response){
@@ -282,7 +282,7 @@ console.log(row);
 
             var cashier = that.$el.find('#cashier');
             if(cashier!=null) {
-                console.log(cashier);
+                cashier.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/cashiers',function(response){
@@ -306,7 +306,7 @@ console.log(row);
 
             var user = that.$el.find('#user');
             if(user!=null) {
-                console.log(user);
+                user.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/users',function(response){

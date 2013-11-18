@@ -159,7 +159,9 @@ public class Audit {
                 report.no = no;
                 report.realName=report.user.realname;
                 if(report.shop!=null)
-                report.shopName =report.shop.name;
+                    report.shopName =report.shop.name;
+                else
+                    report.shopName="";
                 no++;
             }
         }
