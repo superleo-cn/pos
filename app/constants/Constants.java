@@ -23,6 +23,7 @@ public class Constants {
 	public static String ERROR = "-1";
 
 	// current user info
+	public static String USERTYPE_SUPER_ADMIN = "SUPERADMIN";
 	public static String USERTYPE_ADMIN = "ADMIN";
 	public static String USERTYPE_OPERATOR = "OPERATOR";
 	public static String USERTYPE_CASHIER = "CASHIER";

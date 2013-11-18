@@ -31,7 +31,7 @@ public class DailySummarys extends Basic {
 						+ "[userId = " + dailySummary.user.id + "], [A.OpenBalance = " + dailySummary.aOpenBalance
 						+ "]," + "[B.Expenses = " + dailySummary.bExpenses + "], [C.CashCollected = "
 						+ dailySummary.cCashCollected + "], " + "[D.DailyTurnover = " + dailySummary.dDailyTurnover
-						+ "], [" + "[E.NextOpenBalance = " + dailySummary.eNextOpenBalance + "], "
+						+ "], [E.NextOpenBalance = " + dailySummary.eNextOpenBalance + "], "
 						+ "[F.BringBackCash = " + dailySummary.fBringBackCash + "], " + "[G.TotalBalance = "
 						+ dailySummary.gTotalBalance + "]";
 				logger.info("[System]-[Info]-[The DailySummary data is : {}]", str);
