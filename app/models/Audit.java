@@ -158,6 +158,7 @@ public class Audit {
             for(Audit report:list) {
                 report.no = no;
                 report.realName=report.user.realname;
+                if(report.shop!=null)
                 report.shopName =report.shop.name;
                 no++;
             }
