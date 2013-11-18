@@ -76,6 +76,7 @@ public class ReportPL {
         if(tmpList!=null) {
             Long no = 1l;
 
+            Double cash,sales,expenses,net;
             for(SqlRow report:tmpList) {
                 ReportPL reportPL = new ReportPL();
 
@@ -86,6 +87,7 @@ public class ReportPL {
                 no++;
                 list.add(reportPL);
 
+                sales = reportPL.amount;
                 reportPL = new ReportPL();
                 reportPL.no = no;
                 reportPL.shopName= (String) report.get("shopName");
@@ -99,6 +101,15 @@ public class ReportPL {
                 reportPL.shopName= (String) report.get("shopName");
                 reportPL.item = "C. Expenses";
                 reportPL.amount        = (Double) report.get("expenses");
+                no++;
+                list.add(reportPL);
+                expenses = reportPL.amount;
+
+                reportPL = new ReportPL();
+                reportPL.no = no;
+                reportPL.shopName= (String) report.get("shopName");
+                reportPL.item = "D. Net Profit";
+                reportPL.amount        = sales-expenses;
                 no++;
                 list.add(reportPL);
             }
@@ -123,7 +134,6 @@ public class ReportPL {
             while(searchKeys.hasNext()){
                 String key = (String) searchKeys.next();
                 String value = (String) search.get(key);
-                play.Logger.info("Valuex " + value);
                 if(StringUtils.isEmpty(value)) continue;
 
                 if(key.equalsIgnoreCase("dateFrom") || key.equalsIgnoreCase("dateTo") ) {
@@ -139,10 +149,15 @@ public class ReportPL {
         play.Logger.info(" size "+tmpList.size());
         if(tmpList!=null) {
             for(SqlRow report:tmpList) {
+                double  cost = 0.0;
                 for(ReportPL exising:list ){
                     if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) && exising.item.equalsIgnoreCase("B. Cost of Sales")) {
                         exising.amount = (Double) report.get("total_cost_price");
-                        break;
+                        cost = exising.amount;
+                    }
+                    else if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) && exising.item.equalsIgnoreCase("D. Net Profit")) {
+                        if(exising.amount==null) exising.amount=0.0;
+                        exising.amount = exising.amount - cost;
                     }
                 }
             }
@@ -152,21 +167,21 @@ public class ReportPL {
         pagination.iTotalDisplayRecords = list.size();
         pagination.iTotalRecords = list.size();
 
-        int endIndex = (startIndex+10);
-        if(endIndex>=list.size())
-            endIndex=list.size();
 
-        play.Logger.info("start "+startIndex+" end "+endIndex);
-        list = new ArrayList<ReportPL>(list.subList(startIndex,endIndex));
+    int endIndex = (startIndex+10);
+    if(endIndex>=list.size())
+    endIndex=list.size();
 
-        pagination.recordList = list;
-        return pagination;
-    }
+    play.Logger.info("start "+startIndex+" end "+endIndex);
+    list = new ArrayList<ReportPL>(list.subList(startIndex,endIndex));
+
+    pagination.recordList = list;
+    return pagination;
+}
 
     public Long getNo() {
         return no;
     }
-
     public String getItem() {
         return item;
     }
