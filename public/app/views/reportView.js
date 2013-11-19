@@ -194,8 +194,7 @@ console.log(row);
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
-
-                $('#timeFrom,#timeTo').timepicker({'defaultTime':false,'template':'modal',showMeridian:false});
+                $('#timeFrom,#timeTo').timepicker({'defaultTime':false,'template':false,showMeridian:false});
 
             }
             else if(page=='reportCashierClosing') {
