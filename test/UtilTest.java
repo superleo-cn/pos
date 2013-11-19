@@ -10,7 +10,7 @@ import org.junit.Test;
 import play.test.FunctionalTest;
 import utils.MyPropertiesUtils;
 
-public class UtilTest extends FunctionalTest {
+public class UtilTest {
 
 	@Test
 	public void testPropertyBeanUtils() throws Exception {
@@ -48,6 +48,16 @@ public class UtilTest extends FunctionalTest {
 		System.out.println(user.realname);
 		System.out.println(user.createDate);
 		System.out.println(user.password);
+	}
+	
+	@Test
+	public void testStrings() throws Exception {
+		String placeholder = "%-20s%-20s%-10s?";
+		String formatted = String.format(placeholder, "Ivan", "Scala", "10000000");
+		System.out.println(formatted);
+		formatted = String.format(placeholder, "I m superman ", "What you want from", "2000");
+		System.out.println(formatted);
+		
 	}
 
 }
