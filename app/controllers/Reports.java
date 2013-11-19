@@ -205,7 +205,16 @@ public class Reports extends Basic {
         Map searchs = new HashMap();
         if(session.get("cashierClosingSearch")!=null)
             searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
-
+        else {
+            String cashier="%";
+            searchs.put("realName",cashier);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
         pagination = ReportCashierClosing.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -232,7 +241,16 @@ public class Reports extends Basic {
         Map searchs = new HashMap();
         if(session.get("loginAuditSearch")!=null)
             searchs = new ObjectMapper().readValue(session.get("loginAuditSearch"), Map.class);
-
+        else {
+            String cashier="%";
+            searchs.put("user.realname",cashier);
+            String outlet ="%";
+            searchs.put("shop.name",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
         pagination = Audit.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -260,7 +278,14 @@ public class Reports extends Basic {
         Map searchs = new HashMap();
         if(session.get("reportPlSearch")!=null)
             searchs = new ObjectMapper().readValue(session.get("reportPlSearch"), Map.class);
-
+        else {
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
         pagination = ReportPL.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -287,7 +312,16 @@ public class Reports extends Basic {
         Map searchs = new HashMap();
         if(session.get("reportTransactionSearchs")!=null)
             searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
-
+        else {
+            String food="%";
+            searchs.put("food",food);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
         pagination = ReportTransactionDetail.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -313,7 +347,16 @@ public class Reports extends Basic {
         Map searchs = new HashMap();
         if(session.get("reportTransactionSearchs")!=null)
             searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
-
+        else {
+            String food="%";
+            searchs.put("food",food);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
         Logger.info(searchs.toString());
         pagination = ReportTransactionSummary.search(searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
