@@ -94,7 +94,8 @@ public class Food {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, price, picture").where().eq("status", true)
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, price, picture")
+					.fetch("shop", "id").where().eq("shop.id", id).eq("status", true)
 					.findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
