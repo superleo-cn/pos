@@ -3,7 +3,7 @@ package constants;
 public class Constants {
 	
 	// website URL
-	public static String WEBSITE_URL = "http://localhost:9000/";
+	public static String WEBSITE_URL = "http://ec2-54-254-145-129.ap-southeast-1.compute.amazonaws.com/";
 	public static String PICTURE_URL = WEBSITE_URL + "public/upload/";
 	
 	// code status
