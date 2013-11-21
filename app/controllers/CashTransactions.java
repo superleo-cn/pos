@@ -5,17 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.CashTransaction;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import models.CashTransaction;
-import models.ConsumeTransaction;
-import models.Transaction;
-
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
+import constants.Messages;
 
 public class CashTransactions extends Basic {
 
@@ -40,7 +39,8 @@ public class CashTransactions extends Basic {
 					}
 				}
 				result.put(Constants.DATAS, datas);
-				logger.info("[System]-[Info]-[datas size is : {}, cashTransactions size is {}]", datas.size(), cashTransactions.length);
+				logger.info(Messages.TRANSACTION_MESSAGE,
+						new Object[] { datas.size(), CashTransaction.class.getSimpleName(), cashTransactions.length });
 				if (CollectionUtils.size(datas) == CollectionUtils.size(cashTransactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");

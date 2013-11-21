@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.ConsumeTransaction;
 import models.Transaction;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,11 +29,12 @@ public class Transactions extends Basic {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id + "], [userId = " + transaction.user.id
-							+ "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
-							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = "
-							+ transaction.totalRetailPrice + "], [totalPackage = " + transaction.totalPackage
-							+ "], [freeOfCharge = " + transaction.freeOfCharge + "]\n";
+					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
+							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
+							+ transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice
+							+ "], [totalPackage = " + transaction.totalPackage + "], [freeOfCharge = "
+							+ transaction.freeOfCharge + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Transaction.store(transaction);
 					if (flag) {
@@ -41,6 +43,8 @@ public class Transactions extends Basic {
 				}
 
 				result.put(Constants.DATAS, datas);
+				logger.info(Messages.TRANSACTION_MESSAGE,
+						new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
 				if (CollectionUtils.size(datas) == CollectionUtils.size(transactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");

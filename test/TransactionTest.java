@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,8 +36,7 @@ public class TransactionTest extends FunctionalTest {
 
 			Response response = POST("/transactions/store2", params);
 			assertIsOk(response);
-			// assertContentType("text/html", response);
-			// assertCharset(play.Play.defaultWebEncoding, response);
+			response.out.writeTo(System.out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,8 +70,7 @@ public class TransactionTest extends FunctionalTest {
 
 			Response response = POST("/transactions/submit", params);
 			assertIsOk(response);
-			// assertContentType("text/html", response);
-			// assertCharset(play.Play.defaultWebEncoding, response);
+			response.out.writeTo(System.out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

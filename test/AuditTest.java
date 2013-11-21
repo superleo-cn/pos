@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class AuditTest extends FunctionalTest {
 
 			Response response = POST("/audits/submit", params);
 			assertIsOk(response);
+			response.out.writeTo(System.out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

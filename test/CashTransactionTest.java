@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,11 @@ public class CashTransactionTest extends FunctionalTest {
 
 		Response response = POST("/cashTransactions/submit", params);
 		assertIsOk(response);
-		// assertContentType("text/html", response);
-		// assertCharset(play.Play.defaultWebEncoding, response);
+		try {
+			response.out.writeTo(System.out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

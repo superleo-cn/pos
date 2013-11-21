@@ -185,6 +185,18 @@ create table tb_user (
   constraint pk_tb_user primary key (id))
 ;
 
+create table tb_version (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  version_no                bigint,
+  create_by                 varchar(255),
+  modified_by               varchar(255),
+  description               varchar(255),
+  create_date               datetime,
+  modified_date             datetime,
+  constraint pk_tb_version primary key (id))
+;
+
 alter table tb_audit add constraint fk_tb_audit_user_1 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
 create index ix_tb_audit_user_1 on tb_audit (user_id);
 alter table tb_audit add constraint fk_tb_audit_shop_2 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;

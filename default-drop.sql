@@ -24,5 +24,7 @@ drop table tb_transaction;
 
 drop table tb_user;
 
+drop table tb_version;
+
 SET FOREIGN_KEY_CHECKS=1;
 

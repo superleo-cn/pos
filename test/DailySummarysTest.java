@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +34,11 @@ public class DailySummarysTest extends FunctionalTest {
 
 		Response response = POST("/dailySummarys/submit", params);
 		assertIsOk(response);
-		// assertContentType("text/html", response);
-		// assertCharset(play.Play.defaultWebEncoding, response);
+		try {
+			response.out.writeTo(System.out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
