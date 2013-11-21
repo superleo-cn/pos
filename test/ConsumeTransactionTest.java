@@ -1,13 +1,14 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.junit.*;
+import models.Cash;
+import models.Consumption;
 
-import play.Logger;
-import play.test.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import models.*;
+import org.junit.Test;
+
+import play.mvc.Http.Response;
+import play.test.FunctionalTest;
 
 public class ConsumeTransactionTest extends FunctionalTest {
 
@@ -15,16 +16,18 @@ public class ConsumeTransactionTest extends FunctionalTest {
 	public void testConsumeTransactionStore() {
 		String userId = "2";
 		String shopId = "1";
-		String consumptionId = "1";
-		String pirce = "100.1";
 		// Http.Request req = newRequest();
+		List<Consumption> list = Consumption.listByShop(Long.parseLong(shopId));
 		Map<String, String> params = new HashMap<>();
-		params.put("consumeTransaction.user.id", userId);
-		params.put("consumeTransaction.shop.id", shopId);
-		params.put("consumeTransaction.consumption.id", consumptionId);
-		params.put("consumeTransaction.price", pirce);
+		for (int i = 0; i < list.size(); i++) {
+			Consumption consumption = list.get(i);
+			params.put("consumeTransactions[" + i + "].user.id", userId);
+			params.put("consumeTransactions[" + i + "].shop.id", shopId);
+			params.put("consumeTransactions[" + i + "].consumption.id", String.valueOf(consumption.id));
+			params.put("consumeTransactions[" + i + "].price", String.valueOf(i + 1));
+		}
 
-		Response response = POST("/consumeTransactions/store", params);
+		Response response = POST("/consumeTransactions/submit", params);
 		assertIsOk(response);
 		// assertContentType("text/html", response);
 		// assertCharset(play.Play.defaultWebEncoding, response);

@@ -29,21 +29,21 @@ import constants.Constants;
 public class Cash {
 	@Id
 	public Long id;
-	
+
 	@Required(message = "Cash price cannot be empty")
 	public Float price;
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
-	
+
 	public Integer position;
 
 	public String createBy, modifiedBy;
-	
+
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */
@@ -89,11 +89,11 @@ public class Cash {
 		Integer flag = Ebean.delete(Cash.class, id);
 		return (flag > 0) ? true : false;
 	}
-	
+
 	public static List<Cash> listByShop(Long id) {
 		if (id != null) {
-			return Ebean.find(Cash.class).select("id, name, price, picture").where().eq("status", true)
-					.findList();
+			return Ebean.find(Cash.class).select("id, price, position").where()
+					.eq("shop.id", id).eq("status", true).findList();
 		}
 		return null;
 	}
