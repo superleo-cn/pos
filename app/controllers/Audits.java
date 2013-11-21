@@ -19,7 +19,7 @@ public class Audits extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Audits.class);
 
-	//@Transactional
+	@Transactional
 	public static void store(Audit[] audits) {
 		Map result = new HashMap();
 		try {

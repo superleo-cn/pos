@@ -21,6 +21,8 @@ import constants.Constants;
 import constants.Messages;
 import constants.Pages;
 
+import com.avaje.ebean.annotation.Transactional;
+
 public class Auth extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Auth.class);
@@ -30,6 +32,7 @@ public class Auth extends Basic {
 		render(Pages.LOGIN);
 	}
 	
+	@Transactional
 	public static void loginJson(User user) {
 		Map result = new HashMap();
 		try {
@@ -64,6 +67,7 @@ public class Auth extends Basic {
 		renderJSON(result);
 	}
 
+	@Transactional
 	public static void login() {
 		Map result = new HashMap();
         User user = new User();
@@ -110,6 +114,7 @@ public class Auth extends Basic {
 		renderJSON(result);
 	}
 	
+	@Transactional
 	public static void loginAdminJson(User user) {
 		Map result = new HashMap();
 		try {
@@ -138,6 +143,7 @@ public class Auth extends Basic {
 		renderJSON(result);
 	}
 
+	@Transactional
     public static void logout() {
         Cache.delete(session.getId());
 
