@@ -43,10 +43,10 @@ public class Version {
 		return Ebean.find(Version.class).order("id desc").setMaxRows(1).findList();
 	}
 
-	public static boolean store(Version audit) {
+	public static boolean store(Version version) {
 		try {
-			audit.createDate = new Date();
-			Ebean.save(audit);
+			version.createDate = new Date();
+			Ebean.save(version);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

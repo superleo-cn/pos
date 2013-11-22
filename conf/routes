@@ -31,6 +31,8 @@ POST	/cashTransactions/submit				CashTransactions.store
 *		/dailySummarys/submit					DailySummarys.store
 # Version Operation 
 *		/checkUpdate							Versions.listJson
+*		/versions/index							Versions.index
+*		/versions/uploadApk						Versions.store
 
 # Audit Operation 
 POST	/audits/submit							Audits.store

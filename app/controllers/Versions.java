@@ -1,21 +1,13 @@
 package controllers;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import models.Audit;
-import models.Food;
-import models.Shop;
 import models.Version;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
 import constants.Messages;
@@ -36,5 +28,22 @@ public class Versions extends Basic {
 		}
 		renderJSON(result);
 
+	}
+	
+	public static void index() {
+		render("/pages/upload.html");
+	}
+
+	public static void store(Version version, File file) {
+		String message = null;
+		try {
+			version.name = uploadFile(file);
+			Version.store(version);
+			message = "上传成功";
+		} catch (Exception e) {
+			logger.error(Messages.VERSION_LIST_ERROR, new Object[] { e });
+			message = "上传失败";
+		}
+		renderText(message);
 	}
 }
