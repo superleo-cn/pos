@@ -23,6 +23,8 @@ public class Version {
 	public Long id;
 	
 	public String name;
+	
+	public String versionSn;
 
 	public Long versionNo;
 

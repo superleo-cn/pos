@@ -188,6 +188,7 @@ create table tb_user (
 create table tb_version (
   id                        bigint auto_increment not null,
   name                      varchar(255),
+  version_sn                varchar(255),
   version_no                bigint,
   create_by                 varchar(255),
   modified_by               varchar(255),

@@ -27,18 +27,6 @@ drop table tb_user;
 SET FOREIGN_KEY_CHECKS=1;
 
 --create all the new tables
-create table tb_version (
-  id                        bigint auto_increment not null,
-  name                      varchar(255),
-  version_no                bigint,
-  create_by                 varchar(255),
-  modified_by               varchar(255),
-  description               varchar(255),
-  create_date               datetime,
-  modified_date             datetime,
-  constraint pk_tb_version primary key (id))
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 create table tb_shop (
   id                        bigint auto_increment not null,
   name                      varchar(255),
@@ -203,6 +191,19 @@ create table tb_audit (
   create_date               datetime,
   modified_date             datetime,
   constraint pk_tb_audit primary key (id))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table tb_version (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  version_sn 				VARCHAR(255),
+  version_no                bigint,
+  create_by                 varchar(255),
+  modified_by               varchar(255),
+  description               varchar(255),
+  create_date               datetime,
+  modified_date             datetime,
+  constraint pk_tb_version primary key (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table report_transaction (
