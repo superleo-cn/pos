@@ -47,6 +47,7 @@ GET     /css/                                	staticDir:public/css
 GET     /js/                               	 	staticDir:public/js
 GET     /lib/                                	staticDir:public/lib
 GET     /img/                                	staticDir:public/img
+GET     /versions/                              staticDir:public/versions
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
