@@ -30,7 +30,7 @@ POST	/cashTransactions/submit				CashTransactions.store
 # CashTransaction Operation 
 *		/dailySummarys/submit					DailySummarys.store
 # Version Operation 
-*		/versions/update						Versions.listJson
+*		/checkUpdate							Versions.listJson
 
 # Audit Operation 
 POST	/audits/submit							Audits.store
