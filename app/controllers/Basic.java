@@ -50,10 +50,12 @@ public class Basic extends Controller {
 	}
 
 	public static String uploadFile(File apkFile) {
-		File file = Play.getFile("/public/versions");
 		String filename = apkFile.getName();
 		try {
-			FileUtils.copyFileToDirectory(apkFile, file);
+			if(!StringUtils.containsIgnoreCase(filename, ".apk")){
+				filename = filename + ".apk";
+			}
+			FileUtils.copyFile(apkFile, new File("public/versions/" + filename));
 		} catch (IOException e) {
 			Logger.error("upload file error", e);
 		}
