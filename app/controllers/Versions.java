@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import models.Version;
@@ -31,7 +32,12 @@ public class Versions extends Basic {
 	}
 	
 	public static void index() {
-		render("/pages/upload.html");
+		List<Version> versions = Version.getLastVersion();
+		Version version = null;
+		if(versions != null){
+			version = versions.get(0);
+		}
+		render("/pages/upload.html", version);
 	}
 
 	public static void store(Version version, File file) {
