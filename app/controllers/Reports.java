@@ -1,10 +1,8 @@
 package controllers;
 
+import constants.Constants;
 import models.*;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
@@ -70,6 +68,9 @@ public class Reports extends Basic {
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            outlet=session.get("shopName");
+
         searchs.put("shopName",outlet);
         String dateFrom =  request.params.get("sSearch_2");
         if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
@@ -100,6 +101,8 @@ public class Reports extends Basic {
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            outlet=session.get("shopName");
         searchs.put("shopName",outlet);
 
         String dateFrom =  request.params.get("sSearch_2");
@@ -173,6 +176,8 @@ public class Reports extends Basic {
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet)  || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            outlet=session.get("shopName");
         searchs.put("shopName",outlet);
 
         String dateFrom =  request.params.get("sSearch_3");
@@ -219,7 +224,10 @@ public class Reports extends Basic {
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
-            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"CashierClosing.xls");
 
@@ -255,7 +263,9 @@ public class Reports extends Basic {
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
-            print = JasperFillManager.fillReport(is, null, dataSource);
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"LoginAudit.xls");
 
@@ -290,7 +300,9 @@ public class Reports extends Basic {
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
-            print = JasperFillManager.fillReport(is, null, dataSource);
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"PL.xls");
 
@@ -326,7 +338,10 @@ public class Reports extends Basic {
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
-            print = JasperFillManager.fillReport(is, null, dataSource);
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionDetail.xls");
 
@@ -362,7 +377,9 @@ public class Reports extends Basic {
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
         try {
-            print = JasperFillManager.fillReport(is, null, dataSource);
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionSummary.xls");
 
@@ -379,9 +396,10 @@ public class Reports extends Basic {
         exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
         exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, response.out);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-        exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.FALSE);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+
         exporterXLS.exportReport();
         response.setHeader("Content-Type","application/vnd.ms-excel");
         response.setHeader("Content-Disposition"," attachment; filename="+fileName);

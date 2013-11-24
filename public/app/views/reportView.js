@@ -163,7 +163,7 @@ define([
             that.page=page;
 
             var accessType = userCredential.accessType;
-            if(accessType=='ADMIN' || accessType=='OPERATOR'){
+            if(accessType=='ADMIN' || accessType=='SUPERADMIN'){
                 that.$el.find('.adminFields').show();
             }
             else {
@@ -186,11 +186,11 @@ console.log(row);
                         }
                     ],*/
                     "aoColumns": [
-                        { "mData": "no" },
-                        { "mData": "item" },
-                        { "mData": "shopName" },
-                        { "mData": "totalQuantity" },
-                        { "mData": "totalPrice" }
+                        { "mData": "no",  "bSortable": false  },
+                        { "mData": "item",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
+                        { "mData": "totalQuantity" ,  "bSortable": false },
+                        { "mData": "totalPrice",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
@@ -207,12 +207,12 @@ console.log(row);
                     "sAjaxDataProp" : "recordList",
 
                     "aoColumns": [
-                        { "mData": "no" },
-                        { "mData": "realName" },
-                        { "mData": "shopName" },
-                        { "mData": "openBalance" },
-                        { "mData": "expenses" },{ "mData": "cashCollected" },{ "mData": "dailyTurnover" },
-                        { "mData": "nextOpenBalance" },{ "mData": "bringBackCash" }
+                        { "mData": "no",  "bSortable": false  },
+                        { "mData": "realName",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
+                        { "mData": "openBalance",  "bSortable": false  },
+                        { "mData": "expenses" ,  "bSortable": false },{ "mData": "cashCollected",  "bSortable": false  },{ "mData": "dailyTurnover",  "bSortable": false  },
+                        { "mData": "nextOpenBalance" ,  "bSortable": false },{ "mData": "bringBackCash",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/cashierClosing"
                 } );
@@ -226,11 +226,11 @@ console.log(row);
                     "sAjaxDataProp" : "recordList",
 
                     "aoColumns": [
-                        { "mData": "no" },
-                        { "mData": "user.realname" },
-                        { "mData": "shop.name" },
-                        { "mData": "createDate" },
-                        { "mData": "action" }
+                        { "mData": "no" ,  "bSortable": false },
+                        { "mData": "user.realname",  "bSortable": false  },
+                        { "mData": "shop.name",  "bSortable": false  },
+                        { "mData": "createDate" ,  "bSortable": false },
+                        { "mData": "action" ,  "bSortable": false }
                     ],
                     "sAjaxSource": "/reports/loginAudit"
                 } );
@@ -243,10 +243,10 @@ console.log(row);
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
                     "aoColumns": [
-                        { "mData": "no" },
-                        { "mData": "shopName" },
-                        { "mData": "item" },
-                        { "mData": "amount" }
+                        { "mData": "no",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
+                        { "mData": "item",  "bSortable": false  },
+                        { "mData": "amount",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/pl"
                 } );

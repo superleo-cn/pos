@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionSummary" pageWidth="725" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="725" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4746e223-0a05-4add-92d0-e48fc8727bb3">
-	<property name="ireport.zoom" value="0.8264462809917362"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.2100000000000017"/>
+	<property name="ireport.x" value="62"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="shopName" class="java.lang.String"/>
@@ -46,7 +46,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Price]]></text>
+				<text><![CDATA[Total Price (S$)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

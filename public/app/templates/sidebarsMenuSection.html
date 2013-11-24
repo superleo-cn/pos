@@ -23,33 +23,16 @@
             <ul class="nav nav-list">
                 <li><a href="#/reportTransaction">Transaction</a></li>
                 <li><a href="#/reportCashierClosing">Cashier Closing</a></li>
+                <%
+                if(_.contains(akses,'ADMIN') || _.contains(akses,'SUPERADMIN')) {
+            %>
                 <li><a href="#/reportLoginAudit">Login Audit</a></li>
+                <%
+              }
+            %>
                 <li><a href="#/reportPL">P & L</a></li>
                
             </ul>
         </div>
     </div>
 </div>
-<%
- if(_.contains(akses,'admin')) {
- %>
-<div class="accordion-group">
-    <div class="accordion-heading">
-        <a href="#collapseThree" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
-            <i class="icon-list"></i> Laporan
-        </a>
-    </div>
-    <div class="accordion-body collapse" id="collapseThree">
-        <div class="accordion-inner">
-            <ul class="nav nav-list">
-                <li><a href="#constructionModal" data-toggle="modal">Keuntungan</a></li>
-                <li><a href="#constructionModal" data-toggle="modal">Transaksi Leasing</a></li>
-                <li><a href="#constructionModal" data-toggle="modal">Karyawan</a></li>
-            </ul>
-
-        </div>
-    </div>
-</div>
- <%
- }
- %>

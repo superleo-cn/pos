@@ -38,7 +38,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Amount]]></text>
+				<text><![CDATA[Amount (S$)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

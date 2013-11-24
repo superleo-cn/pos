@@ -28,10 +28,10 @@
         var userCredential = {
           username:'${session?.username}',
           realname:'${session?.userRealname}',
-          accessType:'OPERATOR'
+          accessType:'${session?.userType}'
         };
 
-        var tmpAkses = '{{currentUser.akses}}';
+        var tmpAkses = userCredential.accessType;
         if(tmpAkses=='') location.href='/login';
         var arrAkses=tmpAkses.split(",");
         if (typeof console == "undefined") {

@@ -72,7 +72,12 @@ public class Auth extends Basic {
 			user.username = request.params.get("username");
             user.password = request.params.get("password");
             User dbUser = User.login(user);
-			if (dbUser != null) {
+            boolean isCorrectRole = false;
+            if(dbUser!=null && dbUser.usertype!=null &&  (dbUser.usertype.equalsIgnoreCase("SUPERADMIN") || dbUser.usertype.equalsIgnoreCase("ADMIN") ||
+                    dbUser.usertype.equalsIgnoreCase("OPERATOR")))
+                isCorrectRole = true;
+
+			if (dbUser != null && isCorrectRole) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
 				User.store(user);
@@ -89,12 +94,17 @@ public class Auth extends Basic {
                 }
                 Audit.store(audit);
                 if(dbUser.shop!=null)
-                session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
+                {
+                    session.put("shopName", dbUser.shop.name);
+                    session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
+                }
+
 
                 session.put(Constants.CURRENT_USERID, dbUser.id);
                 session.put(Constants.CURRENT_USERNAME, dbUser.username);
                 session.put(Constants.CURRENT_USER_REALNAME, dbUser.realname);
                 session.put(Constants.CURRENT_USERTYPE, dbUser.usertype);
+
 
                 play.Logger.info("Login successfully");
 
