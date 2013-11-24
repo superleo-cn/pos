@@ -140,6 +140,9 @@ public class Reports extends Basic {
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet)  || "ALL".equalsIgnoreCase(outlet))
             outlet="%";
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            outlet=session.get("shopName");
+
         searchs.put("shop.name",outlet);
 
         String dateFrom =  request.params.get("sSearch_3");
