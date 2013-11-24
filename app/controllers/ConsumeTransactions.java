@@ -9,12 +9,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import models.CashTransaction;
 import models.ConsumeTransaction;
 import models.Transaction;
 
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
+import constants.Messages;
 
 public class ConsumeTransactions extends Basic {
 
@@ -38,7 +40,9 @@ public class ConsumeTransactions extends Basic {
 					}
 				}
 				result.put(Constants.DATAS, datas);
-				logger.info("[System]-[Info]-[datas size is : {}, consumeTransactions size is {}]", datas.size(), consumeTransactions.length);
+				logger.info(Messages.TRANSACTION_MESSAGE,
+						new Object[] { datas.size(), ConsumeTransaction.class.getSimpleName(),
+								consumeTransactions.length });
 				if (CollectionUtils.size(datas) == CollectionUtils.size(consumeTransactions)) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");

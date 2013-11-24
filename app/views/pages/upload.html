@@ -1,0 +1,47 @@
+
+#{set 'moreScripts'} 
+	<script type='text/javascript'>
+	
+	$(document).on("pageinit", function() {
+		
+	});	
+	
+	
+	
+	</script>
+#{/set} 
+
+Current Version is: ${version?.versionNo}
+
+<form id="form" method="post" action="@{Versions.store()}" enctype="multipart/form-data">
+	<h2>Upload APK File</h2>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">APK Name:</label>
+		<input type="text" name="version.name" id="name" size="30" required> (E.g. pos-android-v1.2.apk)
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">APK Version Sn.:</label>
+		<input type="text" name="version.versionSn" id="versionSn" size="30" required> (E.g. V2.3.1)
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">APK Version No.:</label>
+		<input type="text" name="version.versionNo" id="versionNo" size="30" required> (E.g. 2)
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Description:</label>
+		<input type="text" name="version.description" id="description" size="60" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<label for="text-basic">Upload File:</label>
+		<input type="file" name="file" id="file" required>
+	</div>
+	
+	<div data-role="fieldcontain" class="no-field-separator">
+		<input type="submit" value="Upload">
+	</div>
+</form>

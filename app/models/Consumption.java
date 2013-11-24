@@ -32,7 +32,7 @@ public class Consumption {
 
 	@Required(message = "Consumption name cannot be empty")
 	public String name;
-	
+
 	@Required(message = "Consumption Chinese name cannot be empty")
 	public String name_zh;
 
@@ -42,9 +42,9 @@ public class Consumption {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
-	
+
 	public Integer position;
-	
+
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;
@@ -75,10 +75,9 @@ public class Consumption {
 
 	public static List<Consumption> listByShop(Long id) {
 		if (id != null) {
-			 return Ebean.find(Consumption.class).select("id, name, price, picture").where()
+			return Ebean.find(Consumption.class).select("id, name, name_zh, position").where().eq("shop.id", id)
 					.eq("status", true).findList();
 		}
 		return null;
 	}
-
 }

@@ -29,6 +29,10 @@ POST	/consumeTransactions/submit				ConsumeTransactions.store
 POST	/cashTransactions/submit				CashTransactions.store
 # CashTransaction Operation 
 *		/dailySummarys/submit					DailySummarys.store
+# Version Operation 
+*		/checkUpdate							Versions.listJson
+*		/versions/index							Versions.index
+*		/versions/uploadApk						Versions.store
 
 # Audit Operation 
 POST	/audits/submit							Audits.store
@@ -45,6 +49,7 @@ GET     /css/                                	staticDir:public/css
 GET     /js/                               	 	staticDir:public/js
 GET     /lib/                                	staticDir:public/lib
 GET     /img/                                	staticDir:public/img
+GET     /versions/                              staticDir:public/versions
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

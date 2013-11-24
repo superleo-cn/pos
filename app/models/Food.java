@@ -29,22 +29,22 @@ import constants.Constants;
 public class Food {
 	@Id
 	public Long id;
-	
+
 	@Required(message = "SN cannot be empty")
 	public String sn;
 
 	@Required(message = "Food name cannot be empty")
 	public String name;
-	
+
 	@Required(message = "Food chinese name cannot be empty")
 	public String nameZh;
-	
+
 	@Required(message = "Food type cannot be empty")
 	public String type;
 
 	@Required(message = "Food cost price cannot be empty")
 	public Float costPrice;
-	
+
 	@Required(message = "Food retail price cannot be empty")
 	public Float retailPrice;
 
@@ -61,9 +61,9 @@ public class Food {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
-	
+
 	public Integer position;
-	
+
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;
@@ -94,8 +94,8 @@ public class Food {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, name, type, price, picture").where().eq("status", true)
-					.findList();
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, retailPrice, picture, position").where()
+					.eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
 					if (o != null) {

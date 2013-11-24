@@ -1,13 +1,14 @@
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.junit.*;
+import models.Cash;
 
-import play.Logger;
-import play.test.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import models.*;
+import org.junit.Test;
+
+import play.mvc.Http.Response;
+import play.test.FunctionalTest;
 
 public class CashTransactionTest extends FunctionalTest {
 
@@ -15,19 +16,24 @@ public class CashTransactionTest extends FunctionalTest {
 	public void testCashTransactionStore() {
 		String userId = "2";
 		String shopId = "1";
-		String cashId = "2";
-		String qunatity = "13";
 		// Http.Request req = newRequest();
+		List<Cash> list = Cash.listByShop(Long.parseLong(shopId));
 		Map<String, String> params = new HashMap<>();
-		params.put("cashTransaction.user.id", userId);
-		params.put("cashTransaction.shop.id", shopId);
-		params.put("cashTransaction.cash.id", cashId);
-		params.put("cashTransaction.quantity", qunatity);
+		for (int i = 0; i < list.size(); i++) {
+			Cash cash = list.get(i);
+			params.put("cashTransactions[" + i + "].user.id", userId);
+			params.put("cashTransactions[" + i + "].shop.id", shopId);
+			params.put("cashTransactions[" + i + "].cash.id", String.valueOf(cash.id));
+			params.put("cashTransactions[" + i + "].quantity", String.valueOf(i + 1));
+		}
 
-		Response response = POST("/cashTransactions/store", params);
+		Response response = POST("/cashTransactions/submit", params);
 		assertIsOk(response);
-		// assertContentType("text/html", response);
-		// assertCharset(play.Play.defaultWebEncoding, response);
+		try {
+			response.out.writeTo(System.out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

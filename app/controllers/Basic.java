@@ -49,20 +49,17 @@ public class Basic extends Controller {
 
 	}
 
-	public static void uploadFile(File imgFile) {
-		File file = Play.getFile("/public/uploads");
-		String filename = imgFile.getName();
-		Map map = new HashMap();
+	public static String uploadFile(File apkFile) {
+		String filename = apkFile.getName();
 		try {
-			FileUtils.copyFileToDirectory(imgFile, file);
-			map.put("error", 0);
-			map.put("url", Play.ctxPath + "/public/uploads/" + filename);
+			if(!StringUtils.containsIgnoreCase(filename, ".apk")){
+				filename = filename + ".apk";
+			}
+			FileUtils.copyFile(apkFile, new File("public/versions/" + filename));
 		} catch (IOException e) {
 			Logger.error("upload file error", e);
-			map.put("error", 1);
-			map.put("url", Play.ctxPath + "/public/uploads/error.jpg");
 		}
-		renderJSON(map);
+		return filename;
 	}
 
 	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index","Appraisals.index" })
