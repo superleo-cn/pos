@@ -155,4 +155,8 @@ public class ReportTransactionDetail {
     public String getFreeOfCharge() {
         return freeOfCharge;
     }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
 }
