@@ -209,7 +209,7 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3,4,5,6,7 ]
+                            "aTargets": [3,4,5,6,7,8 ]
                         }
                     ],
                     "aoColumns": [
@@ -217,8 +217,8 @@ define([
                         { "mData": "realName",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "openBalance",  "bSortable": false  },
-                        { "mData": "expenses" ,  "bSortable": false },{ "mData": "cashCollected",  "bSortable": false  },{ "mData": "dailyTurnover",  "bSortable": false  },
-                        { "mData": "nextOpenBalance" ,  "bSortable": false },{ "mData": "bringBackCash",  "bSortable": false  }
+                        { "mData": "cashInDrawer" ,  "bSortable": false },{ "mData": "expenses",  "bSortable": false  },{ "mData": "totalCollection",  "bSortable": false  },
+                        { "mData": "dailyTurnover" ,  "bSortable": false },{ "mData": "total",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/cashierClosing"
                 } );
