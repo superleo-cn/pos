@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionDetail" pageWidth="1080" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1080" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1ee46721-8924-44b5-a59e-d8aec6837062">
 	<property name="ireport.zoom" value="1.0000000000000036"/>
-	<property name="ireport.x" value="31"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="createDate" class="java.util.Date"/>
@@ -16,31 +16,31 @@
 	<field name="freeOfCharge" class="java.lang.String"/>
 	<field name="shopName" class="java.lang.String"/>
 	<field name="orderDate" class="java.util.Date"/>
-	<variable name="sumRetailPrice" class="java.lang.Double" calculation="Sum">
+	<variable name="sumRetailPrice" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{retailPrice}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumCostPrice" class="java.lang.Double" calculation="Sum">
+	<variable name="sumCostPrice" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{costPrice}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumTotalCostPrice" class="java.lang.Double" calculation="Sum">
+	<variable name="sumTotalCostPrice" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalCostPrice}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumTotalDiscount" class="java.lang.Double" calculation="Sum">
+	<variable name="sumTotalDiscount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalDiscount}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumTotalRetailPrice" class="java.lang.Double" calculation="Sum">
+	<variable name="sumTotalRetailPrice" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalRetailPrice}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumQuantity" class="java.lang.Double" calculation="Sum">
+	<variable name="sumQuantity" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{quantity}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="sumTotalPackage" class="java.lang.Double" calculation="Sum">
+	<variable name="sumTotalPackage" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalPackage}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
