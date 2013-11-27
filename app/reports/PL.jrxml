@@ -56,7 +56,7 @@
 				<reportElement x="241" y="0" width="203" height="20" uuid="33b3829c-0700-4e7d-8e1c-44d2dd5da288"/>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="444" y="0" width="151" height="20" uuid="f36de256-18d5-4013-a223-86713320b05c"/>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>

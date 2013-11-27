@@ -176,15 +176,14 @@ define([
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                 /*   "aoColumnDefs": [
+                   "aoColumnDefs": [
                         {
                             "mRender": function ( data, type, row ) {
-console.log(row);
-                                return row;
+                                return data.toFixed(2);
                             },
-                            "aTargets": [0 ]
+                            "aTargets": [4 ]
                         }
-                    ],*/
+                    ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
@@ -205,7 +204,14 @@ console.log(row);
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-
+                    "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+                                return data.toFixed(2);
+                            },
+                            "aTargets": [3,4,5,6,7 ]
+                        }
+                    ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "realName",  "bSortable": false  },
@@ -242,6 +248,14 @@ console.log(row);
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
+                    "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+                                return data.toFixed(2);
+                            },
+                            "aTargets": [3]
+                        }
+                    ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
@@ -257,7 +271,7 @@ console.log(row);
 
             var outlet = that.$el.find('#outlet');
             if(outlet!=null) {
-                outlet.select2({data:{}});
+                //  outlet.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/shops',function(response){
@@ -266,22 +280,17 @@ console.log(row);
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.name,name:obj.name};
                     });
-                    outlet.select2({
-                        minimumResultsForSearch:-1,
-                        data:{
-                            results:record
-                        },
-                        formatResult:format,
-                        formatSelection:function(object) {
-                            return object.name;
-                        }
+                    var shopStr ='';
+                    record.forEach(function(entry) {
+                       shopStr+='<option>'+entry.name+'</option>';
                     });
+                    outlet.replaceWith('<select name=outlet id=outlet>'+shopStr+'</select>');
                 });
             }
 
             var cashier = that.$el.find('#cashier');
             if(cashier!=null) {
-                cashier.select2({data:{}});
+                //cashier.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/cashiers',function(response){
@@ -290,22 +299,17 @@ console.log(row);
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.realname,name:obj.realname};
                     });
-                    cashier.select2({
-                        minimumResultsForSearch:-1,
-                        data:{
-                            results:record
-                        },
-                        formatResult:format,
-                        formatSelection:function(object) {
-                            return object.name;
-                        }
+                    var cashierStr ='';
+                    record.forEach(function(entry) {
+                        cashierStr+='<option>'+entry.name+'</option>';
                     });
+                    cashier.replaceWith('<select name=cashier id=cashier>'+cashierStr+'</select>');
                 });
             }
 
             var user = that.$el.find('#user');
             if(user!=null) {
-                user.select2({data:{}});
+                //user.select2({data:{}});
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/users',function(response){
@@ -314,16 +318,11 @@ console.log(row);
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.realname,name:obj.realname};
                     });
-                    user.select2({
-                        minimumResultsForSearch:-1,
-                        data:{
-                            results:record
-                        },
-                        formatResult:format,
-                        formatSelection:function(object) {
-                            return object.name;
-                        }
+                    var userStr ='';
+                    record.forEach(function(entry) {
+                        userStr+='<option>'+entry.name+'</option>';
                     });
+                    user.replaceWith('<select name=user id=user>'+userStr+'</select>');
                 });
             }
            // that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
