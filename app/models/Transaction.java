@@ -63,7 +63,7 @@ public class Transaction {
 
 	public String createBy, modifiedBy;
 
-	public Date createDate, modifiedDate;
+	public Date createDate, modifiedDate, ordeDate;
 
 	@Transient
 	public Long androidId;

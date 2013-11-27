@@ -164,6 +164,7 @@ create table tb_transaction (
   modified_by               varchar(255),
   create_date               datetime,
   modified_date             datetime,
+  order_date				datetime,
   constraint pk_tb_transaction primary key (id))
 ;
 
