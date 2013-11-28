@@ -36,6 +36,7 @@ POST	/cashTransactions/submit				CashTransactions.store
 
 # Audit Operation 
 POST	/audits/submit							Audits.store
+POST	/audits/index							Audits.index
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

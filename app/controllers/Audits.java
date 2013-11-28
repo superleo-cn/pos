@@ -19,6 +19,10 @@ public class Audits extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Audits.class);
 
+	public static void index() {
+		render("/pages/audits.html");
+	}
+	
 	@Transactional
 	public static void store(Audit[] audits) {
 		Map result = new HashMap();
