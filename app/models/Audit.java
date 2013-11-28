@@ -38,6 +38,8 @@ public class Audit {
     public String action;
 
 	public Date createDate, modifiedDate;
+	
+	public Date actionDate;
 
 	@Transient
 	public Long androidId;

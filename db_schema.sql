@@ -191,6 +191,7 @@ create table tb_audit (
   modified_by               varchar(255),
   create_date               datetime,
   modified_date             datetime,
+  action_date             	datetime,
   constraint pk_tb_audit primary key (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
