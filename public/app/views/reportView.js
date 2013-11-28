@@ -19,7 +19,18 @@ define([
             "click #exportTransactionSummary" :"exportTransactionSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
             "click #exportCashierClosing" :"exportCashierClosing",
-            "click #exportPL" :"exportPL"
+            "click #exportPL" :"exportPL",
+            "click #clearReport" :"clearReport"
+        },
+        clearReport:function() {
+            that.$el.find('#item').val('');
+            that.$el.find('#outlet').val('ALL');
+            that.$el.find('#cashier').val('ALL');
+            that.$el.find('#user').val('ALL');
+            that.$el.find('#dateFrom').val('');
+            that.$el.find('#timeFrom').val('');
+            that.$el.find('#dateTo').val('');
+            that.$el.find('#timeTo').val('');
         },
         exportTransactionDetail:function() {
           window.open("/reports/exportTransactionDetail?_dc"+new Date());
