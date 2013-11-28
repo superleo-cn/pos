@@ -97,7 +97,7 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
 
 
-                that.oTable.fnMultiFilter({"shopName":outlet,"item":dateFrom,"amount":dateTo});
+                that.oTable.fnMultiFilter({"shopName":outlet,"sales":dateFrom,"costOfSales":dateTo});
 
             }
         },

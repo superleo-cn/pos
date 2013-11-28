@@ -183,12 +183,12 @@ public class Reports extends Basic {
             outlet=session.get("shopName");
         searchs.put("shopName",outlet);
 
-        String dateFrom =  request.params.get("sSearch_3");
+        String dateFrom =  request.params.get("sSearch_2");
         if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
             dateFrom="2000-01-01";
         searchs.put("dateFrom",dateFrom);
 
-        String dateTo =  request.params.get("sSearch_4");
+        String dateTo =  request.params.get("sSearch_3");
         if(StringUtils.isEmpty(dateTo ) || "undefined".equalsIgnoreCase(dateTo ))
             dateTo="2222-01-01";
 
