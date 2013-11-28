@@ -58,10 +58,10 @@ public class ReportTransactionSummary {
                     expList.where().ilike(key, "%" + value+ "%");
                 }
                 else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("createDate",  value);
+                    expList.where().ge("orderDate",  value);
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate", value);
+                    expList.where().le("orderDate", value);
                 }
             }
         }

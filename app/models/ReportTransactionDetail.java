@@ -21,7 +21,7 @@ public class ReportTransactionDetail {
 
     @Transient
     public Long no;
-    public Date createDate;
+    public Date createDate,orderDate;
     public String foodName,foodNameZh,shopName;
 
     @Transient
@@ -57,10 +57,10 @@ public class ReportTransactionDetail {
                     expList.where().ilike(key, "%" + value+ "%");
                 }
                 else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("createDate",  value);
+                    expList.where().ge("orderDate",  value);
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate",  value);
+                    expList.where().le("orderDate",  value);
                 }
             }
         }
@@ -154,5 +154,9 @@ public class ReportTransactionDetail {
 
     public String getFreeOfCharge() {
         return freeOfCharge;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
     }
 }

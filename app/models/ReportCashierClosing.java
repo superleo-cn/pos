@@ -27,9 +27,9 @@ public class ReportCashierClosing {
 
     public String shopName,realName;
 
-    public Double openBalance,expenses,cashCollected;
+    public Double openBalance,expenses,cashInDrawer;
 
-    public Double dailyTurnover,nextOpenBalance,bringBackCash;
+    public Double dailyTurnover,totalCollection,total;
 
 
     /* the following are service methods */
@@ -114,20 +114,20 @@ public class ReportCashierClosing {
         return expenses;
     }
 
-    public Double getCashCollected() {
-        return cashCollected;
-    }
-
     public Double getDailyTurnover() {
         if(dailyTurnover==null) return 0.0;
         return dailyTurnover;
     }
 
-    public Double getNextOpenBalance() {
-        return nextOpenBalance;
+    public Double getCashInDrawer() {
+        return cashInDrawer;
     }
 
-    public Double getBringBackCash() {
-        return bringBackCash;
+    public Double getTotalCollection() {
+        return totalCollection;
+    }
+
+    public Double getTotal() {
+        return total;
     }
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" pageWidth="1100" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
 	<property name="ireport.zoom" value="1.1"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="294"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="realName" class="java.lang.String"/>
 	<field name="shopName" class="java.lang.String"/>
 	<field name="openBalance" class="java.lang.Double"/>
 	<field name="expenses" class="java.lang.Double"/>
-	<field name="cashCollected" class="java.lang.Double"/>
+	<field name="cashInDrawer" class="java.lang.Double"/>
+	<field name="totalCollection" class="java.lang.Double"/>
 	<field name="dailyTurnover" class="java.lang.Double"/>
-	<field name="nextOpenBalance" class="java.lang.Double"/>
-	<field name="bringBackCash" class="java.lang.Double"/>
+	<field name="total" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -46,39 +46,39 @@
 				<text><![CDATA[Open Balance (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="526" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
+				<reportElement x="641" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Expenses (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="619" y="0" width="115" height="20" uuid="12738d07-91ab-4471-95a1-ad1153a24360"/>
+				<reportElement x="526" y="0" width="115" height="20" uuid="12738d07-91ab-4471-95a1-ad1153a24360"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cash Collected (S$)]]></text>
+				<text><![CDATA[Cash in Drawer (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="734" y="0" width="113" height="20" uuid="b2de0c9f-bdc9-4ec7-b33c-c1d27ebea819"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Daily Turnover (S$)]]></text>
+				<text><![CDATA[Total Collection (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="847" y="0" width="135" height="20" uuid="8a610188-7344-499f-b95e-bc096b255103"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Next Open Balance (S$)]]></text>
+				<text><![CDATA[Daily Turnover(S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="982" y="0" width="118" height="20" uuid="4e637da6-2bfc-49ab-b763-2957555ebb22"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bring Back Cash (S$)]]></text>
+				<text><![CDATA[Total (S$)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -101,24 +101,24 @@
 				<textFieldExpression><![CDATA[$F{openBalance}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="526" y="0" width="93" height="20" uuid="045d35d9-f2fe-4fe1-9f2c-8167df6819a4"/>
+				<reportElement x="641" y="0" width="93" height="20" uuid="045d35d9-f2fe-4fe1-9f2c-8167df6819a4"/>
 				<textFieldExpression><![CDATA[$F{expenses}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="619" y="0" width="115" height="20" uuid="bf4f6aa0-9940-4254-b70d-643256dec60d"/>
-				<textFieldExpression><![CDATA[$F{cashCollected}]]></textFieldExpression>
+				<reportElement x="526" y="0" width="115" height="20" uuid="bf4f6aa0-9940-4254-b70d-643256dec60d"/>
+				<textFieldExpression><![CDATA[$F{cashInDrawer}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="734" y="0" width="113" height="20" uuid="00dd4939-9820-4f51-8c20-801a501d993f"/>
-				<textFieldExpression><![CDATA[$F{dailyTurnover}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalCollection}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="847" y="0" width="135" height="20" uuid="d7478eeb-6d29-4918-86ba-7e42fe641385"/>
-				<textFieldExpression><![CDATA[$F{nextOpenBalance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dailyTurnover}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="982" y="0" width="118" height="20" uuid="92cce2e3-3ae0-4c2f-9d08-94eb51aeb133"/>
-				<textFieldExpression><![CDATA[$F{bringBackCash}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
