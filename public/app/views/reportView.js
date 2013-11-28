@@ -22,19 +22,19 @@ define([
             "click #exportPL" :"exportPL"
         },
         exportTransactionDetail:function() {
-          window.open("/reports/exportTransactionDetail");
+          window.open("/reports/exportTransactionDetail?_dc"+new Date());
         },
         exportTransactionSummary:function() {
-            window.open("/reports/exportTransactionSummary");
+            window.open("/reports/exportTransactionSummary?_dc"+new Date());
         },
         exportCashierClosing:function() {
-            window.open("/reports/exportCashierClosing");
+            window.open("/reports/exportCashierClosing?_dc"+new Date());
         },
         exportLoginAudit:function() {
-            window.open("/reports/exportLoginAudit");
+            window.open("/reports/exportLoginAudit?_dc"+new Date());
         },
         exportPL:function() {
-            window.open("/reports/exportPL");
+            window.open("/reports/exportPL?_dc"+new Date());
         },
         searchReport:function() {
             var page =this.page;
@@ -253,14 +253,16 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3]
+                            "aTargets": [2,3,4,5]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "item",  "bSortable": false  },
-                        { "mData": "amount",  "bSortable": false  }
+                        { "mData": "sales",  "bSortable": false  },
+                        { "mData": "costOfSales",  "bSortable": false  },
+                        { "mData": "expenses",  "bSortable": false  },
+                        { "mData": "netProfit",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/pl"
                 } );

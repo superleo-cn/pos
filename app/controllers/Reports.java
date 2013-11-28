@@ -194,6 +194,7 @@ public class Reports extends Basic {
 
         searchs.put("dateTo",dateTo);
 
+
         session.put("cashierClosingSearch",new ObjectMapper().writeValueAsString(searchs));
 
         renderJSON(ReportCashierClosing.search(searchs, pagination));
@@ -210,6 +211,7 @@ public class Reports extends Basic {
         pagination.all = true;
         pagination.currentPage=1;
 
+        play.Logger.info("Cashier Closing " + session);
         Map searchs = new HashMap();
         if(session.get("cashierClosingSearch")!=null)
             searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);

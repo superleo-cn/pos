@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PL" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="397e2ed5-3656-41b3-a67f-4b9fd4650597">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PL" pageWidth="600" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="397e2ed5-3656-41b3-a67f-4b9fd4650597">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="shopName" class="java.lang.String"/>
-	<field name="item" class="java.lang.String"/>
-	<field name="amount" class="java.lang.Double"/>
+	<field name="sales" class="java.lang.Double"/>
+	<field name="costOfSales" class="java.lang.Double"/>
+	<field name="expenses" class="java.lang.Double"/>
+	<field name="netProfit" class="java.lang.Double"/>
+	<variable name="sumSales" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{sales}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumCostOfSales" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{costOfSales}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumExpenses" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{expenses}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumNetProfit" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{netProfit}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -27,18 +45,32 @@
 				<text><![CDATA[Outlet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="241" y="0" width="203" height="20" uuid="03fa09d3-b6a9-40ed-892a-40ac195b7a51"/>
+				<reportElement x="241" y="0" width="76" height="20" uuid="8d425bc0-538a-4188-81b4-b183a128b83c"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Item]]></text>
+				<text><![CDATA[Sales (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="444" y="0" width="151" height="20" uuid="8d425bc0-538a-4188-81b4-b183a128b83c"/>
+				<reportElement x="317" y="0" width="105" height="20" uuid="80ce85a6-a2e1-4c23-9693-75f857eeb1f2"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Amount (S$)]]></text>
+				<text><![CDATA[Cost of Sales (S$)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="89" height="20" uuid="c819bc22-5ee6-47bf-85d4-b5b11ff65abf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expenses (S$)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="0" width="89" height="20" uuid="f7ae391e-a2b4-40ea-abd7-49ebba807dbf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Profit (S$)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -52,14 +84,61 @@
 				<reportElement x="48" y="0" width="193" height="20" uuid="ee985416-c1fe-43e0-a221-603b2b01d083"/>
 				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="241" y="0" width="203" height="20" uuid="33b3829c-0700-4e7d-8e1c-44d2dd5da288"/>
-				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			<textField pattern="###0.00">
+				<reportElement x="241" y="0" width="76" height="20" uuid="f36de256-18d5-4013-a223-86713320b05c"/>
+				<textFieldExpression><![CDATA[$F{sales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="444" y="0" width="151" height="20" uuid="f36de256-18d5-4013-a223-86713320b05c"/>
-				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				<reportElement x="317" y="0" width="105" height="20" uuid="4e33457a-8bd9-46ab-874a-bf4b1980fbdf"/>
+				<textFieldExpression><![CDATA[$F{costOfSales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="422" y="0" width="89" height="20" uuid="75625ba4-e5d0-4e38-8ab2-79df48dcb844"/>
+				<textFieldExpression><![CDATA[$F{expenses}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="511" y="0" width="89" height="20" uuid="b3eac88a-6483-483e-8013-6c7045a6481e"/>
+				<textFieldExpression><![CDATA[$F{netProfit}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="48" y="0" width="193" height="20" uuid="747d3d9a-559c-4369-990e-eba2b380ef40"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="###0.00">
+				<reportElement x="241" y="0" width="76" height="20" uuid="0247c6c9-21c8-45c7-83dd-5b4ad15b0b39"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumSales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="317" y="0" width="105" height="20" uuid="f3beb3a6-9aa2-4fa0-a793-6c4e3a4b312b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumCostOfSales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="422" y="0" width="89" height="20" uuid="0e1a3741-4793-43bf-b738-7de4c07935ca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumExpenses}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="511" y="0" width="89" height="20" uuid="ff6b4e18-b41f-4493-9f71-3db14e953d42"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumNetProfit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>

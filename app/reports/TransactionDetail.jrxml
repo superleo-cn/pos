@@ -181,22 +181,37 @@
 			</staticText>
 			<textField>
 				<reportElement x="396" y="0" width="95" height="20" uuid="919e7e7e-3214-485e-803b-735797a95255"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumRetailPrice}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="491" y="0" width="90" height="20" uuid="058222f9-2e47-4fbf-85fc-98f69e4a2c7d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumTotalDiscount}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="581" y="0" width="93" height="20" uuid="3acbe907-5113-4b3c-84e0-0a713ce8628d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumTotalPackage}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="715" y="0" width="80" height="20" uuid="80293506-314b-431f-b076-aa166ee37adb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumQuantity}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="795" y="0" width="94" height="20" uuid="7f41347b-ba5c-4ded-b9c2-a6c24e885531"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumTotalRetailPrice}]]></textFieldExpression>
 			</textField>
 		</band>

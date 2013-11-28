@@ -93,10 +93,16 @@
 			</staticText>
 			<textField pattern="###0.00">
 				<reportElement x="538" y="0" width="87" height="20" uuid="d24a7b1b-f452-427f-ba8c-79cbb32c0e96"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumQuantity}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="625" y="0" width="100" height="20" uuid="1d5dcf5c-1ebe-4715-bc72-051103748081"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{sumPrice}]]></textFieldExpression>
 			</textField>
 		</band>
