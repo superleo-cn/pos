@@ -87,7 +87,7 @@ public class ReportPL {
                 reportPL.expenses        = (Double) report.get("expenses");
                 reportPL.netProfit        = reportPL.sales-reportPL.expenses;
                 list.add(reportPL);
-
+                no++;
             }
         }
 

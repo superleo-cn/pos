@@ -225,6 +225,10 @@ public class Reports extends Basic {
             String dateTo = "2222-01-01";
             searchs.put("dateTo",dateTo);
         }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
         pagination = ReportCashierClosing.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -301,6 +305,10 @@ public class Reports extends Basic {
             String dateTo = "2222-01-01";
             searchs.put("dateTo",dateTo);
         }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
         pagination = ReportPL.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -339,6 +347,10 @@ public class Reports extends Basic {
             String dateTo = "2222-01-01";
             searchs.put("dateTo",dateTo);
         }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
         pagination = ReportTransactionDetail.search((Map) searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
@@ -377,7 +389,10 @@ public class Reports extends Basic {
             String dateTo = "2222-01-01";
             searchs.put("dateTo",dateTo);
         }
-        Logger.info(searchs.toString());
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
         pagination = ReportTransactionSummary.search(searchs, pagination);
         JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
         JasperPrint print = null;
