@@ -7,6 +7,7 @@ create table tb_audit (
   action                    varchar(255),
   create_date               datetime,
   modified_date             datetime,
+  action_date               datetime,
   constraint pk_tb_audit primary key (id))
 ;
 
@@ -113,14 +114,15 @@ create table report_cashier_closing (
   real_name                 varchar(255),
   open_balance              double,
   expenses                  double,
-  cash_collected            double,
+  cash_in_drawer            double,
   daily_turnover            double,
-  next_open_balance         double,
-  bring_back_cash           double)
+  total_collection          double,
+  total                     double)
 ;
 
 create table report_transaction_detail (
   create_date               datetime,
+  order_date                datetime,
   food_name                 varchar(255),
   food_name_zh              varchar(255),
   shop_name                 varchar(255),

@@ -19,6 +19,10 @@ public class Audits extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Audits.class);
 
+	public static void index() {
+		render("/pages/audits.html");
+	}
+	
 	@Transactional
 	public static void store(Audit[] audits) {
 		Map result = new HashMap();
@@ -28,7 +32,7 @@ public class Audits extends Basic {
 				String str = "";
 				for (Audit audit : audits) {
 					str += "[androidId = " + audit.androidId + "], [shopId = " + audit.shop.id + "], [userId = "
-							+ audit.user.id + "], [action = " + audit.action + "]\n";
+							+ audit.user.id + "], [action = " + audit.action + "], [actionDate = " + audit.actionDate + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Audit.store(audit);
 					if (flag) {

@@ -18,15 +18,17 @@ public class AuditTest extends FunctionalTest {
 		try {
 			Map<String, String> params = new HashMap<>();
 			params.put("audits[0].androidId", "0");
-			params.put("audits[0].user.id", "1");
+			params.put("audits[0].user.id", "2");
 			params.put("audits[0].shop.id", "1");
 			params.put("audits[0].action", "Login");
+			params.put("audits[0].actionDate", "2013-12-31 12:00:12");
 
 			params.put("audits[1].androidId", "2");
-			params.put("audits[1].user.id", "abc");
+			params.put("audits[1].user.id", "2");
 			params.put("audits[1].shop.id", "1");
 			params.put("audits[1].action", "Logout");
-
+			params.put("audits[0].actionDate", "2013-12-31 14:00:12");
+			
 			Response response = POST("/audits/submit", params);
 			assertIsOk(response);
 			response.out.writeTo(System.out);
