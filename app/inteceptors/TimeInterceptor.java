@@ -16,6 +16,7 @@ public class TimeInterceptor extends Controller {
 
 	@After(unless = { "Home.logout" })
 	static void end() {
+        if(session.get("_execute_time_")==null) return;
 		long time = (new Date()).getTime() - Long.parseLong(session.get("_execute_time_"));
 		session.put("_execute_time_", time);
 		Logger.info("Action %s execution time is %d ms", request.action, time);

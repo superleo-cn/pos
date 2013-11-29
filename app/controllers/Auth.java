@@ -81,6 +81,7 @@ public class Auth extends Basic {
                     dbUser.usertype.equalsIgnoreCase("OPERATOR")))
                 isCorrectRole = true;
 
+            play.Logger.info(dbUser.usertype+" "+isCorrectRole);
 			if (dbUser != null && isCorrectRole) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
@@ -172,6 +173,8 @@ public class Auth extends Basic {
                 audit.shop = shop;
                 Audit.store(audit);
             }
+            session.remove("shopName");
+            session.remove(Constants.CURRENT_SHOPID);
 
         }
 
@@ -179,6 +182,7 @@ public class Auth extends Basic {
         session.remove(Constants.CURRENT_USERNAME);
         session.remove(Constants.CURRENT_USERTYPE);
         session.remove(Constants.CURRENT_USERID);
+        session.clear();
 
         index();
     }

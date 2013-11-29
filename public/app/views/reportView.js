@@ -19,22 +19,33 @@ define([
             "click #exportTransactionSummary" :"exportTransactionSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
             "click #exportCashierClosing" :"exportCashierClosing",
-            "click #exportPL" :"exportPL"
+            "click #exportPL" :"exportPL",
+            "click #clearReport" :"clearReport"
+        },
+        clearReport:function() {
+            that.$el.find('#item').val('');
+            that.$el.find('#outlet').val('ALL');
+            that.$el.find('#cashier').val('ALL');
+            that.$el.find('#user').val('ALL');
+            that.$el.find('#dateFrom').val('');
+            that.$el.find('#timeFrom').val('');
+            that.$el.find('#dateTo').val('');
+            that.$el.find('#timeTo').val('');
         },
         exportTransactionDetail:function() {
-          window.open("/reports/exportTransactionDetail");
+          window.open("/reports/exportTransactionDetail?_dc"+new Date());
         },
         exportTransactionSummary:function() {
-            window.open("/reports/exportTransactionSummary");
+            window.open("/reports/exportTransactionSummary?_dc"+new Date());
         },
         exportCashierClosing:function() {
-            window.open("/reports/exportCashierClosing");
+            window.open("/reports/exportCashierClosing?_dc"+new Date());
         },
         exportLoginAudit:function() {
-            window.open("/reports/exportLoginAudit");
+            window.open("/reports/exportLoginAudit?_dc"+new Date());
         },
         exportPL:function() {
-            window.open("/reports/exportPL");
+            window.open("/reports/exportPL?_dc"+new Date());
         },
         searchReport:function() {
             var page =this.page;
@@ -86,7 +97,7 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
 
 
-                that.oTable.fnMultiFilter({"shopName":outlet,"item":dateFrom,"amount":dateTo});
+                that.oTable.fnMultiFilter({"shopName":outlet,"sales":dateFrom,"costOfSales":dateTo});
 
             }
         },
@@ -253,14 +264,16 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3]
+                            "aTargets": [2,3,4,5]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "item",  "bSortable": false  },
-                        { "mData": "amount",  "bSortable": false  }
+                        { "mData": "sales",  "bSortable": false  },
+                        { "mData": "costOfSales",  "bSortable": false  },
+                        { "mData": "expenses",  "bSortable": false  },
+                        { "mData": "netProfit",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/reports/pl"
                 } );

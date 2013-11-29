@@ -24,7 +24,7 @@ public class ReportPL {
 
     public String shopName;
 
-    public Double amount;
+    public Double sales,costOfSales,expenses,netProfit;
 
 
     /* the following are service methods */
@@ -36,7 +36,7 @@ public class ReportPL {
         String sql =
                 "SELECT " +
                         "    ts.name shopName, " +
-                        "     SUM(c_cash_collected) AS cash_collected ,  " +
+                        "     SUM(c_cash_collected-e_next_open_balance) AS sales ,  " +
                         "    SUM(b_expenses)       AS expenses   " +
                         "    " +
                         "FROM " +
@@ -82,36 +82,12 @@ public class ReportPL {
 
                 reportPL.no = no;
                 reportPL.shopName= (String) report.get("shopName");
-                reportPL.item = "A. Sales";
-                reportPL.amount        = (Double) report.get("cash_collected");
-                no++;
+                reportPL.sales        = (Double) report.get("sales");
+                reportPL.costOfSales        = 0.0;
+                reportPL.expenses        = (Double) report.get("expenses");
+                reportPL.netProfit        = reportPL.sales-reportPL.expenses;
                 list.add(reportPL);
-
-                sales = reportPL.amount;
-                reportPL = new ReportPL();
-                reportPL.no = no;
-                reportPL.shopName= (String) report.get("shopName");
-                reportPL.item = "B. Cost of Sales";
-                reportPL.amount        = 0.0;
                 no++;
-                list.add(reportPL);
-
-                reportPL = new ReportPL();
-                reportPL.no = no;
-                reportPL.shopName= (String) report.get("shopName");
-                reportPL.item = "C. Expenses";
-                reportPL.amount        = (Double) report.get("expenses");
-                no++;
-                list.add(reportPL);
-                expenses = reportPL.amount;
-
-                reportPL = new ReportPL();
-                reportPL.no = no;
-                reportPL.shopName= (String) report.get("shopName");
-                reportPL.item = "D. Net Profit";
-                reportPL.amount        = sales-expenses;
-                no++;
-                list.add(reportPL);
             }
         }
 
@@ -151,13 +127,9 @@ public class ReportPL {
             for(SqlRow report:tmpList) {
                 double  cost = 0.0;
                 for(ReportPL exising:list ){
-                    if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) && exising.item.equalsIgnoreCase("B. Cost of Sales")) {
-                        exising.amount = (Double) report.get("total_cost_price");
-                        cost = exising.amount;
-                    }
-                    else if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) && exising.item.equalsIgnoreCase("D. Net Profit")) {
-                        if(exising.amount==null) exising.amount=0.0;
-                        exising.amount = exising.amount - cost;
+                    if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) ) {
+                        exising.costOfSales = (Double) report.get("total_cost_price");
+                        exising.netProfit = exising.netProfit-exising.costOfSales;
                     }
                 }
             }
@@ -190,7 +162,35 @@ public class ReportPL {
         return shopName;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getSales() {
+        return sales;
+    }
+
+    public void setSales(Double sales) {
+        this.sales = sales;
+    }
+
+    public Double getCostOfSales() {
+        return costOfSales;
+    }
+
+    public void setCostOfSales(Double costOfSales) {
+        this.costOfSales = costOfSales;
+    }
+
+    public Double getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(Double expenses) {
+        this.expenses = expenses;
+    }
+
+    public Double getNetProfit() {
+        return netProfit;
+    }
+
+    public void setNetProfit(Double netProfit) {
+        this.netProfit = netProfit;
     }
 }
