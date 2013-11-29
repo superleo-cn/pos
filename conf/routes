@@ -28,15 +28,15 @@ POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 
 POST	/cashTransactions/submit				CashTransactions.store
 # CashTransaction Operation 
-*		/dailySummarys/submit					DailySummarys.store
+POST	/dailySummarys/submit					DailySummarys.store
+# Audit Operation 
+POST	/audits/submit							Audits.store
+POST	/audits/index							Audits.index
+
 # Version Operation 
 *		/checkUpdate							Versions.listJson
 *		/versions/index							Versions.index
 *		/versions/uploadApk						Versions.store
-
-# Audit Operation 
-POST	/audits/submit							Audits.store
-POST	/audits/index							Audits.index
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

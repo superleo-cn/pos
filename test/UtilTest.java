@@ -5,9 +5,9 @@ import models.User;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import play.test.FunctionalTest;
 import utils.MyPropertiesUtils;
 
 public class UtilTest {
@@ -60,4 +60,12 @@ public class UtilTest {
 		
 	}
 
+	
+	@Test
+	public void testDouble() throws Exception {
+		String placeholder = "2001.0912";
+		placeholder = StringUtils.substring(placeholder, 0, placeholder.indexOf(".") + 3);
+		System.out.println(placeholder);
+		
+	}
 }
