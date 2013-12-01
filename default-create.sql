@@ -131,8 +131,8 @@ create table report_transaction_detail (
   total_cost_price          double,
   total_discount            double,
   total_retail_price        double,
+  total_package             double,
   quantity                  bigint,
-  total_package             bigint,
   free_of_charge            varchar(255))
 ;
 

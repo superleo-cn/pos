@@ -27,8 +27,8 @@ public class ReportTransactionDetail {
     @Transient
     public String item;
 
-    public Double retailPrice,costPrice,totalCostPrice,totalDiscount,totalRetailPrice;
-    public Long quantity,totalPackage;
+    public Double retailPrice,costPrice,totalCostPrice,totalDiscount,totalRetailPrice,totalPackage;
+    public Long quantity;
     public String freeOfCharge;
 
 
@@ -148,7 +148,7 @@ public class ReportTransactionDetail {
         return quantity;
     }
 
-    public Long getTotalPackage() {
+    public Double getTotalPackage() {
         return totalPackage;
     }
 
