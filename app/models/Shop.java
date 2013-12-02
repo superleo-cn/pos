@@ -27,6 +27,9 @@ public class Shop {
 	
 	@Required(message = "Shop name cannot be empty")
 	public String name;
+	
+	@Required(message = "Shop code cannot be empty")
+	public String code;
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;

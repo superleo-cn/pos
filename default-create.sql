@@ -139,6 +139,7 @@ create table report_transaction_detail (
 create table tb_shop (
   id                        bigint auto_increment not null,
   name                      varchar(255),
+  code                      varchar(255),
   status                    tinyint(1) default 0,
   expiry_date               datetime,
   create_by                 varchar(255),
