@@ -77,7 +77,7 @@ public class ReportCashierClosing {
         }
 
         if(list!=null) {
-            Long no = ((pagination.currentPage-1)*10)+1l;
+            Long no = ((pagination.currentPage-1)*pagination.pageSize)+1l;
             for(ReportCashierClosing report:list) {
                 report.no = no;
                 if(report.dailyTurnover==null) report.dailyTurnover=0.0;

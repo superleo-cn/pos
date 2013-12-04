@@ -84,7 +84,7 @@ public class ReportTransactionDetail {
         }
 
         if(list!=null) {
-            Long no = ((pagination.currentPage-1)*10)+1l;
+            Long no = ((pagination.currentPage-1)*pagination.pageSize)+1l;
             for(ReportTransactionDetail report:list) {
                 report.no = no;
                 if(pagination.zh)

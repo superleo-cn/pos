@@ -71,7 +71,7 @@ public class ReportPL {
         ArrayList<ReportPL> list = new ArrayList<ReportPL>();
 
         play.Logger.info("current page"+pagination.currentPage);
-        int startIndex =  ((pagination.currentPage-1)*10);
+        int startIndex =  ((pagination.currentPage-1)*pagination.pageSize);
 
         if(tmpList!=null) {
             Long no = 1l;
@@ -140,7 +140,7 @@ public class ReportPL {
         pagination.iTotalRecords = list.size();
 
 
-    int endIndex = (startIndex+10);
+    int endIndex = (startIndex+pagination.pageSize);
     if(endIndex>=list.size())
     endIndex=list.size();
 

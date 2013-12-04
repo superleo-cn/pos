@@ -54,11 +54,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String food =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(food) || "undefined".equalsIgnoreCase(food) || "ALL".equalsIgnoreCase(food))
@@ -92,11 +92,12 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
@@ -127,11 +128,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))
@@ -166,11 +167,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))

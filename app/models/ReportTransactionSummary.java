@@ -109,7 +109,7 @@ public class ReportTransactionSummary {
 
             if(tmp2List!=null) {
                 Long no = 1l;
-                int startIndex =  ((pagination.currentPage-1)*10);
+                int startIndex =  ((pagination.currentPage-1)*pagination.pageSize);
                 for(ReportTransactionSummary report:tmp2List) {
                     report.no = no;
                     no++;
