@@ -247,6 +247,96 @@ public class Reports extends Basic {
         }
     }
 
+
+
+    public static void exportExpensesDetails() throws IOException {
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/ExpensesDetails.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        play.Logger.info("ExpensesDetails " + session);
+        Map searchs = new HashMap();
+        if(session.get("cashierClosingSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
+        else {
+            String cashier="%";
+            searchs.put("realName",cashier);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
+        pagination = ReportExpensesDetails.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
+
+            exportXls(print,"ExpensesDetails.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+
+    public static void exportCollectionDetails() throws IOException {
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/CollectionDetails.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        play.Logger.info("CollectionDetails " + session);
+        Map searchs = new HashMap();
+        if(session.get("cashierClosingSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
+        else {
+            String cashier="%";
+            searchs.put("realName",cashier);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
+        pagination = ReportCollectionDetails.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
+
+            exportXls(print,"CollectionDetails.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+
     public static void exportLoginAudit() throws IOException {
 
 

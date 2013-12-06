@@ -120,6 +120,22 @@ create table report_cashier_closing (
   total                     double)
 ;
 
+create table report_collection_details (
+  create_date               datetime,
+  shop_name                 varchar(255),
+  real_name                 varchar(255),
+  price                     double,
+  food_name                 double)
+;
+
+create table report_expenses_details (
+  create_date               datetime,
+  shop_name                 varchar(255),
+  real_name                 varchar(255),
+  food_name                 varchar(255),
+  price                     double)
+;
+
 create table report_transaction_detail (
   create_date               datetime,
   order_date                datetime,

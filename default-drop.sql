@@ -16,6 +16,10 @@ drop table tb_food;
 
 drop table report_cashier_closing;
 
+drop table report_collection_details;
+
+drop table report_expenses_details;
+
 drop table report_transaction_detail;
 
 drop table tb_shop;
