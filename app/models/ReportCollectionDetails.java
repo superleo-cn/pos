@@ -87,4 +87,28 @@ public class ReportCollectionDetails {
     public String getFoodName2(){
         return "S$ " + foodName;
     }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Double getFoodName() {
+        return foodName;
+    }
 }

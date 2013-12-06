@@ -83,4 +83,28 @@ public class ReportExpensesDetails {
         pagination.recordList = list;
         return pagination;
     }
+
+    public Long getNo() {
+        return no;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
 }
