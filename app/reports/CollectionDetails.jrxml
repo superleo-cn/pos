@@ -100,6 +100,7 @@
 							</box>
 							<textField>
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="151" height="25" uuid="7376fef2-0c1f-4fe9-b8f4-456819d7c886"/>
+								<textElement textAlignment="Left"/>
 								<textFieldExpression><![CDATA[$V{realName}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -132,6 +133,7 @@
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
+								<textElement textAlignment="Left"/>
 								<textFieldExpression><![CDATA[$V{shopName}]]></textFieldExpression>
 							</textField>
 						</cellContents>
