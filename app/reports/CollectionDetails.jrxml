@@ -189,7 +189,7 @@
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="80" height="25" forecolor="#000000" uuid="1177e3b4-2467-4b94-ba5c-2af61183ec36"/>
 							<textElement>
 								<font isBold="true"/>
@@ -203,7 +203,7 @@
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="84" height="25" uuid="7fe65113-71ca-4dc4-9c8e-63da9934df6a"/>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
 						</textField>
@@ -214,7 +214,7 @@
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="84" height="25" forecolor="#000000" uuid="99638c6e-c370-48fa-b5a3-57202bbf92a0"/>
 							<textElement>
 								<font isBold="true"/>
