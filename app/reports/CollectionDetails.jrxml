@@ -178,7 +178,7 @@
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textField>
+						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="80" height="25" uuid="9b117b67-674c-4884-a5fa-adb0dd99c951"/>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
 						</textField>
