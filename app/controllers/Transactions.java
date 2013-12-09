@@ -1,11 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.ConsumeTransaction;
 import models.Transaction;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -29,7 +29,7 @@ public class Transactions extends Basic {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+					str += "[date = " + new Date() + "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
 							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
 							+ transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice
