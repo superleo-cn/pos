@@ -117,7 +117,7 @@ public class ReportTransactionSummary {
 
                 list.addAll(tmp2List);
 
-                int endIndex = (startIndex+10);
+                int endIndex = (startIndex+pagination.pageSize);
                 if(endIndex>=tmp2List.size())
                     endIndex=tmp2List.size();
 
