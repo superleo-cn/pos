@@ -18,6 +18,9 @@ define([
             "click #exportTransactionDetail" :"exportTransactionDetail",
             "click #exportTransactionSummary" :"exportTransactionSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
+
+                "click #exportExpenses" :"exportExpenses",
+                "click #exportCashCollection" :"exportCashCollection",
             "click #exportCashierClosing" :"exportCashierClosing",
             "click #exportPL" :"exportPL",
             "click #clearReport" :"clearReport"
@@ -31,6 +34,12 @@ define([
             that.$el.find('#timeFrom').val('');
             that.$el.find('#dateTo').val('');
             that.$el.find('#timeTo').val('');
+        },
+        exportExpenses:function() {
+            window.open("/reports/exportExpensesDetails?_dc"+new Date());
+        },
+        exportCashCollection:function() {
+            window.open("/reports/exportCollectionDetails?_dc"+new Date());
         },
         exportTransactionDetail:function() {
           window.open("/reports/exportTransactionDetail?_dc"+new Date());

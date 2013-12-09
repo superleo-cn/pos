@@ -1,11 +1,9 @@
 package models;
 
 import com.avaje.ebean.*;
-import com.avaje.ebean.annotation.Sql;
 import org.apache.commons.lang.StringUtils;
 import utils.Pagination;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.*;
@@ -13,30 +11,26 @@ import java.util.*;
 /**
  * Created with IntelliJ IDEA.
  * User: lala
- * Date: 11/15/13
- * Time: 1:55 AM
+ * Date: 12/7/13
+ * Time: 12:10 AM
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class ReportCashierClosing {
+public class ReportExpensesDetails {
 
     @Transient
     public Long no;
 
     public Date createDate;
 
-    public String shopName,realName;
+    public String shopName,realName,foodName;
 
-    public Double openBalance,expenses,cashInDrawer;
+    public Double price;
 
-    public Double dailyTurnover,totalCollection,total;
-
-
-    /* the following are service methods */
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportCashierClosing.class);
+        Query query  = Ebean.find(ReportExpensesDetails.class);
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();
@@ -57,18 +51,18 @@ public class ReportCashierClosing {
                 }
             }
         }
-        List<ReportCashierClosing> list = new ArrayList<ReportCashierClosing>();
+        List<ReportExpensesDetails> list = new ArrayList<ReportExpensesDetails>();
         if(!pagination.all)
         {
-        PagingList<ReportCashierClosing> pagingList = expList.findPagingList(pagination.pageSize);
-        pagingList.setFetchAhead(false);
-        Page page = pagingList.getPage(pagination.currentPage-1);
+            PagingList<ReportExpensesDetails> pagingList = expList.findPagingList(pagination.pageSize);
+            pagingList.setFetchAhead(false);
+            Page page = pagingList.getPage(pagination.currentPage-1);
 
-        list = page.getList();
+            list = page.getList();
 
 
-        pagination.iTotalDisplayRecords = expList.findRowCount();
-        pagination.iTotalRecords = expList.findRowCount();
+            pagination.iTotalDisplayRecords = expList.findRowCount();
+            pagination.iTotalRecords = expList.findRowCount();
 
         }
         else {
@@ -78,9 +72,9 @@ public class ReportCashierClosing {
 
         if(list!=null) {
             Long no = ((pagination.currentPage-1)*pagination.pageSize)+1l;
-            for(ReportCashierClosing report:list) {
+            for(ReportExpensesDetails report:list) {
                 report.no = no;
-                if(report.dailyTurnover==null) report.dailyTurnover=0.0;
+                //if(report.dailyTurnover==null) report.dailyTurnover=0.0;
 
                 no++;
             }
@@ -106,28 +100,11 @@ public class ReportCashierClosing {
         return realName;
     }
 
-    public Double getOpenBalance() {
-        return openBalance;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public Double getExpenses() {
-        return expenses;
-    }
-
-    public Double getDailyTurnover() {
-        if(dailyTurnover==null) return 0.0;
-        return dailyTurnover;
-    }
-
-    public Double getCashInDrawer() {
-        return cashInDrawer;
-    }
-
-    public Double getTotalCollection() {
-        return totalCollection;
-    }
-
-    public Double getTotal() {
-        return total;
+    public Double getPrice() {
+        return price;
     }
 }

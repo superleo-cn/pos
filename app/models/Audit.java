@@ -156,7 +156,7 @@ public class Audit {
         }
 
         if(list!=null) {
-            Long no = ((pagination.currentPage-1)*10)+1l;
+            Long no = ((pagination.currentPage-1)*pagination.pageSize)+1l;
             for(Audit report:list) {
                 report.no = no;
                 report.realName=report.user.realname;

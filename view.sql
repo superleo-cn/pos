@@ -70,3 +70,17 @@ WHERE
     create_date BETWEEN '2013-11-01' AND '2013-21-31'
 GROUP BY
     shop_id    
+
+-- report export expenses details
+create view report_expenses_details as
+SELECT tct.create_date,tu.realname real_name,ts.name shop_name,
+tc.name food_name,tct.price FROM tb_consume_transaction tct,
+tb_consumption tc, tb_user tu,tb_shop ts where tct.shop_id=tc.shop_id and tct.consumption_id=tc.id and tct.user_id=tu.id and ts.id=tct.shop_id
+order by create_date desc,realname,shop_name,food_name;
+
+-- report export collection details
+create view report_collection_details as
+SELECT tct.create_date,tu.realname real_name,ts.name shop_name,
+tc.price food_name,tct.total_price price FROM tb_cash_transaction tct,
+tb_cash tc, tb_user tu,tb_shop ts where tct.shop_id=tc.shop_id and tct.cash_id=tc.id and tct.user_id=tu.id and ts.id=tct.shop_id
+order by create_date desc,realname,shop_name,food_name;

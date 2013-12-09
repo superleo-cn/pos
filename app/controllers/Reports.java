@@ -54,11 +54,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String food =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(food) || "undefined".equalsIgnoreCase(food) || "ALL".equalsIgnoreCase(food))
@@ -92,11 +92,12 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String outlet =  request.params.get("sSearch_1");
         if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
@@ -127,11 +128,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))
@@ -166,11 +167,11 @@ public class Reports extends Basic {
 
         int currentPage = 1;
         if(request.params.get("iDisplayStart")!="0") {
-            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/10)+1;
+            currentPage = (Integer.parseInt(request.params.get("iDisplayStart"))/Integer.parseInt(request.params.get("iDisplayLength")))+1;
         }
         Pagination pagination = new Pagination();
         pagination.currentPage = currentPage;
-        pagination.pageSize = 10;
+        pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
         Map searchs = new HashMap();
         String cashier =  request.params.get("sSearch_0");
         if(StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier)  || "ALL".equalsIgnoreCase(cashier))
@@ -245,6 +246,96 @@ public class Reports extends Basic {
             Logger.error("Error",e);
         }
     }
+
+
+
+    public static void exportExpensesDetails() throws IOException {
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/ExpensesDetails.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        play.Logger.info("ExpensesDetails " + session);
+        Map searchs = new HashMap();
+        if(session.get("cashierClosingSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
+        else {
+            String cashier="%";
+            searchs.put("realName",cashier);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
+        pagination = ReportExpensesDetails.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
+
+            exportXls(print,"ExpensesDetails.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
+
+    public static void exportCollectionDetails() throws IOException {
+
+        InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/CollectionDetails.jasper");
+
+        Pagination pagination = new Pagination();
+        pagination.all = true;
+        pagination.currentPage=1;
+
+        play.Logger.info("CollectionDetails " + session);
+        Map searchs = new HashMap();
+        if(session.get("cashierClosingSearch")!=null)
+            searchs = new ObjectMapper().readValue(session.get("cashierClosingSearch"), Map.class);
+        else {
+            String cashier="%";
+            searchs.put("realName",cashier);
+            String outlet ="%";
+            searchs.put("shopName",outlet);
+            String dateFrom="2000-01-01";
+            searchs.put("dateFrom",dateFrom);
+            String dateTo = "2222-01-01";
+            searchs.put("dateTo",dateTo);
+        }
+
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            searchs.put("shopName",session.get("shopName"));
+
+        pagination = ReportCollectionDetails.search((Map) searchs, pagination);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+        JasperPrint print = null;
+        try {
+
+            Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+            print = JasperFillManager.fillReport(is, parameters, dataSource);
+
+            exportXls(print,"CollectionDetails.xls");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            Logger.error("Error",e);
+        }
+    }
+
 
     public static void exportLoginAudit() throws IOException {
 
