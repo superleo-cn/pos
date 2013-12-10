@@ -43,12 +43,14 @@ $('#sidebarsMenu').html(compiledTemplate);
         init: function() {
       // sidebar onload state
       if($(window).width() > 979){
+          window.hideSidebar = false;
                 if(!$('body').hasClass('sidebar_hidden')) {
                    
                 } else {
                     $('.sidebar_switch').toggleClass('on_switch off_switch').attr('title','Show Sidebar');
                 }
             } else {
+                window.hideSidebar = true;
                 $('body').addClass('sidebar_hidden');
                 $('.sidebar_switch').removeClass('on_switch').addClass('off_switch');
             }

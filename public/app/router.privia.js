@@ -12,6 +12,11 @@ define([
     var AppRouter = Backbone.Router.extend({
       initialize : function(option) {
         this.currentView = {};
+          this.bind( "route", function(){
+             if(hideSidebar) {
+                 $('body').addClass('sidebar_hidden');
+             }
+          });
       },
       routes: {
       // Define some URL routes
