@@ -36,9 +36,9 @@ public class ReportTransactionSummary {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class);
+        Query query  = Ebean.find(ReportTransactionDetail.class).order("createDate desc");
         ExpressionList expList = query.where();
-        query.findList();
+
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();
             while(searchKeys.hasNext()){
@@ -118,6 +118,9 @@ public class ReportTransactionSummary {
                 list.addAll(tmp2List);
 
                 int endIndex = (startIndex+pagination.pageSize);
+                if(pagination.all) {
+                    endIndex = tmp2List.size();
+                }
                 if(endIndex>=tmp2List.size())
                     endIndex=tmp2List.size();
 

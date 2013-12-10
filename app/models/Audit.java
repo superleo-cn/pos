@@ -115,7 +115,7 @@ public class Audit {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(Audit.class).fetch("user","realname").fetch("shop","name");
+        Query query  = Ebean.find(Audit.class).fetch("user","realname").fetch("shop","name").order("createDate desc");
 
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {

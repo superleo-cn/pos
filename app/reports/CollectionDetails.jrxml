@@ -60,7 +60,7 @@
 					</cellContents>
 				</crosstabHeaderCell>
 				<rowGroup name="createDate" width="80" totalPosition="End">
-					<bucket class="java.lang.String">
+					<bucket order="Descending" class="java.lang.String">
 						<bucketExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).format($F{createDate})]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
