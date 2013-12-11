@@ -86,18 +86,22 @@
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="241" y="0" width="76" height="20" uuid="f36de256-18d5-4013-a223-86713320b05c"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{sales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="317" y="0" width="105" height="20" uuid="4e33457a-8bd9-46ab-874a-bf4b1980fbdf"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{costOfSales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="422" y="0" width="89" height="20" uuid="75625ba4-e5d0-4e38-8ab2-79df48dcb844"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{expenses}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="511" y="0" width="89" height="20" uuid="b3eac88a-6483-483e-8013-6c7045a6481e"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{netProfit}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -113,28 +117,28 @@
 			</staticText>
 			<textField pattern="###0.00">
 				<reportElement x="241" y="0" width="76" height="20" uuid="0247c6c9-21c8-45c7-83dd-5b4ad15b0b39"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumSales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="317" y="0" width="105" height="20" uuid="f3beb3a6-9aa2-4fa0-a793-6c4e3a4b312b"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumCostOfSales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="422" y="0" width="89" height="20" uuid="0e1a3741-4793-43bf-b738-7de4c07935ca"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumExpenses}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="511" y="0" width="89" height="20" uuid="ff6b4e18-b41f-4493-9f71-3db14e953d42"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumNetProfit}]]></textFieldExpression>

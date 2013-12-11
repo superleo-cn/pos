@@ -182,6 +182,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="80" height="25" uuid="9b117b67-674c-4884-a5fa-adb0dd99c951"/>
+							<textElement textAlignment="Right"/>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -193,7 +194,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="80" height="25" forecolor="#000000" uuid="1177e3b4-2467-4b94-ba5c-2af61183ec36"/>
-							<textElement>
+							<textElement textAlignment="Right">
 								<font isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
@@ -207,6 +208,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="84" height="25" uuid="7fe65113-71ca-4dc4-9c8e-63da9934df6a"/>
+							<textElement textAlignment="Right"/>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -218,7 +220,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="84" height="25" forecolor="#000000" uuid="99638c6e-c370-48fa-b5a3-57202bbf92a0"/>
-							<textElement>
+							<textElement textAlignment="Right">
 								<font isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
