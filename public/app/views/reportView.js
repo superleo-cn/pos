@@ -224,17 +224,26 @@ define([
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
+
                     "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+
+                                return moment(data).format('YYYY-MM-DD');
+                            },
+                            "aTargets": [2 ]
+                        },
                         {
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3,4,5,6,7,8 ]
+                            "aTargets": [4,5,6,7,8,9 ]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "realName",  "bSortable": false  },
+                        { "mData": "createDate",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "openBalance",  "bSortable": false  },
                         { "mData": "cashInDrawer" ,  "bSortable": false },{ "mData": "expenses",  "bSortable": false  },{ "mData": "totalCollection",  "bSortable": false  },

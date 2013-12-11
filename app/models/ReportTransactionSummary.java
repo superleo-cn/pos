@@ -20,7 +20,7 @@ import java.util.*;
 
 @Entity
 @Sql
-public class ReportTransactionSummary {
+public class ReportTransactionSummary implements Comparable<ReportTransactionSummary> {
 
     @Transient
     public Long no;
@@ -172,5 +172,14 @@ public class ReportTransactionSummary {
 
     public Double getTotalPrice() {
         return totalPrice;
+    }
+
+    @Override
+    public int compareTo(ReportTransactionSummary o) {
+        if(o==null) return 0;
+        if(foodName==null || shopName==null) return 0;
+        ReportTransactionSummary reportTransactionSummary = (ReportTransactionSummary)o;
+
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
