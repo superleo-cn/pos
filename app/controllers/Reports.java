@@ -34,6 +34,14 @@ public class Reports extends Basic {
     }
 
 
+    public static void items() {
+        Pagination pagination = new Pagination();
+        pagination.currentPage = 0;
+        pagination.pageSize = 100;
+        renderJSON(Food.searchDistinct2(null, pagination));
+    }
+
+
     public static void cashiers() {
         Pagination pagination = new Pagination();
         pagination.currentPage = 0;

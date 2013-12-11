@@ -291,6 +291,25 @@ define([
             $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
             $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
 
+            var item = that.$el.find('#item');
+            if(item!=null) {
+                //  outlet.select2({data:{}});
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/items',function(response){
+                    response.recordList.unshift({id:'ALL',name:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.name,name:obj.name};
+                    });
+                    var itemStr ='';
+                    record.forEach(function(entry) {
+                        itemStr+='<option>'+entry.name+'</option>';
+                    });
+                    item.replaceWith('<select name=item id=item>'+itemStr+'</select>');
+                });
+            }
+
             var outlet = that.$el.find('#outlet');
             if(outlet!=null) {
                 //  outlet.select2({data:{}});

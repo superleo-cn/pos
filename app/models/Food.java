@@ -1,7 +1,6 @@
 package models;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,7 +25,7 @@ import constants.Constants;
 
 @Entity
 @Table(name = "tb_food")
-public class Food {
+public class Food implements Comparable {
 	@Id
 	public Long id;
 
@@ -85,6 +84,32 @@ public class Food {
 		return pagination;
 	}
 
+    public static Pagination searchDistinct2(String queryName, Pagination pagination) {
+        pagination = pagination == null ? new Pagination() : pagination;
+        ExpressionList expList = Ebean.find(Food.class).where();
+        if (StringUtils.isNotEmpty(queryName)) {
+            queryName = StringUtils.trimToNull(queryName);
+            expList.where().ilike("name", "%" + queryName + "%");
+        }
+        List<Food> list =  expList.order("name").findList();
+        Set<String> set = new TreeSet<String>();
+        Set<Food> set2 = new TreeSet<Food>();
+        for(Food food:list){
+            set.add(food.name);
+        }
+
+        long id =0l;
+        for(String name:set){
+            Food food = new Food();
+            food.name=name;
+            food.id=id;
+            id++;
+            set2.add(food);
+        }
+        pagination.recordList= Arrays.asList(set2.toArray());
+        return pagination;
+    }
+
 	public static Food view(Long id) {
 		if (id != null) {
 			return Ebean.find(Food.class, id);
@@ -109,4 +134,11 @@ public class Food {
 		return null;
 	}
 
+    @Override
+    public int compareTo(Object o) {
+        if(o==null || name==null) return 0;
+        if(!(o instanceof Food)) return 0;
+        Food food = (Food)o;
+        return name.compareTo(food.name);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
