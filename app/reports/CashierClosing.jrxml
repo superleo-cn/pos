@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" pageWidth="1200" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
-	<property name="ireport.zoom" value="0.7513148009015777"/>
-	<property name="ireport.x" value="37"/>
+	<property name="ireport.zoom" value="0.5644739300537773"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="realName" class="java.lang.String"/>
@@ -65,42 +65,42 @@
 			</staticText>
 			<staticText>
 				<reportElement x="513" y="0" width="114" height="20" uuid="88493062-78b9-4dd8-80ce-cee4c8c23aa2"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Open Balance (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="742" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Expenses (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="627" y="0" width="115" height="20" uuid="12738d07-91ab-4471-95a1-ad1153a24360"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cash in Drawer (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="835" y="0" width="113" height="20" uuid="b2de0c9f-bdc9-4ec7-b33c-c1d27ebea819"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Collection (S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="948" y="0" width="135" height="20" uuid="8a610188-7344-499f-b95e-bc096b255103"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Daily Turnover(S$)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1083" y="0" width="118" height="20" uuid="4e637da6-2bfc-49ab-b763-2957555ebb22"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total (S$)]]></text>

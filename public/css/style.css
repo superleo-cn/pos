@@ -749,8 +749,9 @@
 	/* invoice */
 		.invoice_heading {font-size:28px;font-family: "PT Sans",sans-serif;}
 		td.number_tar,th.number_tar {text-align:right}
-		
-	/* media queries */
+        td.number_tac,th.number_tac {text-align:center}
+
+    /* media queries */
 
 		@media (min-width: 980px) {
 			.sidebar {position:fixed;top:40px;left:0;margin-left:0}

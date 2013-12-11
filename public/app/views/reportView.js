@@ -208,8 +208,8 @@ define([
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "totalQuantity" ,  "bSortable": false },
-                        { "mData": "totalPrice",  "bSortable": false  }
+                        { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
@@ -245,9 +245,12 @@ define([
                         { "mData": "realName",  "bSortable": false  },
                         { "mData": "createDate",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "openBalance",  "bSortable": false  },
-                        { "mData": "cashInDrawer" ,  "bSortable": false },{ "mData": "expenses",  "bSortable": false  },{ "mData": "totalCollection",  "bSortable": false  },
-                        { "mData": "dailyTurnover" ,  "bSortable": false },{ "mData": "total",  "bSortable": false  }
+                        { "mData": "openBalance",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "cashInDrawer" ,  "bSortable": false,"sClass":"number_tar" },
+                        { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "totalCollection",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "dailyTurnover" ,  "bSortable": false,"sClass":"number_tar" },
+                        { "mData": "total",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/cashierClosing"
                 } );
@@ -288,10 +291,10 @@ define([
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "sales",  "bSortable": false  },
-                        { "mData": "costOfSales",  "bSortable": false  },
-                        { "mData": "expenses",  "bSortable": false  },
-                        { "mData": "netProfit",  "bSortable": false  }
+                        { "mData": "sales",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "costOfSales",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "netProfit",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/pl"
                 } );

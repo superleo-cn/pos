@@ -24,7 +24,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Outlet]]></text>
@@ -38,7 +38,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[DateTime]]></text>
@@ -52,7 +52,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Cashier]]></text>
@@ -153,7 +153,7 @@
 							</box>
 							<textField>
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="80" height="24" uuid="42a2a6b3-5012-4eb2-a787-2ca2530d099b"/>
-								<textElement>
+								<textElement textAlignment="Right">
 									<font isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA["S$"+$V{foodName}]]></textFieldExpression>
@@ -164,7 +164,7 @@
 						<cellContents>
 							<staticText>
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="84" height="24" uuid="8dbeaf3b-4427-4bbd-99e4-3c5b813cceea"/>
-								<textElement>
+								<textElement textAlignment="Right">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total (S$)]]></text>
