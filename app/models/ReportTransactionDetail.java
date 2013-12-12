@@ -36,7 +36,7 @@ public class ReportTransactionDetail {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class).order("createDate desc");
+        Query query  = Ebean.find(ReportTransactionDetail.class);
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();

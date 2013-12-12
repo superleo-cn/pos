@@ -36,7 +36,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class).order("createDate desc");
+        Query query  = Ebean.find(ReportTransactionDetail.class);
         ExpressionList expList = query.where();
 
         if (search.keySet()!=null) {
@@ -79,7 +79,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
                     report.item = report.foodName;
             }
 
-            Map<String,ReportTransactionSummary> summaryMap = new HashMap();
+            Map<String,ReportTransactionSummary> summaryMap = new TreeMap();
             for(ReportTransactionDetail report:tmpList) {
                 String shop = report.shopName;
                 String item = report.item;
