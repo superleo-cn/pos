@@ -90,7 +90,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="575" y="0" width="41" height="20" uuid="6123d8f5-89ba-4448-ab33-56ff42fd3d30"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[FOC]]></text>
@@ -111,7 +111,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="616" y="0" width="60" height="20" uuid="3ca32aa9-c1a4-466a-b01b-0058c41b9dec"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Quantity]]></text>
@@ -145,6 +145,7 @@
 			</textField>
 			<textField>
 				<reportElement x="575" y="0" width="41" height="20" uuid="a1db686a-555f-473a-987e-4006f229d426"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{freeOfCharge}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
@@ -158,12 +159,12 @@
 			</textField>
 			<textField>
 				<reportElement x="616" y="0" width="60" height="20" uuid="e6b8de3b-f18b-48d9-8a7c-c43f3f4730ec"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="32" y="0" width="105" height="20" uuid="b1c280cd-4a42-4b91-a5c5-114ee2070d8d"/>
-				<textFieldExpression><![CDATA[$F{orderDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd H:mm")).format($F{orderDate})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -199,7 +200,7 @@
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement x="616" y="0" width="60" height="20" uuid="80293506-314b-431f-b076-aa166ee37adb"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumQuantity}]]></textFieldExpression>

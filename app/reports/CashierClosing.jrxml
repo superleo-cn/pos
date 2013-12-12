@@ -160,7 +160,7 @@
 			</textField>
 			<textField>
 				<reportElement x="217" y="0" width="100" height="20" uuid="aaf23f55-94e1-4885-9a01-319b7c27ebd2"/>
-				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).format($F{createDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd H:mm")).format($F{createDate})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

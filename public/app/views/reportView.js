@@ -80,7 +80,7 @@ define([
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var dateTo = that.$el.find('#dateTo').val();
 
-                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
+                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"createDate":dateTo});
 
             }
             else  if(page=='reportCashierClosing') {
@@ -94,7 +94,7 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
 
 
-                that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"shopName":dateFrom,"openBalance":dateTo});
+                that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"createDate":dateFrom,"shopName":dateTo});
 
             }
             else  if(page=='reportPL') {
@@ -229,7 +229,7 @@ define([
                         {
                             "mRender": function ( data, type, row ) {
 
-                                return moment(data).format('YYYY-MM-DD');
+                                return moment(data).format('YYYY-MM-DD H:mm');
                             },
                             "aTargets": [2 ]
                         },
@@ -263,6 +263,15 @@ define([
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
 
+                    "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+
+                                return moment(data).format('YYYY-MM-DD H:mm');
+                            },
+                            "aTargets": [3 ]
+                        }
+                    ],
                     "aoColumns": [
                         { "mData": "no" ,  "bSortable": false },
                         { "mData": "user.realname",  "bSortable": false  },
