@@ -79,7 +79,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
                     report.item = report.foodName;
             }
 
-            Map<String,ReportTransactionSummary> summaryMap = new TreeMap();
+            Map<String,ReportTransactionSummary> summaryMap = new LinkedHashMap<String, ReportTransactionSummary>(  );
             for(ReportTransactionDetail report:tmpList) {
                 String shop = report.shopName;
                 String item = report.item;
