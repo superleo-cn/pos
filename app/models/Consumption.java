@@ -34,7 +34,7 @@ public class Consumption {
 	public String name;
 
 	@Required(message = "Consumption Chinese name cannot be empty")
-	public String name_zh;
+	public String nameZh;
 
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
