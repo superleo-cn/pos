@@ -75,7 +75,7 @@ public class Consumption {
 
 	public static List<Consumption> listByShop(Long id) {
 		if (id != null) {
-			return Ebean.find(Consumption.class).select("id, name, name_zh, position").where().eq("shop.id", id)
+			return Ebean.find(Consumption.class).select("id, name, nameZh, position").where().eq("shop.id", id)
 					.eq("status", true).findList();
 		}
 		return null;
