@@ -30,7 +30,7 @@ public class ReportCollectionDetails {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportCollectionDetails.class);
+        Query query  = Ebean.find(ReportCollectionDetails.class).order("createDate desc");
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();

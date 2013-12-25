@@ -80,7 +80,7 @@ define([
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var dateTo = that.$el.find('#dateTo').val();
 
-                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"totalQuantity":dateTo});
+                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"createDate":dateTo});
 
             }
             else  if(page=='reportCashierClosing') {
@@ -94,7 +94,7 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
 
 
-                that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"shopName":dateFrom,"openBalance":dateTo});
+                that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"createDate":dateFrom,"shopName":dateTo});
 
             }
             else  if(page=='reportPL') {
@@ -208,8 +208,8 @@ define([
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "totalQuantity" ,  "bSortable": false },
-                        { "mData": "totalPrice",  "bSortable": false  }
+                        { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
@@ -224,21 +224,33 @@ define([
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
+
                     "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+
+                                return moment(data).format('YYYY-MM-DD H:mm');
+                            },
+                            "aTargets": [2 ]
+                        },
                         {
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3,4,5,6,7,8 ]
+                            "aTargets": [4,5,6,7,8,9 ]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "realName",  "bSortable": false  },
+                        { "mData": "createDate",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "openBalance",  "bSortable": false  },
-                        { "mData": "cashInDrawer" ,  "bSortable": false },{ "mData": "expenses",  "bSortable": false  },{ "mData": "totalCollection",  "bSortable": false  },
-                        { "mData": "dailyTurnover" ,  "bSortable": false },{ "mData": "total",  "bSortable": false  }
+                        { "mData": "openBalance",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "cashInDrawer" ,  "bSortable": false,"sClass":"number_tar" },
+                        { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "totalCollection",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "dailyTurnover" ,  "bSortable": false,"sClass":"number_tar" },
+                        { "mData": "total",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/cashierClosing"
                 } );
@@ -251,6 +263,15 @@ define([
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
 
+                    "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+
+                                return moment(data).format('YYYY-MM-DD H:mm');
+                            },
+                            "aTargets": [3 ]
+                        }
+                    ],
                     "aoColumns": [
                         { "mData": "no" ,  "bSortable": false },
                         { "mData": "user.realname",  "bSortable": false  },
@@ -279,10 +300,10 @@ define([
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
-                        { "mData": "sales",  "bSortable": false  },
-                        { "mData": "costOfSales",  "bSortable": false  },
-                        { "mData": "expenses",  "bSortable": false  },
-                        { "mData": "netProfit",  "bSortable": false  }
+                        { "mData": "sales",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "costOfSales",  "bSortable": false ,"sClass":"number_tar" },
+                        { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "netProfit",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/pl"
                 } );
@@ -290,6 +311,25 @@ define([
 
             $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
             $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
+
+            var item = that.$el.find('#item');
+            if(item!=null) {
+                //  outlet.select2({data:{}});
+                var format=function format(item) { return item.name; };
+
+                $.get('/reports/items',function(response){
+                    response.recordList.unshift({id:'ALL',name:'ALL'});
+
+                    var record = $.map(response.recordList, function(obj){
+                        return {id:obj.name,name:obj.name};
+                    });
+                    var itemStr ='';
+                    record.forEach(function(entry) {
+                        itemStr+='<option>'+entry.name+'</option>';
+                    });
+                    item.replaceWith('<select name=item id=item>'+itemStr+'</select>');
+                });
+            }
 
             var outlet = that.$el.find('#outlet');
             if(outlet!=null) {

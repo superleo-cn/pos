@@ -20,7 +20,7 @@ import java.util.*;
 
 @Entity
 @Sql
-public class ReportTransactionSummary {
+public class ReportTransactionSummary implements Comparable<ReportTransactionSummary> {
 
     @Transient
     public Long no;
@@ -38,7 +38,7 @@ public class ReportTransactionSummary {
 
         Query query  = Ebean.find(ReportTransactionDetail.class);
         ExpressionList expList = query.where();
-        query.findList();
+
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();
             while(searchKeys.hasNext()){
@@ -79,7 +79,7 @@ public class ReportTransactionSummary {
                     report.item = report.foodName;
             }
 
-            Map<String,ReportTransactionSummary> summaryMap = new HashMap();
+            Map<String,ReportTransactionSummary> summaryMap = new LinkedHashMap<String, ReportTransactionSummary>(  );
             for(ReportTransactionDetail report:tmpList) {
                 String shop = report.shopName;
                 String item = report.item;
@@ -117,7 +117,10 @@ public class ReportTransactionSummary {
 
                 list.addAll(tmp2List);
 
-                int endIndex = (startIndex+10);
+                int endIndex = (startIndex+pagination.pageSize);
+                if(pagination.all) {
+                    endIndex = tmp2List.size();
+                }
                 if(endIndex>=tmp2List.size())
                     endIndex=tmp2List.size();
 
@@ -169,5 +172,14 @@ public class ReportTransactionSummary {
 
     public Double getTotalPrice() {
         return totalPrice;
+    }
+
+    @Override
+    public int compareTo(ReportTransactionSummary o) {
+        if(o==null) return 0;
+        if(foodName==null || shopName==null) return 0;
+        ReportTransactionSummary reportTransactionSummary = (ReportTransactionSummary)o;
+
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

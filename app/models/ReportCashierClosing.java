@@ -42,18 +42,18 @@ public class ReportCashierClosing {
             Iterator searchKeys = search.keySet().iterator();
             while(searchKeys.hasNext()){
                 String key = (String) searchKeys.next();
-                String value = (String) search.get(key);
-                play.Logger.info("Value " + value);
+               String value = (String) search.get(key);
+                play.Logger.info("Key " + key+" Value " + value);
                 if(StringUtils.isEmpty(value)) continue;
 
                 if(key.equalsIgnoreCase("shopName") || key.equalsIgnoreCase("realName")){
                     expList.where().ilike(key, "%" + value + "%");
                 }
                 else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("createDate", value);
+                    expList.where().ge("createDate", value+" 00:00:00");
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate", value);
+                    expList.where().le("createDate", value+" 23:59:59");
                 }
             }
         }
@@ -72,6 +72,7 @@ public class ReportCashierClosing {
 
         }
         else {
+            play.Logger.info("ALLLL ");
             pagination.currentPage = 1;
             list = expList.findList();
         }

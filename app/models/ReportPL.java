@@ -56,8 +56,11 @@ public class ReportPL {
                 play.Logger.info("value " + value);
                 if(StringUtils.isEmpty(value)) continue;
 
-                if(key.equalsIgnoreCase("dateFrom") || key.equalsIgnoreCase("dateTo") ) {
-                    query.setParameter(key,value);
+                if(key.equalsIgnoreCase("dateFrom")){
+                   query.setParameter(key, value+" 00:00:00");
+                }
+                else if(key.equalsIgnoreCase("dateTo")){
+                    query.setParameter(key, value+" 23:59:59");
                 }
                 else if(key.equalsIgnoreCase("shopName")) {
                     query.setParameter(key,"%"+value+"%");
@@ -110,11 +113,18 @@ public class ReportPL {
             while(searchKeys.hasNext()){
                 String key = (String) searchKeys.next();
                 String value = (String) search.get(key);
+
+                play.Logger.info("Key " + key+" Value " + value);
+
                 if(StringUtils.isEmpty(value)) continue;
 
-                if(key.equalsIgnoreCase("dateFrom") || key.equalsIgnoreCase("dateTo") ) {
-                    query.setParameter(key,value);
-                } else if(key.equalsIgnoreCase("shopName")) {
+                if(key.equalsIgnoreCase("dateFrom")){
+                    query.setParameter(key,value+" 00:00:00");
+                }
+                else if(key.equalsIgnoreCase("dateTo")){
+                    query.setParameter(key,value+" 23:59:59");
+                }
+               else if(key.equalsIgnoreCase("shopName")) {
                     query.setParameter(key,"%"+value+"%");
                 }
 

@@ -115,7 +115,7 @@ public class Audit {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(Audit.class).fetch("user","realname").fetch("shop","name");
+        Query query  = Ebean.find(Audit.class).fetch("user","realname").fetch("shop","name").order("createDate desc");
 
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {
@@ -123,14 +123,15 @@ public class Audit {
             while(searchKeys.hasNext()){
                 String key = (String) searchKeys.next();
                 String value = (String) search.get(key);
-                play.Logger.info("Value " + value);
+
+                play.Logger.info("Key " + key+" Value " + value);
                 if(StringUtils.isEmpty(value)) continue;
 
-                if(key.equalsIgnoreCase("dateFrom")) {
-                    expList.where().gt("createDate", value);
+                if(key.equalsIgnoreCase("dateFrom")){
+                    expList.where().ge("createDate", value+" 00:00:00");
                 }
-                else if(key.equalsIgnoreCase("dateTo")) {
-                    expList.where().lt("createDate", value);
+                else if(key.equalsIgnoreCase("dateTo")){
+                    expList.where().le("createDate", value+" 23:59:59");
                 }
                 else {
                     expList.where().ilike(key, "%" + value+ "%");

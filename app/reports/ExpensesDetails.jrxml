@@ -24,7 +24,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[DateTime]]></text>
@@ -38,7 +38,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Cashier]]></text>
@@ -52,7 +52,7 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement>
+							<textElement textAlignment="Left">
 								<font size="10" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Outlet]]></text>
@@ -60,7 +60,7 @@
 					</cellContents>
 				</crosstabHeaderCell>
 				<rowGroup name="createDate" width="80" totalPosition="End">
-					<bucket class="java.lang.String">
+					<bucket order="Descending" class="java.lang.String">
 						<bucketExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).format($F{createDate})]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
@@ -148,7 +148,7 @@
 							</box>
 							<textField>
 								<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="24" uuid="429dc58a-51af-43dd-b53e-5639468dd790"/>
-								<textElement>
+								<textElement textAlignment="Right">
 									<font isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{foodName}]]></textFieldExpression>
@@ -169,6 +169,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="25" uuid="0bc6be88-4102-47ce-97da-467722c8e7e6"/>
+							<textElement textAlignment="Right"/>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -180,7 +181,7 @@
 						</box>
 						<textField pattern="###0.00" isBlankWhenNull="true">
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="99" height="25" forecolor="#000000" uuid="4b0ba9c4-aeed-4c10-9534-40b37dec2cd3"/>
-							<textElement>
+							<textElement textAlignment="Right">
 								<font isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{priceMeasure}]]></textFieldExpression>

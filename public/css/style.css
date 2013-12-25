@@ -749,8 +749,9 @@
 	/* invoice */
 		.invoice_heading {font-size:28px;font-family: "PT Sans",sans-serif;}
 		td.number_tar,th.number_tar {text-align:right}
-		
-	/* media queries */
+        td.number_tac,th.number_tac {text-align:center}
+
+    /* media queries */
 
 		@media (min-width: 980px) {
 			.sidebar {position:fixed;top:40px;left:0;margin-left:0}
@@ -861,7 +862,7 @@
 			.login_page .cnt_b {padding:20px 0;width:68%;margin:0 auto}
             .-list-container {height:300px}
 			.ov_boxes li {padding:0 2px}
-			.navbar .nav.pull-right {float:left;clear:both}
+			.navbar .nav.pull-right {float:right;clear:both}
 			.selectnav {display:inline-block}
 		}
 		
@@ -880,7 +881,7 @@
 
 		.privia_grid img {max-width:80px;}
 		
-		.btn {margin-right:3px;}
+		.btn {margin-right:3px;margin-bottom:4px;}
 
         .login_box {
             opacity:0.9;
