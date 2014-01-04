@@ -327,7 +327,7 @@ define([
                     record.forEach(function(entry) {
                         itemStr+='<option>'+entry.name+'</option>';
                     });
-                    item.replaceWith('<select name=item id=item>'+itemStr+'</select>');
+                    item.replaceWith('<select name=item id=item style="width:180px">'+itemStr+'</select>');
                 });
             }
 
@@ -346,7 +346,7 @@ define([
                     record.forEach(function(entry) {
                        shopStr+='<option>'+entry.name+'</option>';
                     });
-                    outlet.replaceWith('<select name=outlet id=outlet>'+shopStr+'</select>');
+                    outlet.replaceWith('<select name=outlet id=outlet style="width:180px">'+shopStr+'</select>');
                 });
             }
 
