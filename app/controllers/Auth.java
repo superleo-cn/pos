@@ -75,7 +75,7 @@ public class Auth extends Basic {
                 isCorrectRole = true;
 
             play.Logger.info(dbUser.usertype+" "+isCorrectRole);
-			if (dbUser != null && isCorrectRole) {
+			if (dbUser != null && isCorrectRole && dbUser.password.equalsIgnoreCase(user.password)) {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
 				User.store(user);
