@@ -28,7 +28,7 @@ public class ReportTransactionDetail {
     public String item;
 
     public Double retailPrice,costPrice,totalCostPrice,totalDiscount,totalRetailPrice,totalPackage;
-    public Long quantity;
+    public Long quantity,position;
     public String freeOfCharge;
 
 
@@ -36,7 +36,7 @@ public class ReportTransactionDetail {
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class);
+        Query query  = Ebean.find(ReportTransactionDetail.class).orderBy("orderDate desc");
         ExpressionList expList = query.where();
         if (search.keySet()!=null) {
             Iterator searchKeys = search.keySet().iterator();
