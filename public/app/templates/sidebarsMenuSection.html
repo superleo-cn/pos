@@ -24,8 +24,14 @@
                 <li><a href="#/reportTransaction">Transaction</a></li>
                 <li><a href="#/reportCashierClosing">Cashier Closing</a></li>
                 <li><a href="#/reportLoginAudit">Login Audit</a></li>
+
+                 <%
+                 if(_.contains(akses,'ADMIN') || _.contains(akses,'SUPERADMIN')) {
+                 %>
                 <li><a href="#/reportPL">P & L</a></li>
-               
+                 <%
+                 }
+                 %>
             </ul>
         </div>
     </div>
