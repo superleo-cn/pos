@@ -36,7 +36,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
     public static Pagination search(Map search, Pagination pagination) {
         pagination = pagination == null ? new Pagination() : pagination;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class);
+        Query query  = Ebean.find(ReportTransactionDetail.class).orderBy("shopName,position");
         ExpressionList expList = query.where();
 
         if (search.keySet()!=null) {

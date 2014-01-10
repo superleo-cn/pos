@@ -193,6 +193,7 @@ define([
                     that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
+                    "iDisplayLength" : 100,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
@@ -213,7 +214,9 @@ define([
                     ],
                     "sAjaxSource": "/reports/transaction"
                 } );
-                $('#timeFrom,#timeTo').timepicker({'defaultTime':false,'template':false,showMeridian:false});
+
+                that.$el.find('#dateFrom,#dateTo').val(moment().format('YYYY-MM-DD'));
+                that.$el.find('#timeFrom,#timeTo').pickatime({ formatLabel:'HH:i',format:'HH:i'});
 
             }
             else if(page=='reportCashierClosing') {
@@ -221,6 +224,7 @@ define([
                 that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
+                    "iDisplayLength" : 100,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
@@ -259,6 +263,7 @@ define([
                 that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
+                    "iDisplayLength" : 100,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
@@ -286,6 +291,7 @@ define([
                 that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
+                    "iDisplayLength" : 100,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",

@@ -14,6 +14,8 @@ import utils.Pagination;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,12 +83,14 @@ public class Reports extends Basic {
 
         searchs.put("shopName",outlet);
         String dateFrom =  request.params.get("sSearch_2");
+        Date today = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
-            dateFrom="2000-01-01";
+            dateFrom=sdf.format(today);
         searchs.put("dateFrom",dateFrom);
         String dateTo =  request.params.get("sSearch_3");
         if(StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo ))
-            dateTo="2222-01-01";
+            dateTo=sdf.format(today);
         searchs.put("dateTo",dateTo);
 
         session.put("reportTransactionSearchs",new ObjectMapper().writeValueAsString(searchs));
@@ -441,9 +445,11 @@ public class Reports extends Basic {
             searchs.put("food",food);
             String outlet ="%";
             searchs.put("shopName",outlet);
-            String dateFrom="2000-01-01";
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFrom=sdf.format(new Date());
             searchs.put("dateFrom",dateFrom);
-            String dateTo = "2222-01-01";
+            String dateTo = sdf.format(new Date());
             searchs.put("dateTo",dateTo);
         }
 
@@ -456,7 +462,6 @@ public class Reports extends Basic {
         try {
 
             Map parameters = new HashMap();
-            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
             print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionDetail.xls");
@@ -515,7 +520,7 @@ public class Reports extends Basic {
         exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
         exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, response.out);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-        exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.FALSE);
+        exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
         exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 
