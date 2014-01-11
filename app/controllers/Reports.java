@@ -448,9 +448,9 @@ public class Reports extends Basic {
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String dateFrom=sdf.format(new Date());
-            searchs.put("dateFrom",dateFrom);
+            searchs.put("dateFrom",dateFrom+" 00:00:00");
             String dateTo = sdf.format(new Date());
-            searchs.put("dateTo",dateTo);
+            searchs.put("dateTo",dateTo+" 23:59:59");
         }
 
         if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
@@ -462,6 +462,7 @@ public class Reports extends Basic {
         try {
 
             Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
             print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionDetail.xls");
@@ -488,10 +489,11 @@ public class Reports extends Basic {
             searchs.put("food",food);
             String outlet ="%";
             searchs.put("shopName",outlet);
-            String dateFrom="2000-01-01";
-            searchs.put("dateFrom",dateFrom);
-            String dateTo = "2222-01-01";
-            searchs.put("dateTo",dateTo);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFrom=sdf.format(new Date());
+            searchs.put("dateFrom",dateFrom+" 00:00:00");
+            String dateTo = sdf.format(new Date());
+            searchs.put("dateTo",dateTo+" 23:59:59");
         }
 
         if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
@@ -502,6 +504,7 @@ public class Reports extends Basic {
         JasperPrint print = null;
         try {
             Map parameters = new HashMap();
+            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
             print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionSummary.xls");
