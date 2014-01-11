@@ -28,7 +28,7 @@ public class ReportTransactionDetail {
     public String item;
 
     public Double retailPrice,costPrice,totalCostPrice,totalDiscount,totalRetailPrice,totalPackage;
-    public Long quantity,position;
+    public Long quantity;
     public String freeOfCharge;
 
 
