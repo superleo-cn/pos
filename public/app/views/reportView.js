@@ -63,10 +63,16 @@ define([
                 var outlet = that.$el.find('#outlet').val();
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var timeFrom = that.$el.find('#timeFrom').val();
+                if(timeFrom=='') {
+                    timeFrom='00:00';
+                }
                 if(timeFrom!='' && dateFrom!='')
                     dateFrom = dateFrom+' '+timeFrom;
                 var dateTo = that.$el.find('#dateTo').val();
                 var timeTo = that.$el.find('#timeTo').val();
+                if(timeTo=='') {
+                    timeTo='23:59';
+                }
                 if(timeTo!='' && dateTo!='')
                     dateTo = dateTo+' '+timeTo;
 

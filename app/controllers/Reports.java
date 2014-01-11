@@ -86,11 +86,11 @@ public class Reports extends Basic {
         Date today = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
-            dateFrom=sdf.format(today);
+            dateFrom=sdf.format(today)+" 00:00:00";
         searchs.put("dateFrom",dateFrom);
         String dateTo =  request.params.get("sSearch_3");
         if(StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo ))
-            dateTo=sdf.format(today);
+            dateTo=sdf.format(today)+" 23:59:59";
         searchs.put("dateTo",dateTo);
 
         session.put("reportTransactionSearchs",new ObjectMapper().writeValueAsString(searchs));
@@ -502,7 +502,6 @@ public class Reports extends Basic {
         JasperPrint print = null;
         try {
             Map parameters = new HashMap();
-            parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
             print = JasperFillManager.fillReport(is, parameters, dataSource);
 
             exportXls(print,"TransactionSummary.xls");
