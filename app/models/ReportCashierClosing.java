@@ -131,4 +131,8 @@ public class ReportCashierClosing {
     public Double getTotal() {
         return total;
     }
+
+    public Double getNextOpenBalance() {
+        return nextOpenBalance;
+    }
 }
