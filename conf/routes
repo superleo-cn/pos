@@ -6,6 +6,8 @@
 GET     /                                       Home.index
 GET     /home                                  	Home.index
 # Login page
+
+GET     /changePassword                         ChangePassword.index
 GET     /login                                	Auth.index
 POST	/loginJson								Auth.loginJson
 POST	/loginAdminJson							Auth.loginAdminJson

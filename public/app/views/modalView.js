@@ -2,14 +2,12 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!../templates/customerList.html',
-    'text!../templates/modalCustomer.html',
-    'text!../templates/modalCustomer.html',
+    'text!../templates/modalChangePassword.html',
     '../models/customer'
-], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model){
+], function($, _, Backbone, formTemplate,Model){
 
     var ModalView = Backbone.View.extend({
-        el: $('#modalView'),
+        el: $('#modalContainer'),
         events: {
             "click .save"   : "save",
             "click .cancel"   : "cancel"
@@ -61,44 +59,17 @@ define([
             var data = {};
             var template;
 
-            if(page=='customer') {
+
                 template=formTemplate;
-            }
-            else
-                template=listTemplate;
 
                 console.log(this.model.toJSON());
                 var compiledTemplate = _.template( template, this.model.toJSON() );
                 // Append our compiled template to this Views "el"
                 this.$el.html( compiledTemplate );
 
-                this.customerForm = this.$el.find('#customerForm');
 
-                this.customerForm.validate({
-                    onkeyup: false,
-                    errorClass: 'error',
-                    validClass: 'valid',
-                    highlight: function(element) {
-                        $(element).closest('div').addClass("f_error");
-                    },
-                    unhighlight: function(element) {
-                        $(element).closest('div').removeClass("f_error");
-                    },
-                    errorPlacement: function(error, element) {
-                        $(element).closest('div').append(error);
-                    },
-                    rules: {
-                        namaModal: "required",
-                        gender : "required",
-                        "telepon[hp1]":"required"
-                    },
-                    messages: {
-
-                    }
-                });
-
-                this.$el.css('width',600);
-                this.$el.modal();
+//                this.$el.css('width',600);
+                this.$el.find('#modalView').modal();
 
                 if(cb) cb();
             

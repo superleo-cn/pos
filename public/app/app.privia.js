@@ -193,7 +193,6 @@ Number.prototype.formatPrice = function() {
      // return this+"".replace(/(\d)(?=(\d{3})+)/g, "$1,");
    };
 
-   
 
 var delay = (function(){
   var timer = 0;

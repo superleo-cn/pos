@@ -258,6 +258,7 @@ define([
                         { "mData": "openBalance",  "bSortable": false ,"sClass":"number_tar" },
                         { "mData": "cashInDrawer" ,  "bSortable": false,"sClass":"number_tar" },
                         { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
+                        { "mData": "nextOpenBalance",  "bSortable": false,"sClass":"number_tar"  },
                         { "mData": "totalCollection",  "bSortable": false,"sClass":"number_tar"  },
                         { "mData": "dailyTurnover" ,  "bSortable": false,"sClass":"number_tar" },
                         { "mData": "total",  "bSortable": false,"sClass":"number_tar"  }

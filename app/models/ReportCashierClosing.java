@@ -27,7 +27,7 @@ public class ReportCashierClosing {
 
     public String shopName,realName;
 
-    public Double openBalance,expenses,cashInDrawer;
+    public Double openBalance,expenses,cashInDrawer,nextOpenBalance;
 
     public Double dailyTurnover,totalCollection,total;
 

@@ -52,6 +52,23 @@
 <script>
     //* hide all elements & show preloader
     document.documentElement.className += 'js';
+
+
+    function changePassword(){
+        $('#modalView').modal();
+
+    }
+    function savePassword(){
+        var password = $('#password').val();
+        $.get('/changePassword?password='+password,function(){
+            $('#password').val('')
+        });
+        $('#modalView').modal('hide');
+    }
+
+    function closePassword() {
+        $('#modalView').modal('hide');
+    }
 </script>
 
 
