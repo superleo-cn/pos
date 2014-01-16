@@ -247,7 +247,7 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [4,5,6,7,8,9 ]
+                            "aTargets": [4,5,6,7,8,9,10 ]
                         }
                     ],
                     "aoColumns": [
