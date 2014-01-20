@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
@@ -24,10 +23,10 @@ import com.avaje.ebean.PagingList;
 public class Shop {
 	@Id
 	public Long id;
-	
+
 	@Required(message = "Shop name cannot be empty")
 	public String name;
-	
+
 	@Required(message = "Shop code cannot be empty")
 	public String code;
 
@@ -38,7 +37,7 @@ public class Shop {
 	public Date expiryDate;
 
 	public String createBy, modifiedBy;
-	
+
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */
@@ -63,6 +62,10 @@ public class Shop {
 			return Ebean.find(Shop.class, id);
 		}
 		return null;
+	}
+
+	public static List<Shop> listJson(Long id) {
+		return Ebean.find(Shop.class).select("id, name, code, status, expiryDate").where().eq("id", id).findList();
 	}
 
 	public static void store(Shop shop) {

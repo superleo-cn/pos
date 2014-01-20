@@ -115,6 +115,7 @@ create table report_cashier_closing (
   open_balance              double,
   expenses                  double,
   cash_in_drawer            double,
+  next_open_balance         double,
   daily_turnover            double,
   total_collection          double,
   total                     double)
