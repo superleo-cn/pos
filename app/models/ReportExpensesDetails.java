@@ -44,10 +44,10 @@ public class ReportExpensesDetails {
                     expList.where().ilike(key, "%" + value + "%");
                 }
                 else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("createDate", value);
+                    expList.where().ge("createDate", value+" 00:00:00");
                 }
                 else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("createDate", value);
+                    expList.where().le("createDate", value+" 23:59:59");
                 }
             }
         }
