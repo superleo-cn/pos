@@ -17,6 +17,8 @@ GET     /logout                                	Auth.logout
 *		/users/list								Users.list
 *		/users/view/{id}						Users.view
 *		/users/delete/{id}						Users.delete
+# Shop Operation
+*		/shops/listJson/{id}					Shops.listJson
 # Food Operation
 *		/foods/listJson/{id}					Foods.listJson
 # Consumption Operation 
