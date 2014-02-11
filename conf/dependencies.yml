@@ -3,7 +3,7 @@
 require:
     - play
     - play -> ebean 1.0.6
-    - net.sf.jasperreports -> jasperreports 5.0.4:
+    - net.sf.jasperreports -> jasperreports 5.2.0:
              transitive: false
     - org.apache.poi -> poi 3.7:
              transitive: false

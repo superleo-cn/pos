@@ -323,7 +323,7 @@ define([
             }
 
             $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
-            $("#dateTo").datepicker({ dateFormat: 'yy-m-dd',changeYear :true,changeMonth: true  });
+            $("#dateTo").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true  });
 
             var item = that.$el.find('#item');
             if(item!=null) {
