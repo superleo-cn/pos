@@ -10,20 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import utils.Pagination;
-
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
-import com.avaje.ebean.PagingList;
-import com.avaje.ebean.annotation.Transactional;
-
-import constants.Constants;
 
 @Entity
 @Table(name = "tb_daily_summary")
@@ -67,7 +57,7 @@ public class DailySummary {
 
 	public String createBy, modifiedBy;
 
-	public Date createDate, modifiedDate;
+	public Date createDate, modifiedDate, submitDate;
 
 	@Transient
 	public Long androidId;
@@ -89,6 +79,13 @@ public class DailySummary {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+
+	public static boolean search(DailySummary dailySummary) {
+		List<DailySummary> dailySummaryList = Ebean.find(DailySummary.class).select("id").where()
+				.eq("user.id", dailySummary.user.id).eq("shop.id", dailySummary.shop.id).eq("createBy", true)
+				.findList();
 		return false;
 	}
 }
