@@ -140,8 +140,7 @@ public class Auth extends Basic {
 			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
 
 		}
-		//renderJSON(result);
-		renderHtml("<a>test</a>");
+		renderJSON(result);
 	}
 
 	@Transactional
