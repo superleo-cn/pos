@@ -10,12 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
-import play.data.validation.Required;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -23,13 +19,13 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
-import constants.Constants;
-
 @Entity
 @Table(name = "tb_transaction")
 public class Transaction {
 	@Id
 	public Long id;
+	
+	public String transactionId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -88,6 +84,13 @@ public class Transaction {
 	public static Transaction view(Long id) {
 		if (id != null) {
 			return Ebean.find(Transaction.class, id);
+		}
+		return null;
+	}
+	
+	public static List<Transaction> getByTransactionId(String transactionId) {
+		if (StringUtils.isNotEmpty(transactionId)) {
+			return Ebean.find(Transaction.class).where().eq("transactionId", transactionId).findList();
 		}
 		return null;
 	}

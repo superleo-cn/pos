@@ -86,6 +86,7 @@ create table tb_daily_summary (
   modified_by               varchar(255),
   create_date               datetime,
   modified_date             datetime,
+  submit_date               datetime,
   constraint pk_tb_daily_summary primary key (id))
 ;
 
@@ -168,6 +169,7 @@ create table tb_shop (
 
 create table tb_transaction (
   id                        bigint auto_increment not null,
+  transaction_id            varchar(255),
   user_id                   bigint,
   shop_id                   bigint,
   food_id                   bigint,

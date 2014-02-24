@@ -25,27 +25,33 @@ public class Transactions extends Basic {
 	public static void store(Transaction[] transactions) {
 		Map result = new HashMap();
 		String str = "";
+		int size = 0; // successful transaction records
 		try {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[date = " + new Date() + "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+					str += "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
+							+ "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
 							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
 							+ transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice
 							+ "], [totalPackage = " + transaction.totalPackage + "], [freeOfCharge = "
 							+ transaction.freeOfCharge + "], [orderDate = " + transaction.orderDate + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
-					boolean flag = Transaction.store(transaction);
-					if (flag) {
-						datas.add(transaction.androidId);
+					List<Transaction> list = Transaction.getByTransactionId(transaction.transactionId);
+					if (CollectionUtils.size(list) == 0) {
+						size++;
+						boolean flag = Transaction.store(transaction);
+						if (flag) {
+							datas.add(transaction.androidId);
+						}
 					}
 				}
 
 				result.put(Constants.DATAS, datas);
 				logger.info(Messages.TRANSACTION_MESSAGE,
 						new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
-				if (CollectionUtils.size(datas) == CollectionUtils.size(transactions)) {
+				if (CollectionUtils.size(datas) == size) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
 				} else {
