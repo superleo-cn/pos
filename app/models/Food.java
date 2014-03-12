@@ -28,9 +28,12 @@ import constants.Constants;
 public class Food implements Comparable {
 	@Id
 	public Long id;
-
+	
 	@Required(message = "SN cannot be empty")
 	public String sn;
+
+	@Required(message = "Bar Code cannot be empty")
+	public String barCode;
 
 	@Required(message = "Food name cannot be empty")
 	public String name;
@@ -62,6 +65,8 @@ public class Food implements Comparable {
 	public Shop shop;
 
 	public Integer position;
+	
+	public Boolean flag;
 
 	public String createBy, modifiedBy;
 
@@ -119,7 +124,7 @@ public class Food implements Comparable {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, retailPrice, picture, position").where()
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag").where()
 					.eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
