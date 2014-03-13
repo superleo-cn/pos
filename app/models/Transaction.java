@@ -24,7 +24,7 @@ import com.avaje.ebean.PagingList;
 public class Transaction {
 	@Id
 	public Long id;
-	
+
 	public String transactionId;
 
 	@ManyToOne
@@ -57,6 +57,8 @@ public class Transaction {
 
 	public String invoice;
 
+	public String type;
+
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate, orderDate;
@@ -87,7 +89,7 @@ public class Transaction {
 		}
 		return null;
 	}
-	
+
 	public static List<Transaction> getByTransactionId(String transactionId) {
 		if (StringUtils.isNotEmpty(transactionId)) {
 			return Ebean.find(Transaction.class).where().eq("transactionId", transactionId).findList();
