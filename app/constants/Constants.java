@@ -3,7 +3,7 @@ package constants;
 public class Constants {
 	
 	// website URL
-	public static String WEBSITE_URL = "http://ec2-54-254-145-129.ap-southeast-1.compute.amazonaws.com:8080/";
+	public static String WEBSITE_URL = "http://f1.weebo.com.sg:80/";
 	//public static String WEBSITE_URL = "http://192.168.0.123:9000/";
 	public static String PICTURE_URL = WEBSITE_URL + "public/upload/";
 	
