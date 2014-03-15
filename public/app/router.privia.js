@@ -4,10 +4,11 @@ define([
   'backbone',
   './views/reportView',
   './views/commonView',
-  './views/modalView'
+  './views/modalView',
+  './views/master/itemView'
   ], 
 
-  function($, _, Backbone, ReportView,CommonView, ModalView) {
+  function($, _, Backbone, ReportView,CommonView, ModalView,ItemView) {
 
     var AppRouter = Backbone.Router.extend({
       initialize : function(option) {
@@ -31,6 +32,8 @@ define([
       'analisis': 'showAnalisa',
       'login': 'showLogin',
       'success': 'showSuccess',
+      'master/item/list': 'itemList',
+      'master/item/upload': 'itemUpload',
       // Default
       '': 'defaultAction',
       '*actions': 'defaultAction'
@@ -42,6 +45,14 @@ define([
     showHome: function() {
       console.log('showHome');
       new CommonView().render();
+    },
+    itemList: function() {
+      console.log('itemList');
+      new ItemView().render('list');
+    },
+    itemUpload: function() {
+      console.log('itemUpload');
+      new ItemView().render('upload');
     },
    showReportTransaction: function() {
     console.log('showReportTransaction');

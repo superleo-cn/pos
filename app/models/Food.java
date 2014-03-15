@@ -73,20 +73,41 @@ public class Food implements Comparable {
 	public Date createDate, modifiedDate;
 
 	/* the following are service methods */
-	public static Pagination search(String queryName, Pagination pagination) {
+	public static Pagination search(Map search, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
-		ExpressionList expList = Ebean.find(Food.class).where();
-		if (StringUtils.isNotEmpty(queryName)) {
-			queryName = StringUtils.trimToNull(queryName);
-			expList.where().ilike("name", "%" + queryName + "%");
-		}
-		PagingList<Food> pagingList = expList.findPagingList(pagination.pageSize);
-		pagingList.setFetchAhead(false);
-		Page page = pagingList.getPage(pagination.currentPage);
-		pagination.recordList = page.getList();
-		pagination.pageCount = page.getTotalPageCount();
-		pagination.recordCount = page.getTotalRowCount();
-		return pagination;
+		ExpressionList expList = Ebean.find(Food.class).fetch("shop", "name").where();
+        if (search.keySet()!=null) {
+            Iterator searchKeys = search.keySet().iterator();
+            while(searchKeys.hasNext()){
+                String key = (String) searchKeys.next();
+                String value = (String) search.get(key);
+                play.Logger.info("value " + value);
+                if(StringUtils.isEmpty(value)) continue;
+
+                 if(key.equalsIgnoreCase("shopName")) {
+                     expList.where().ilike("shop.name", "%" + value+ "%");
+                }
+            }
+        }
+        List<Food> list = new ArrayList<Food>();
+        if(!pagination.all)
+        {
+            PagingList<Food> pagingList = expList.findPagingList(pagination.pageSize);
+            pagingList.setFetchAhead(false);
+            Page page = pagingList.getPage(pagination.currentPage-1);
+
+            list = page.getList();
+            pagination.iTotalDisplayRecords = expList.findRowCount();
+            pagination.iTotalRecords = expList.findRowCount();
+
+        }
+        else {
+            pagination.currentPage = 1;
+            list = expList.findList();
+        }
+
+        pagination.recordList = list;
+        return pagination;
 	}
 
     public static Pagination searchDistinct2(String queryName, Pagination pagination) {
@@ -145,5 +166,13 @@ public class Food implements Comparable {
         if(!(o instanceof Food)) return 0;
         Food food = (Food)o;
         return name.compareTo(food.name);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public static void bulkStore(List<Food> list) {
+
+        Ebean.save(list);
+        for(int i=0;i<list.size();i++) {
+
+        }
     }
 }
