@@ -136,7 +136,7 @@ define([
                         {
                             "mRender": function ( data, type, row ) {
                                 
-                                return row.name+' / '+row.name_zh;
+                                return row.name+' / '+row.nameZh;
                             },
                             "aTargets": [1 ]
                         },
