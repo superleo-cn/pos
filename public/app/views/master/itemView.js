@@ -73,7 +73,7 @@ define([
                 this.model.readFile(this.$('form :file')[0].files[0], function(){
                     that.itemForm.find('.save').button('reset');
                 }, function(){
-                    that.render('list');
+                    app.router.navigate('master/item/list',true);
                 });
                 this.itemForm.find('.save').button('loading');
             

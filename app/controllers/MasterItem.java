@@ -49,6 +49,8 @@ public class MasterItem extends Basic  {
         if(list.size()<=1) throw new RuntimeException("No Record");
         if(list.size()!=0) {
             List foodList  =new ArrayList();
+            Map<Long,Shop> shopMap = new HashMap<>();
+            int insertCount = 0;
             for(int i=1;i<list.size();i++) {
                 String columns[]= list.get(i);
                 if(columns.length!=8) throw new RuntimeException("Invalid CSV Columns");
@@ -67,13 +69,24 @@ public class MasterItem extends Basic  {
                 food.status=true;
                 food.createBy=session.get(Constants.CURRENT_USERNAME);
                 food.createDate=new Date();
+                food.flag=true;
                 if(NumberUtils.isNumber(columns[7]))
                 {
-                    food.shop= new Shop();
-                    food.shop.id=Long.valueOf(columns[7]);
+                    Shop shop = null;
+                    if(!shopMap.containsKey(Long.valueOf(columns[7]))) {
+                        shop = Shop.view(Long.valueOf(columns[7]));
+                        shopMap.put(Long.valueOf(columns[7]),shop);
+                    }
+                    shop = shopMap.get(Long.valueOf(columns[7]));
+                    if(shop!=null) {
+                        food.shop= new Shop();
+                        food.shop.id=Long.valueOf(columns[7]);
+                        foodList.add(food);
+                        insertCount++;
+                    }
                 }
 
-                foodList.add(food);
+
             }
             size = foodList.size();
             Food.bulkStore(foodList);
