@@ -13,3 +13,8 @@ ALTER TABLE
 ALTER TABLE
     tb_transaction modify type VARCHAR(100) after invoice;  
     
+ALTER TABLE
+    tb_daily_summary ADD h_card FLOAT;
+ALTER TABLE
+    tb_daily_summary MODIFY h_card FLOAT AFTER g_total_balance;    
+    

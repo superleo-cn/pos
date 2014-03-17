@@ -44,6 +44,8 @@ public class DailySummary {
 	public Float fBringBackCash;
 
 	public Float gTotalBalance;
+	
+	public Float hCard;
 
 	public String middleCalculateTime;
 
