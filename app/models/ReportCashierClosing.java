@@ -29,7 +29,7 @@ public class ReportCashierClosing {
 
     public Double openBalance,expenses,cashInDrawer,nextOpenBalance;
 
-    public Double dailyTurnover,totalCollection,total;
+    public Double dailyTurnover,totalCollection,total,cardCollected;
 
 
     /* the following are service methods */
@@ -134,5 +134,9 @@ public class ReportCashierClosing {
 
     public Double getNextOpenBalance() {
         return nextOpenBalance;
+    }
+
+    public Double getCardCollected() {
+        return cardCollected;
     }
 }

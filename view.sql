@@ -75,13 +75,8 @@ GROUP BY
 --select s.name AS shop_name,u.realname AS real_name,d.a_open_balance AS open_balance,d.c_cash_collected AS cash_in_drawer,d.b_expenses AS expenses,(d.c_cash_collected - d.e_next_open_balance) AS total_collection,d.d_daily_turnover AS daily_turnover,(d.b_expenses + d.c_cash_collected) AS total,d.create_date AS create_date,d.e_next_open_balance as next_open_balance from ((tb_shop s join tb_user u) join tb_daily_summary d) where ((s.id = u.shop_id) and (s.id = d.shop_id) and (u.id = d.user_id))
 drop view report_cashier_closing;
 create view report_cashier_closing as
-select s.name AS shop_name,u.realname AS real_name,d.a_open_balance AS open_balance,d.c_cash_collected AS cash_in_drawer,d.b_expenses AS expenses,
-d.f_bring_back_cash AS total_collection,
-d.d_daily_turnover AS daily_turnover,
-g.g_total_balance AS total,
-d.create_date AS create_date,d.e_next_open_balance as next_open_balance 
-from ((tb_shop s join tb_user u) join tb_daily_summary d) where ((s.id = u.shop_id) and (s.id = d.shop_id) and (u.id = d.user_id))
- 
+select s.name AS shop_name,u.realname AS real_name,d.a_open_balance AS open_balance,d.c_cash_collected AS cash_in_drawer,d.b_expenses AS expenses,(d.c_cash_collected + d.h_card - d.e_next_open_balance) AS total_collection,d.d_daily_turnover AS daily_turnover,(d.b_expenses + d.c_cash_collected+d.h_card) AS total,d.create_date AS create_date,d.e_next_open_balance AS next_open_balance,d.h_card AS card_collected from ((pos_f1.tb_shop s join pos_f1.tb_user u) join pos_f1.tb_daily_summary d) where ((s.id = u.shop_id) and (s.id = d.shop_id) and (u.id = d.user_id))
+
 -- report export expenses details
 create view report_expenses_details as
 SELECT tct.create_date,tu.realname real_name,ts.name shop_name,

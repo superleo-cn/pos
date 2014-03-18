@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" pageWidth="1300" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
-	<property name="ireport.zoom" value="0.6830134553650707"/>
-	<property name="ireport.x" value="79"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashierClosing" pageWidth="1430" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1430" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="142d0e78-bdbf-43ff-a0d7-947c3b9b0eee">
+	<property name="ireport.zoom" value="0.9090909090909095"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="realName" class="java.lang.String"/>
@@ -14,6 +14,7 @@
 	<field name="total" class="java.lang.Double"/>
 	<field name="createDate" class="java.util.Date"/>
 	<field name="nextOpenBalance" class="java.lang.Double"/>
+	<field name="cardCollected" class="java.lang.Double"/>
 	<variable name="sumOpenBalance" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{openBalance}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -40,6 +41,10 @@
 	</variable>
 	<variable name="sumNextOpenBalance" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{nextOpenBalance}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumCardCollected" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{cardCollected}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<background>
@@ -76,7 +81,7 @@
 				<text><![CDATA[Open Balance (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="742" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
+				<reportElement x="857" y="0" width="93" height="20" uuid="197cb73e-b739-4098-b698-9555452e1fb7"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
@@ -90,21 +95,21 @@
 				<text><![CDATA[Cash in Drawer (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="964" y="0" width="113" height="20" uuid="b2de0c9f-bdc9-4ec7-b33c-c1d27ebea819"/>
+				<reportElement x="1095" y="0" width="113" height="20" uuid="b2de0c9f-bdc9-4ec7-b33c-c1d27ebea819"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Collection (S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1077" y="0" width="120" height="20" uuid="8a610188-7344-499f-b95e-bc096b255103"/>
+				<reportElement x="1208" y="0" width="120" height="20" uuid="8a610188-7344-499f-b95e-bc096b255103"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Daily Turnover(S$)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1197" y="0" width="100" height="20" uuid="4e637da6-2bfc-49ab-b763-2957555ebb22"/>
+				<reportElement x="1328" y="0" width="100" height="20" uuid="4e637da6-2bfc-49ab-b763-2957555ebb22"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
@@ -118,11 +123,18 @@
 				<text><![CDATA[Date Time]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="835" y="0" width="129" height="20" uuid="2c706968-ba74-43ea-840c-dd24f84a2a9c"/>
+				<reportElement x="950" y="0" width="145" height="20" uuid="2c706968-ba74-43ea-840c-dd24f84a2a9c"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Next Open Balance (S$)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="742" y="0" width="115" height="20" uuid="9aef7aea-f7ed-4768-a2cf-169f06115082"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Card Payment (S$)]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -146,7 +158,7 @@
 				<textFieldExpression><![CDATA[$F{openBalance}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="742" y="0" width="93" height="20" uuid="045d35d9-f2fe-4fe1-9f2c-8167df6819a4"/>
+				<reportElement x="857" y="0" width="93" height="20" uuid="045d35d9-f2fe-4fe1-9f2c-8167df6819a4"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{expenses}]]></textFieldExpression>
 			</textField>
@@ -156,28 +168,33 @@
 				<textFieldExpression><![CDATA[$F{cashInDrawer}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="964" y="0" width="113" height="20" uuid="00dd4939-9820-4f51-8c20-801a501d993f"/>
+				<reportElement x="1095" y="0" width="113" height="20" uuid="00dd4939-9820-4f51-8c20-801a501d993f"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{totalCollection}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="1077" y="0" width="120" height="20" uuid="d7478eeb-6d29-4918-86ba-7e42fe641385"/>
+				<reportElement x="1208" y="0" width="120" height="20" uuid="d7478eeb-6d29-4918-86ba-7e42fe641385"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{dailyTurnover}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="1197" y="0" width="100" height="20" uuid="92cce2e3-3ae0-4c2f-9d08-94eb51aeb133"/>
+				<reportElement x="1328" y="0" width="100" height="20" uuid="92cce2e3-3ae0-4c2f-9d08-94eb51aeb133"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="0" width="100" height="20" uuid="aaf23f55-94e1-4885-9a01-319b7c27ebd2"/>
+				<reportElement x="217" y="0" width="101" height="20" uuid="aaf23f55-94e1-4885-9a01-319b7c27ebd2"/>
 				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd H:mm")).format($F{createDate})]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="835" y="0" width="129" height="20" uuid="a669b6e2-ca09-4cbb-9c36-33d89fc07fff"/>
+				<reportElement x="950" y="0" width="145" height="20" uuid="a669b6e2-ca09-4cbb-9c36-33d89fc07fff"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{totalCollection}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="742" y="0" width="115" height="20" uuid="7c6b0795-84ec-4759-ae43-843ad646aa85"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cardCollected}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -205,39 +222,46 @@
 				<textFieldExpression><![CDATA[$V{sumCashInDrawer}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="742" y="0" width="93" height="20" uuid="015f24eb-71bd-4a11-84fd-b43d36fd10bf"/>
+				<reportElement x="857" y="0" width="93" height="20" uuid="015f24eb-71bd-4a11-84fd-b43d36fd10bf"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumExpenses}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="964" y="0" width="113" height="20" uuid="98fa73b2-50b2-48f9-bb11-241ed7bd3017"/>
+				<reportElement x="1095" y="0" width="113" height="20" uuid="98fa73b2-50b2-48f9-bb11-241ed7bd3017"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumTotalCollection}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="1077" y="0" width="120" height="20" uuid="d7a259e7-cc64-4316-8472-fd4ef650ed9a"/>
+				<reportElement x="1208" y="0" width="120" height="20" uuid="d7a259e7-cc64-4316-8472-fd4ef650ed9a"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumDailyTurnover}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="1197" y="0" width="100" height="20" uuid="020645fa-77df-4bd1-b23e-8e5f26191cac"/>
+				<reportElement x="1328" y="0" width="100" height="20" uuid="020645fa-77df-4bd1-b23e-8e5f26191cac"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumTotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="835" y="0" width="129" height="20" uuid="342e9a1b-898a-402c-a356-cafe7e538b6e"/>
+				<reportElement x="950" y="0" width="145" height="20" uuid="342e9a1b-898a-402c-a356-cafe7e538b6e"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumNextOpenBalance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="742" y="0" width="115" height="20" uuid="cbd137fb-cebf-4068-a728-366fef3bbb73"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumCardCollected}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

@@ -257,6 +257,7 @@ define([
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "openBalance",  "bSortable": false ,"sClass":"number_tar" },
                         { "mData": "cashInDrawer" ,  "bSortable": false,"sClass":"number_tar" },
+                        { "mData": "cardCollected" ,  "bSortable": false,"sClass":"number_tar" },
                         { "mData": "expenses",  "bSortable": false,"sClass":"number_tar"  },
                         { "mData": "nextOpenBalance",  "bSortable": false,"sClass":"number_tar"  },
                         { "mData": "totalCollection",  "bSortable": false,"sClass":"number_tar"  },

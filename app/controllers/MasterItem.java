@@ -53,7 +53,7 @@ public class MasterItem extends Basic  {
             int insertCount = 0;
             for(int i=1;i<list.size();i++) {
                 String columns[]= list.get(i);
-                if(columns.length!=8) throw new RuntimeException("Invalid CSV Columns");
+                if(columns.length!=11) throw new RuntimeException("Invalid CSV Columns");
 
                 Food food = new Food();
                 food.sn=columns[0];
@@ -69,7 +69,21 @@ public class MasterItem extends Basic  {
                 food.status=true;
                 food.createBy=session.get(Constants.CURRENT_USERNAME);
                 food.createDate=new Date();
-                food.flag=true;
+                //food.flag=true;
+
+
+                if(NumberUtils.isNumber(columns[8]))
+                {
+                    food.position=Integer.valueOf(columns[8]);
+                }
+                if(NumberUtils.isNumber(columns[9]))
+                {
+                    if(Integer.valueOf(columns[9])==1)
+                        food.flag=true;
+                    else
+                        food.flag=false;
+                }
+                food.type=columns[10];
                 if(NumberUtils.isNumber(columns[7]))
                 {
                     Shop shop = null;
