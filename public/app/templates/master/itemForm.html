@@ -1,17 +1,61 @@
 <div class="row-fluid">
 	<div class="span12">
-  		<h3 class="heading">Tambah Item</h3>
+  		<h3 class="heading">Item Form</h3>
 		<form id="itemForm" method="post">
+		<input type="hidden" name="picture" id="picture" value="<%=picture%>">
 		<div class="formMessage">
   			</div>
+  		<div class="control-group">
+                                <div data-provides="fileupload" class="fileupload fileupload-new">
+                                    <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail">
+                                        <img src="<%=picture!=''?'/upload/'+picture:'/img/80x80.gif'%>" alt="" id="thumbnail-item"></div>
+
+                                    <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
+                                    <span id="img-uploader" class="btn btn-file"></span>
+                                    <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                                </div>
+
+                            </div>
+  			<div class="control-group">
+				<label>Item Name <span class="f_req">*</span></label>
+				<input type="text" name="name" value="<%=name%>"> 
+			</div>
+			<div class="control-group">
+				<label>Item Name 2 <span class="f_req">*</span></label>
+				<input type="text" name="nameZh" value="<%=nameZh%>"> 
+			</div>
 			<div class="control-group">
 				<label>Serial No<span class="f_req">*</span></label>
 				<input type="text" name="sn" value="<%=sn%>"> 
-				</div>
+			
 			</div>
 			<div class="control-group">
 				<label>Barcode</label>
 				<input type="text" name="barCode"  value="<%=barCode%>">
+			</div>
+			<div class="control-group">
+				<label>Type</label>
+				<input type="text" name="type"  value="<%=type%>">
+			</div>
+			<div class="control-group">
+				<label>Cost Price </label>
+				<input type="text" name="costPrice"  value="<%=costPrice%>">
+			</div>
+			<div class="control-group">
+				<label>Retail Price</label>
+				<input type="text" name="retailPrice"  value="<%=retailPrice%>">
+			</div>
+			<div class="control-group">
+				<label>Status</label>
+				<input type="checkbox" name="status"  value="true" <%=status?'checked':''%>>
+			</div>
+			<div class="control-group">
+				<label>Flag</label>
+				<input type="checkbox" name="flag"  value="true"  <%=flag?'checked':''%>>
+			</div>
+			<div class="control-group">
+				<label>Position</label>
+				<input type="text" name="position"  value="<%=position%>">
 			</div>
 			<div class="form-actions">
 				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
@@ -20,7 +64,33 @@
 		</form>
 	</div>
 </div>
+  <script>
+	$(document).ready(function() {
+	$('#img-uploader').fineUploader({
+                    request: {
+                        endpoint: '/masterItem/uploadImg'
+                    },
+                    multiple: false,
+                    sizeSymbols: 'kB',
+                    validation: {
+                        allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+                        sizeLimit: 204800,
+                        sizeSymbols: 'kB'
 
-<script>
-	
+                    },
+                    text: {
+                        uploadButton: 'Click or Drop'
+                    }
+                }).on('complete', function(event, id, fileName, response) {
+                            if (response.success) {
+                                $('#thumbnail-item').attr('src','/upload/'+response.path);
+                                $('#picture').val(response.path);
+                            }
+                            else {
+                            	alert(response.error);
+                                $('#thumbnail-item').attr('src','/img/80x80.gif');
+                                $('#picture').val('');
+                            }
+                });
+	});
 </script>

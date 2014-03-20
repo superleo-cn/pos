@@ -4,7 +4,7 @@ define(["jquery", "backbone"],
 
         // Creates a new Backbone Model class object
         var Item = Backbone.Model.extend({
-            urlRoot :'/api/item',
+            urlRoot :'/masterItem',
             // Model Constructor
             initialize: function() {
             },
@@ -13,6 +13,15 @@ define(["jquery", "backbone"],
             defaults: {
                 id:'',
                 sn:'',
+                name:'',
+                nameZh:'',
+                picture:'',
+                costPrice:0,
+                retailPrice:0,
+                type:'',
+                status:'',
+                flag:'',
+                position:'',
                 barCode:'',
                 attachment:null
             },

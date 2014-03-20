@@ -12,6 +12,7 @@ define([
     el: $('#container'),
      events: {
           "click .save"   : "save",
+          "click .upload"   : "upload",
           "click .cancel"   : "cancel",
           "click #searchItem"   : "searchItem",
           "click #clearItem"   : "clearItem"
@@ -51,9 +52,9 @@ define([
 
             });
             this.listenTo(this.model,'sync', function(e) {
-                console.log('sukses');
+              
                 if(!that.options.id)
-                   this.model.set(new Model().toJSON());
+                this.model.set(new Model().toJSON());
                 that.render('form',function(){
                     var alertInfo = $('#alertInfo').clone();
                     $('span',alertInfo).html('Sukses menyimpan item');
@@ -64,7 +65,7 @@ define([
             });
 
         },
-       save:function(e) {
+        upload:function(e) {
             that=this;
             this.itemForm = this.$el.find('#itemForm');
             console.log(this.itemForm.serializeObject());
@@ -76,6 +77,21 @@ define([
                     app.router.navigate('master/item/list',true);
                 });
                 this.itemForm.find('.save').button('loading');
+            
+            }
+        },
+       save:function(e) {
+            that=this;
+            this.itemForm = this.$el.find('#itemForm');
+            if(this.itemForm.valid()) {
+                var updateModel = this.itemForm.serializeObject();
+                this.model.set(updateModel);
+                if(!updateModel.status)
+                    this.model.set('status',false);
+                if(!updateModel.flag)
+                    this.model.set('flag',false);
+                this.itemForm.find('.save').button('loading');
+                this.model.save();
             
             }
         },
@@ -93,16 +109,8 @@ define([
 
             if(page=='form') {
                 template=formTemplate;
-            }
-            else if(page=='upload') {
-                template=uploadFormTemplate;
-            }
-            else if(page=='list')
-                template=listTemplate;
 
-            if(id) {
-                template=formTemplate;
-
+                if(id) {
                 console.log('load '+id);
                 var item = new Model({id:id});
                 item.fetch({
@@ -117,15 +125,21 @@ define([
 
                     }
                 });
+                }
             }
-            else {
+            else if(page=='upload') {
+                template=uploadFormTemplate;
+            }
+            else if(page=='list')
+                template=listTemplate;
+
                 console.log(this.model.toJSON());
                 var compiledTemplate = _.template( template, this.model.toJSON() );
                 // Append our compiled template to this Views "el"
                 this.$el.html( compiledTemplate );
 
                if(page=='list') {
-                    that.oTable = that.$el.find('#privia_grid').dataTable( {
+                that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "iDisplayLength" : 25,
@@ -145,6 +159,12 @@ define([
                                 return (typeof row.barCode!='undefined')?row.barCode:'';
                             },
                             "aTargets": [2 ]
+                        },
+                        {
+                            "mRender": function ( data, type, row ) {
+                                return '<a href="#/master/item/edit/'+data+'">Edit</a>';
+                            },
+                            "aTargets": [6]
                         }
                     ],
                     "aoColumns": [
@@ -153,35 +173,38 @@ define([
                         { "mData": "nameZh",  "bSortable": false  },
                         { "mData": "costPrice",  "bSortable": false  },
                         { "mData": "retailPrice",  "bSortable": false  },
-                        { "mData": "shop.name",  "bSortable": false  }
+                        { "mData": "shop.name",  "bSortable": false  },
+                        { "mData": "id",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/masterItem/search"
-                } );
+                } );    
 
                 var outlet = that.$el.find('#outlet');
                 if(outlet!=null) {
-                //  outlet.select2({data:{}});
-                var format=function format(item) { return item.name; };
+                    //  outlet.select2({data:{}});
+                    var format=function format(item) { return item.name; };
 
-                $.get('/reports/shops',function(response){
-                    response.recordList.unshift({id:'ALL',name:'ALL'});
+                    $.get('/reports/shops',function(response){
+                        response.recordList.unshift({id:'ALL',name:'ALL'});
 
-                    var record = $.map(response.recordList, function(obj){
-                        return {id:obj.name,name:obj.name};
+                        var record = $.map(response.recordList, function(obj){
+                            return {id:obj.name,name:obj.name};
+                        });
+                        var shopStr ='';
+                        record.forEach(function(entry) {
+                           shopStr+='<option>'+entry.name+'</option>';
+                        });
+                        outlet.replaceWith('<select name=outlet id=outlet style="width:180px">'+shopStr+'</select>');
                     });
-                    var shopStr ='';
-                    record.forEach(function(entry) {
-                       shopStr+='<option>'+entry.name+'</option>';
-                    });
-                    outlet.replaceWith('<select name=outlet id=outlet style="width:180px">'+shopStr+'</select>');
-                });
-            }
+                }
 
+
+            } else if (page=='form') {
 
             }
 
                 if(cb) cb();
-            }
+            
     }
   });
   // Our module now returns our view

@@ -25,8 +25,6 @@ define([
       'reportCashierClosing': 'showReportCashierClosing',
       'reportLoginAudit': 'showReportLoginAudit',
       'reportPL': 'showReportPL',
-      'cabang/edit/:id': 'editCabang',
-      'cabang': 'showCabang',
       'modal/customer': 'addCustomerModal',
       'home': 'showHome',
       'analisis': 'showAnalisa',
@@ -34,6 +32,8 @@ define([
       'success': 'showSuccess',
       'master/item/list': 'itemList',
       'master/item/upload': 'itemUpload',
+      'master/item/edit/:id': 'editItem',
+      'master/item': 'addItem',
       // Default
       '': 'defaultAction',
       '*actions': 'defaultAction'
@@ -53,6 +53,14 @@ define([
     itemUpload: function() {
       console.log('itemUpload');
       new ItemView().render('upload');
+    },
+    addItem: function() {
+      console.log('addItem');
+      new ItemView().render('form');
+    },
+    editItem: function(id) {
+      console.log('editItem');
+      new ItemView({id:id}).render('form');
     },
    showReportTransaction: function() {
     console.log('showReportTransaction');

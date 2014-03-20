@@ -2,18 +2,33 @@ package controllers;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.annotation.Transactional;
 import com.avaje.ebean.text.csv.CsvReader;
+import com.google.gson.Gson;
+import com.ning.http.multipart.MultipartRequestEntity;
 import constants.Constants;
 import models.Food;
 import models.Shop;
 import models.User;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.Play;
+import play.data.FileUpload;
+import play.mvc.Http;
+import play.server.ServletWrapper;
 import utils.Pagination;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -29,6 +44,56 @@ public class MasterItem extends Basic  {
 
     final static Logger logger = LoggerFactory.getLogger(MasterItem.class);
 
+
+    public static void show(Long id) {
+        renderJSON(Food.view(id));
+    }
+
+    public static void update() {
+
+        Food food = new Gson().fromJson(new InputStreamReader(request.body),Food.class);
+        if (food.id != null && food.id > 0) {
+            System.out.println(new Gson().toJson(food));
+            food.modifiedBy = session.get(Constants.CURRENT_USERNAME);
+            food.modifiedDate = new Date();
+
+            Ebean.update(food);
+        } else {
+            Ebean.save(food);
+        }
+        Map data = new HashMap();
+        data.put("messages", "Store Item Successfully.");
+        renderJSON(data);
+    }
+    public static void uploadImg(File img) {
+
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+
+
+// Create a new file upload handler
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        try {
+            FileUpload fileUpload = (FileUpload)((List) Http.Request.current().args.get("__UPLOADS")).get(0);
+
+            File destPath =new File(Play.applicationPath.getPath()+"/public/upload/"+fileUpload.getFileName());
+            logger.info("Upload file "+destPath.getAbsolutePath());
+
+            BufferedImage bimg =ImageIO.read(fileUpload.asFile());
+
+            if(bimg.getWidth()!=bimg.getHeight() && Math.abs(bimg.getWidth()-bimg.getHeight())>50)
+                throw  new IllegalArgumentException("File width and height are not equal : "+bimg.getWidth()+"/"+bimg.getHeight());
+            FileUtils.copyFile(fileUpload.asFile(),destPath);
+            Map data = new HashMap();
+            data.put("success", "Upload file Successfully.");
+            data.put("path",fileUpload.getFileName());
+            renderJSON(data);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            Map data = new HashMap();
+            data.put("error",e.getMessage());
+            renderJSON(data);
+        }
+    }
     public static void upload() {
 
         Map<String,String> response= new HashMap<>();
