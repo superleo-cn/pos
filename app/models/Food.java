@@ -60,6 +60,10 @@ public class Food implements Comparable {
 	@ManyToOne
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	public Category category;
 
 	public Integer position;
 
