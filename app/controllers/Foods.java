@@ -39,9 +39,9 @@ public class Foods extends Basic {
 		Map result = new HashMap();
 		try {
 			Map datas = new HashMap();
-			datas.put("Foods", Food.listByShop(id));
-			datas.put("Categories", Category.listByShop(id));
-			datas.put("Attributes", Attribute.listByShop(id));
+			datas.put("foods", Food.listByShop(id));
+			datas.put("categories", Category.listByShop(id));
+			datas.put("attributes", Attribute.listByShop(id));
 			result.put(Constants.CODE, Constants.SUCCESS);
 			result.put(Constants.DATAS, datas);
 		} catch (Exception e) {
