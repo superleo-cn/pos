@@ -21,6 +21,7 @@ GET     /logout                                	Auth.logout
 *		/shops/listJson/{id}					Shops.listJson
 # Food Operation
 *		/foods/listJson/{id}					Foods.listJson
+*		/foods/listExtJson/{id}					Foods.listExtJson
 # Consumption Operation 
 *		/consumptions/listJson/{id}				Consumptions.listJson
 # Cash Operation 
