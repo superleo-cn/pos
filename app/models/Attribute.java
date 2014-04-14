@@ -42,7 +42,7 @@ public class Attribute {
 	public Date createDate, modifiedDate;
 
 	public static List<Attribute> listByShop(Long id) {
-		return Ebean.find(Attribute.class).select("id, name, nameZh, code, status, position").fetch("food", "food")
+		return Ebean.find(Attribute.class).select("id, name, nameZh, code, status, position").fetch("food", "id")
 				.where().eq("food.shop.id", id).eq("status", true).order("position").findList();
 	}
 

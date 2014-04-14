@@ -123,7 +123,7 @@ public class Food implements Comparable {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, retailPrice, picture, position").fetch("category", "category").where()
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, name, nameZh, type, retailPrice, picture, position").fetch("category", "id").where()
 					.eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
