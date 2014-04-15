@@ -28,6 +28,7 @@ GET     /logout                                	Auth.logout
 *		/cashs/listJson/{id}					Cashs.listJson
 # Transaction Operation 
 POST	/transactions/submit					Transactions.store
+POST	/transactions/submitWithAttrs			Transactions.storeWithAttrs
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 

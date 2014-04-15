@@ -46,4 +46,8 @@ public class Attribute {
 				.where().eq("food.shop.id", id).eq("status", true).order("position").findList();
 	}
 
+	public static Attribute getById(Long id) {
+		return Ebean.find(Attribute.class).select("id").where().eq("id", id).eq("status", true).findUnique();
+	}
+
 }
