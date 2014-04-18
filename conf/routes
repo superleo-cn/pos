@@ -21,12 +21,14 @@ GET     /logout                                	Auth.logout
 *		/shops/listJson/{id}					Shops.listJson
 # Food Operation
 *		/foods/listJson/{id}					Foods.listJson
+*		/foods/listExtJson/{id}					Foods.listExtJson
 # Consumption Operation 
 *		/consumptions/listJson/{id}				Consumptions.listJson
 # Cash Operation 
 *		/cashs/listJson/{id}					Cashs.listJson
 # Transaction Operation 
 POST	/transactions/submit					Transactions.store
+POST	/transactions/submitWithAttrs			Transactions.storeWithAttrs
 # ConsumeTransaction Operation 
 POST	/consumeTransactions/submit				ConsumeTransactions.store
 # CashTransaction Operation 

@@ -78,5 +78,43 @@ public class TransactionTest extends FunctionalTest {
 		}
 
 	}
+	
+	@Test
+	public void testTransactionWithAttrSubmit() {
+		try {
+			String userId = "2";
+			String shopId = "1";
+			String foodId = "1";
+			String quantity = "10";
+			String discount = "2";
+			String totalPackage = "2.2";
+			String totalRetailPrice = "5.8";
+			String foc = "1";
+			// Http.Request req = newRequest();
+			Map<String, String> params = new HashMap<>();
+			for (int i = 0; i < 1; i++) {
+				params.put("transactions[" + i + "].androidId", "123");
+				params.put("transactions[" + i + "].transactionId", "123");
+				params.put("transactions[" + i + "].user.id", userId);
+				params.put("transactions[" + i + "].shop.id", shopId);
+				params.put("transactions[" + i + "].quantity", quantity);
+				params.put("transactions[" + i + "].food.id", foodId);
+				params.put("transactions[" + i + "].totalDiscount", discount);
+				params.put("transactions[" + i + "].totalRetailPrice", totalRetailPrice);
+				params.put("transactions[" + i + "].totalPackage", totalPackage);
+				params.put("transactions[" + i + "].freeOfCharge", foc);
+				params.put("transactions[" + i + "].attributeIds", "1,2");
+				params.put("transactions[" + i + "].orderDate", "2013-12-12 20:01:30");
+				
+			}
+
+			Response response = POST("/transactions/submitWithAttrs", params);
+			assertIsOk(response);
+			response.out.writeTo(System.out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }

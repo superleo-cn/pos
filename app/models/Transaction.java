@@ -3,9 +3,12 @@ package models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -63,8 +66,15 @@ public class Transaction {
 
 	public Date createDate, modifiedDate, orderDate;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_transaction_attribute", joinColumns = @JoinColumn(name = "transaction_id", nullable = true), inverseJoinColumns = @JoinColumn(name = "attribute_id", nullable = true))
+	public List<Attribute> attributes;
+
 	@Transient
 	public Long androidId;
+
+	@Transient
+	public String attributeIds;
 
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
