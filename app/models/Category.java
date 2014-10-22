@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
@@ -68,6 +67,10 @@ public class Category {
 	public static List<Category> listByShop(Long id) {
 		return Ebean.find(Category.class).select("id, name, nameZh, code, status, position").where().eq("shop.id", id)
 				.eq("status", true).order("position").findList();
+	}
+
+	public static void bulkStore(List<Category> list) {
+		Ebean.save(list);
 	}
 
 }

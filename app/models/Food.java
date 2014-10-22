@@ -1,6 +1,13 @@
 package models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -177,10 +184,6 @@ public class Food implements Comparable {
 	}
 
 	public static void bulkStore(List<Food> list) {
-
 		Ebean.save(list);
-		for (int i = 0; i < list.size(); i++) {
-
-		}
 	}
 }

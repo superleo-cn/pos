@@ -36,7 +36,8 @@ define(["jquery", "backbone"],
                 reader.onload = (function(attachment,tha,errorCb,successCb) {
                     return function(e) {
                         //set model
-                        $.post('/masterItem/upload', {attachment:e.target.result},function(data){
+                    	var type = $("#uploadType").val();
+                        $.post('/masterItem/upload', {"type":type, "attachment":e.target.result},function(data){
                             console.log(data);
                             if(data.error){
                                 alert(data.error);
