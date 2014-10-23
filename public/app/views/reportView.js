@@ -511,7 +511,7 @@ function pieChartMoney(outlet, dateFrom, dateTo){
         	        dataFormat: 'json',
         	        dataSource: {
         	            chart: {
-        	                "caption": "Daily Sale Quantity Report",
+        	                "caption": "Daily Sale Money Report",
         	                "subCaption": "",
         	                "bgcolor": "FFFFFF",
         	                "showvalues": "1",
