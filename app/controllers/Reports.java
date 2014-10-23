@@ -88,13 +88,25 @@ public class Reports extends Basic {
     	DecimalFormat df = new DecimalFormat("0.00");
         Map searchs = getChartsParams();
         Map result = new HashMap();
+        Map<String, String> report = new HashMap<String, String>();
         List<ReportMoney> list = ReportTransactionSummary.lineChartMoney(searchs);
         if(list != null && list.size() > 0){
         	StringBuilder cats = new StringBuilder();
         	StringBuilder datas = new StringBuilder();
+        	
         	for(ReportMoney money : list){
-        		cats.append(money.orderHour + "|");
-        		datas.append(df.format(money.value) + "|");
+        		report.put(money.orderHour, df.format(money.value));
+        	}
+        	
+        	for(int i=1; i<=24; i++){
+        		String key = String.format("%02d", i);
+        		String val = report.get(key);
+        		if(StringUtils.isEmpty(val)){
+        			datas.append("0|");
+        		}else{
+        			datas.append(val + "|");
+        		}
+        		cats.append(key + "|");
         	}
         	cats.deleteCharAt(cats.length()-1);
         	datas.deleteCharAt(datas.length()-1);
@@ -600,4 +612,5 @@ public class Reports extends Basic {
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Expires", "0");
 	}
+	
 }

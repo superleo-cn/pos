@@ -580,7 +580,7 @@ function lineChartMoney(outlet, dateFrom, dateTo){
        	             "dynamicaxis": "1",
        	             "showlegend": "0",
        	             "slantlabels": "1",
-       	             "rotatelabels": "1",
+       	             "rotatelabels": "0",
        	             "bgcolor": "FFFFFF",
        	             "showalternatehgridcolor": "0",
        	             "showplotborder": "0",
