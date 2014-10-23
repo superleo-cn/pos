@@ -173,6 +173,16 @@ create table report_expenses_details (
   price                     double)
 ;
 
+create table report_money (
+  id                        bigint,
+  shop_name                 varchar(255),
+  label                     varchar(255),
+  food_name_zh              varchar(255),
+  order_hour                varchar(255),
+  value                     double,
+  order_date                datetime)
+;
+
 create table report_quantity (
   id                        bigint,
   shop_name                 varchar(255),

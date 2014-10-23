@@ -65,6 +65,8 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
                
                 reportQuantity(outlet, dateFrom, dateTo);
+                pieChartMoney(outlet, dateFrom, dateTo);
+                lineChartMoney(outlet, dateFrom, dateTo);
             	
             }
             else if(page=='reportTransaction') {
@@ -212,6 +214,8 @@ define([
                 var dateTo = that.$el.find('#dateTo').val();
                
                 reportQuantity(outlet, dateFrom, dateTo);
+                pieChartMoney(outlet, dateFrom, dateTo);
+                lineChartMoney(outlet, dateFrom, dateTo);
                
             }
             else if(page=='reportTransaction') {
@@ -432,7 +436,7 @@ define([
 
 function reportQuantity(outlet, dateFrom, dateTo){
 	 $.ajax({
-		 url: "/reports/charts",
+		 url: "/reports/pieChartQuantity",
          dataType: "json",
          data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
          async: true,
@@ -444,9 +448,9 @@ function reportQuantity(outlet, dateFrom, dateTo){
          	    // `&lt;div&gt;` element with id `my-chart-container`.
          	    var myChart = new FusionCharts({
          	        type: 'Pie2D',
-         	        renderAt: 'chart-container',
+         	        renderAt: 'reportQuantity',
          	        width: "100%", 
-                    height: "100%", 
+                    height: "70%", 
          	        dataFormat: 'json',
          	        dataSource: {
          	            chart: {
@@ -484,4 +488,137 @@ function reportQuantity(outlet, dateFrom, dateTo){
              //alert('Network error has occurred please try again!');
          }
      });
+}
+
+
+function pieChartMoney(outlet, dateFrom, dateTo){
+	$.ajax({
+		url: "/reports/pieChartMoney",
+        dataType: "json",
+        data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+        async: true,
+        type: "post",
+        success: function (datas) {
+     	  
+        	FusionCharts.ready(function () {
+        	    // Create a new instance of FusionCharts for rendering inside an HTML
+        	    // `&lt;div&gt;` element with id `my-chart-container`.
+        	    var myChart = new FusionCharts({
+        	        type: 'Pie2D',
+        	        renderAt: 'pieChartMoney',
+        	        width: "100%", 
+                    height: "70%", 
+        	        dataFormat: 'json',
+        	        dataSource: {
+        	            chart: {
+        	                "caption": "Daily Sale Quantity Report",
+        	                "subCaption": "",
+        	                "bgcolor": "FFFFFF",
+        	                "showvalues": "1",
+        	                "showpercentvalues": "0",
+        	                "showborder": "0",
+        	                "showplotborder": "0",
+        	                "showlegend": "1",
+        	                "legendborder": "0",
+        	                "legendposition": "bottom",
+        	                "enablesmartlabels": "1",
+        	                "use3dlighting": "0",
+        	                "showshadow": "0",
+        	                "legendbgcolor": "#CCCCCC",
+        	                "legendbgalpha": "20",
+        	                "legendborderalpha": "0",
+        	                "legendshadow": "0",
+        	                "legendnumcolumns": "3",
+        	                "showBorder": "0",
+        	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
+        	            },
+        	            data:datas
+        	        }
+        	    });
+        	    // Render the chart.
+        	    myChart.render();
+        	});
+        	
+        	
+        },
+        error: function (request,error) {
+            //alert('Network error has occurred please try again!');
+        }
+    });
+}
+
+
+function lineChartMoney(outlet, dateFrom, dateTo){	
+	$.ajax({
+	   url: "/reports/lineChartMoney",
+       dataType: "json",
+       data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+       async: true,
+       type: "post",
+       success: function (datas) {
+    	   
+       	FusionCharts.ready(function () {
+       	    // Create a new instance of FusionCharts for rendering inside an HTML
+       	    // `&lt;div&gt;` element with id `my-chart-container`.
+       	    var myChart = new FusionCharts({
+       	        type: 'ZoomLine',
+       	        renderAt: 'lineChartMoney',
+       	        width: "100%", 
+       	        height: "70%", 
+       	        dataFormat: 'json',
+       	        dataSource: {
+       	        	chart: {
+       	             "compactdatamode": "1",
+       	             "dataseparator": "|",
+       	             "caption": "Daily Sale Report",
+       	             "subcaption": "",
+       	             "axis": "linear",
+       	             "numberprefix": "$",
+       	             "formatnumberscale": "0",
+       	             "allowpinmode": "0",
+       	             "enableiconmousecursors": "0",
+       	             "dynamicaxis": "1",
+       	             "showlegend": "0",
+       	             "slantlabels": "1",
+       	             "rotatelabels": "1",
+       	             "bgcolor": "FFFFFF",
+       	             "showalternatehgridcolor": "0",
+       	             "showplotborder": "0",
+       	             "showvalues": "0",
+       	             "divlinecolor": "CCCCCC",
+       	             "showcanvasborder": "0",
+       	             "linecolor": "008ee4",
+       	             "showshadow": "0",
+       	             "linethickness": "3",
+       	             "captionpadding": "20",
+       	             "canvasbottommargin": "30",
+       	             "yaxisvaluespadding": "10",
+       	             "scrollcolor": "CCCCCC",
+       	             "canvasborderalpha": "0",
+       	             "anchorradius": "3",
+       	             "showborder": "0"
+       	         },
+       	         categories: [
+       	             {
+       	                 "category": datas.categories
+       	             }
+       	         ],
+       	         dataset: [
+       	             {
+       	                 "seriesname": "Close",
+       	                 "data": datas.dataset
+       	             }
+       	         ]
+       	        }
+       	    });
+       	    // Render the chart.
+       	    myChart.render();
+       	});
+       	
+       	
+       },
+       error: function (request,error) {
+           //alert('Network error has occurred please try again!');
+       }
+   });
 }
