@@ -2,12 +2,13 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'text!../templates/reportDashboard.html',
     'text!../templates/reportTransaction.html',
     'text!../templates/reportCashierClosing.html',
     'text!../templates/reportLoginAudit.html',
     'text!../templates/reportPL.html',
     '../models/report'
-], function($, _, Backbone, reportTransaction,reportCashierClosing,reportLoginAudit,reportPL,Model){
+], function($, _, Backbone,reportDashboard,reportTransaction,reportCashierClosing,reportLoginAudit,reportPL,Model){
 
     var ReportView = Backbone.View.extend({
         el: $('#container'),
@@ -19,8 +20,8 @@ define([
             "click #exportTransactionSummary" :"exportTransactionSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
 
-                "click #exportExpenses" :"exportExpenses",
-                "click #exportCashCollection" :"exportCashCollection",
+            "click #exportExpenses" :"exportExpenses",
+            "click #exportCashCollection" :"exportCashCollection",
             "click #exportCashierClosing" :"exportCashierClosing",
             "click #exportPL" :"exportPL",
             "click #clearReport" :"clearReport"
@@ -58,7 +59,15 @@ define([
         },
         searchReport:function() {
             var page =this.page;
-            if(page=='reportTransaction') {
+            if(page=='reportDashboard') {
+                var outlet = that.$el.find('#outlet').val();
+                var dateFrom = that.$el.find('#dateFrom').val();
+                var dateTo = that.$el.find('#dateTo').val();
+               
+                reportQuantity(outlet, dateFrom, dateTo);
+            	
+            }
+            else if(page=='reportTransaction') {
               var item = that.$el.find('#item').val();
                 var outlet = that.$el.find('#outlet').val();
                 var dateFrom = that.$el.find('#dateFrom').val();
@@ -162,8 +171,9 @@ define([
             var id = this.options.id;
             var data = {};
             var template;
-
-            if(page=='reportTransaction')
+            if(page=='reportDashboard')
+                template=reportDashboard;
+            else if(page=='reportTransaction')
                 template=reportTransaction;
             else  if(page=='reportCashierClosing')
                 template=reportCashierClosing;
@@ -195,7 +205,16 @@ define([
             else {
                 that.$el.find('.adminFields').hide();
             }
-            if(page=='reportTransaction') {
+            if(page=='reportDashboard') {
+              
+            	var outlet = that.$el.find('#outlet').val();
+                var dateFrom = that.$el.find('#dateFrom').val();
+                var dateTo = that.$el.find('#dateTo').val();
+               
+                reportQuantity(outlet, dateFrom, dateTo);
+               
+            }
+            else if(page=='reportTransaction') {
                     that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
@@ -410,3 +429,59 @@ define([
     // Our module now returns our view
     return  ReportView;
 });
+
+function reportQuantity(outlet, dateFrom, dateTo){
+	 $.ajax({
+		 url: "/reports/charts",
+         dataType: "json",
+         data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+         async: true,
+         type: "post",
+         success: function (datas) {
+      	  
+         	FusionCharts.ready(function () {
+         	    // Create a new instance of FusionCharts for rendering inside an HTML
+         	    // `&lt;div&gt;` element with id `my-chart-container`.
+         	    var myChart = new FusionCharts({
+         	        type: 'Pie2D',
+         	        renderAt: 'chart-container',
+         	        width: "100%", 
+                    height: "100%", 
+         	        dataFormat: 'json',
+         	        dataSource: {
+         	            chart: {
+         	                "caption": "Daily Sale Quantity Report",
+         	                "subCaption": "",
+         	                "bgcolor": "FFFFFF",
+         	                "showvalues": "1",
+         	                "showpercentvalues": "0",
+         	                "showborder": "0",
+         	                "showplotborder": "0",
+         	                "showlegend": "1",
+         	                "legendborder": "0",
+         	                "legendposition": "bottom",
+         	                "enablesmartlabels": "1",
+         	                "use3dlighting": "0",
+         	                "showshadow": "0",
+         	                "legendbgcolor": "#CCCCCC",
+         	                "legendbgalpha": "20",
+         	                "legendborderalpha": "0",
+         	                "legendshadow": "0",
+         	                "legendnumcolumns": "3",
+         	                "showBorder": "0",
+         	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
+         	            },
+         	            data:datas
+         	        }
+         	    });
+         	    // Render the chart.
+         	    myChart.render();
+         	});
+         	
+         	
+         },
+         error: function (request,error) {
+             //alert('Network error has occurred please try again!');
+         }
+     });
+}

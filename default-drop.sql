@@ -24,6 +24,8 @@ drop table report_collection_details;
 
 drop table report_expenses_details;
 
+drop table report_quantity;
+
 drop table report_transaction_detail;
 
 drop table tb_shop;

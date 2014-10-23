@@ -21,6 +21,7 @@ define([
       },
       routes: {
       // Define some URL routes
+      'reportDashboard': 'showReportDashboard',	  
       'reportTransaction': 'showReportTransaction',
       'reportCashierClosing': 'showReportCashierClosing',
       'reportLoginAudit': 'showReportLoginAudit',
@@ -62,10 +63,14 @@ define([
       console.log('editItem');
       new ItemView({id:id}).render('form');
     },
-   showReportTransaction: function() {
-    console.log('showReportTransaction');
-    new ReportView().render('reportTransaction');
-  },
+    showReportDashboard: function() {
+       console.log('showReportDashboard');
+       new ReportView().render('reportDashboard');
+    },
+    showReportTransaction: function() {
+      console.log('showReportTransaction');
+      new ReportView().render('reportTransaction');
+    },
     showReportCashierClosing: function() {
         console.log('showReportCashierClosing');
         new ReportView().render('reportCashierClosing');

@@ -60,6 +60,37 @@ public class Reports extends Basic {
         Map<String,String> search = new HashMap<String, String>();
         renderJSON(User.search(search, pagination));
     }
+    
+    
+    public static void charts() throws IOException {
+
+        Map searchs = new HashMap();
+
+        String outlet =  request.params.get("shopName");
+        if(StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet))
+            outlet="%";
+        if(session.get(Constants.CURRENT_USERTYPE).equals("OPERATOR"))
+            outlet=session.get("shopName");
+
+        searchs.put("shopName",outlet);
+        String dateFrom =  request.params.get("dateFrom");
+        Date today = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if(StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
+            dateFrom=sdf.format(today)+" 00:00:00";
+        searchs.put("dateFrom",dateFrom);
+        String dateTo =  request.params.get("dateTo");
+        if(StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo ))
+            dateTo=sdf.format(today)+" 23:59:59";
+        searchs.put("dateTo",dateTo);
+
+        session.put("reportTransactionSearchs",new ObjectMapper().writeValueAsString(searchs));
+
+        renderJSON(ReportTransactionSummary.charts(searchs));
+
+    }
+    
+    
     public static void transaction() throws IOException {
 
         int currentPage = 1;

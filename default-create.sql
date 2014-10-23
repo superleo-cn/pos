@@ -107,6 +107,7 @@ create table tb_daily_summary (
   e_next_open_balance       float,
   f_bring_back_cash         float,
   g_total_balance           float,
+  h_card                    float,
   middle_calculate_time     varchar(255),
   middle_calculate_balance  varchar(255),
   calculate_time            varchar(255),
@@ -123,6 +124,7 @@ create table tb_daily_summary (
 create table tb_food (
   id                        bigint auto_increment not null,
   sn                        varchar(255),
+  bar_code                  varchar(255),
   name                      varchar(255),
   name_zh                   varchar(255),
   type                      varchar(255),
@@ -133,6 +135,7 @@ create table tb_food (
   shop_id                   bigint,
   category_id               bigint,
   position                  integer,
+  flag                      tinyint(1) default 0,
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,
@@ -150,7 +153,8 @@ create table report_cashier_closing (
   next_open_balance         double,
   daily_turnover            double,
   total_collection          double,
-  total                     double)
+  total                     double,
+  card_collected            double)
 ;
 
 create table report_collection_details (
@@ -167,6 +171,15 @@ create table report_expenses_details (
   real_name                 varchar(255),
   food_name                 varchar(255),
   price                     double)
+;
+
+create table report_quantity (
+  id                        bigint,
+  shop_name                 varchar(255),
+  label                     varchar(255),
+  food_name_zh              varchar(255),
+  value                     bigint,
+  order_date                datetime)
 ;
 
 create table report_transaction_detail (
@@ -213,6 +226,7 @@ create table tb_transaction (
   total_retail_price        float,
   free_of_charge            tinyint(1) default 0,
   invoice                   varchar(255),
+  type                      varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,

@@ -27,10 +27,11 @@ require.config({
     "flot.pie" : "../lib/flot/jquery.flot.pie.min",        
     "qtip2" : "../lib/qtip2/jquery.qtip.min",
     "text" : "/js/text",
-      "pickadate.picker" : "../lib/pickadate/picker",
-      "pickadate.picker.time" : "../lib/pickadate/picker.time",
+    "pickadate.picker" : "../lib/pickadate/picker",
+    "pickadate.picker.time" : "../lib/pickadate/picker.time",
     "gebo_common" : "/js/gebo_common",
     "moment" : "../lib/moment_js/moment.min",
+    "fusioncharts" : "../lib/fusioncharts/fusioncharts",
     "router" : "router.privia",
     "app" : "app.privia"
   },
@@ -114,6 +115,9 @@ require.config({
     },
     'pickadate.picker.time' : {
         deps : ['pickadate.picker']
+    },
+    'fusioncharts' : {
+        deps : ['jquery']
     }
   }
 });
@@ -124,7 +128,7 @@ require([
     'jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
-'backbone.syphon','jquery.inputmask','moment','gebo_common','pickadate.picker.time'], function(app,Router) {
+'backbone.syphon','jquery.inputmask','moment','gebo_common','pickadate.picker.time','fusioncharts'], function(app,Router) {
 
     $.fn.dataTableExt.oApi.fnMultiFilter = function( oSettings, oData ) {
         for ( var key in oData )
