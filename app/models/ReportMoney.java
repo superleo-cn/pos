@@ -16,5 +16,6 @@ public class ReportMoney {
 	public String label, foodNameZh, orderHour;
 	public Double value;
 	public Date orderDate;
-
+	public String orderDateStr;
+	public String orderMonth;
 }

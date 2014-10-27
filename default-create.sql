@@ -180,7 +180,9 @@ create table report_money (
   food_name_zh              varchar(255),
   order_hour                varchar(255),
   value                     double,
-  order_date                datetime)
+  order_date                datetime,
+  order_date_str            varchar(255),
+  order_month               varchar(255))
 ;
 
 create table report_quantity (
@@ -189,7 +191,8 @@ create table report_quantity (
   label                     varchar(255),
   food_name_zh              varchar(255),
   value                     bigint,
-  order_date                datetime)
+  order_date                datetime,
+  order_date_str            varchar(255))
 ;
 
 create table report_transaction_detail (
@@ -214,6 +217,10 @@ create table tb_shop (
   code                      varchar(255),
   status                    tinyint(1) default 0,
   expiry_date               datetime,
+  address                   varchar(255),
+  contact                   varchar(255),
+  website                   varchar(255),
+  email                     varchar(255),
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,

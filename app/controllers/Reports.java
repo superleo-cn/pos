@@ -4,19 +4,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import models.Audit;
+import models.Dashboard;
 import models.Food;
 import models.ReportCashierClosing;
 import models.ReportCollectionDetails;
 import models.ReportExpensesDetails;
 import models.ReportMoney;
 import models.ReportPL;
+import models.ReportQuantity;
 import models.ReportTransactionDetail;
 import models.ReportTransactionSummary;
 import models.Shop;
@@ -76,45 +80,103 @@ public class Reports extends Basic {
 
 	public static void pieChartQuantity() throws IOException {
 		Map searchs = getChartsParams();
-		renderJSON(ReportTransactionSummary.pieChartQuantity(searchs));
+		String type = (String) searchs.get("type");
+		List<ReportQuantity> list = null;
+		if (StringUtils.equals(type, "Daily")) {
+			list = Dashboard.dailyPieChartQuantity(searchs);
+		} else if (StringUtils.equals(type, "Monthly")) {
+			list = Dashboard.monthlyPieChartQuantity(searchs);
+		}
+		renderJSON(list);
 	}
 
 	public static void pieChartMoney() throws IOException {
 		Map searchs = getChartsParams();
-		renderJSON(ReportTransactionSummary.pieChartMoney(searchs));
+		String type = (String) searchs.get("type");
+		List<ReportMoney> list = null;
+		if (StringUtils.equals(type, "Daily")) {
+			list = Dashboard.dailyPieChartMoney(searchs);
+		} else if (StringUtils.equals(type, "Monthly")) {
+			list = Dashboard.monthlyPieChartMoney(searchs);
+		}
+		renderJSON(list);
 	}
 
 	public static void lineChartMoney() throws IOException {
-    	DecimalFormat df = new DecimalFormat("0.00");
-        Map searchs = getChartsParams();
-        Map result = new HashMap();
-        Map<String, String> report = new HashMap<String, String>();
-        List<ReportMoney> list = ReportTransactionSummary.lineChartMoney(searchs);
-        if(list != null && list.size() > 0){
-        	StringBuilder cats = new StringBuilder();
-        	StringBuilder datas = new StringBuilder();
-        	
-        	for(ReportMoney money : list){
-        		report.put(money.orderHour, df.format(money.value));
-        	}
-        	
-        	for(int i=1; i<=24; i++){
-        		String key = String.format("%02d", i);
-        		String val = report.get(key);
-        		if(StringUtils.isEmpty(val)){
-        			datas.append("0|");
-        		}else{
-        			datas.append(val + "|");
-        		}
-        		cats.append(key + "|");
-        	}
-        	cats.deleteCharAt(cats.length()-1);
-        	datas.deleteCharAt(datas.length()-1);
-        	result.put("categories", cats.toString());
-        	result.put("dataset", datas.toString());
-        }
-        renderJSON(result);
-    }
+		DecimalFormat df = new DecimalFormat("0.00");
+		Map searchs = getChartsParams();
+		Map result = new HashMap();
+		String type = (String) searchs.get("type");
+		List<ReportMoney> list = null;
+		if (StringUtils.equals(type, "Daily")) {
+			list = Dashboard.dailyLineChartMoney(searchs);
+			Map<String, String> report = new HashMap<String, String>();
+			if (list != null && list.size() > 0) {
+				StringBuilder cats = new StringBuilder();
+				StringBuilder datas = new StringBuilder();
+
+				for (ReportMoney money : list) {
+					report.put(money.orderHour, df.format(money.value));
+				}
+
+				for (int i = 1; i <= 24; i++) {
+					String key = String.format("%02d", i);
+					String val = report.get(key);
+					if (StringUtils.isEmpty(val)) {
+						datas.append("0|");
+					} else {
+						datas.append(val + "|");
+					}
+					cats.append(key + "|");
+				}
+				cats.deleteCharAt(cats.length() - 1);
+				datas.deleteCharAt(datas.length() - 1);
+				result.put("categories", cats.toString());
+				result.put("dataset", datas.toString());
+			}
+
+		} else if (StringUtils.equals(type, "Monthly")) {
+			list = Dashboard.monthlyLineChartMoney(searchs);
+			Map<String, String> report = new HashMap<String, String>();
+			if (list != null && list.size() > 0) {
+				String month = searchs.get("date") + "-01";
+				int daysInMonth = 0;
+				Date date = null;
+				try {
+					Calendar c = Calendar.getInstance();
+					date = new SimpleDateFormat("yyyy-MM-dd").parse(month);
+					c.setTime(date);
+					daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				StringBuilder cats = new StringBuilder();
+				StringBuilder datas = new StringBuilder();
+
+				for (ReportMoney money : list) {
+					report.put(money.orderDateStr, df.format(money.value));
+				}
+
+				for (int i = 1; i <= daysInMonth; i++) {
+					String key = String.format("%02d", i);
+					String val = report.get(key);
+					if (StringUtils.isEmpty(val)) {
+						datas.append("0|");
+					} else {
+						datas.append(val + "|");
+					}
+					cats.append(key + "|");
+				}
+				cats.deleteCharAt(cats.length() - 1);
+				datas.deleteCharAt(datas.length() - 1);
+				result.put("categories", cats.toString());
+				result.put("dataset", datas.toString());
+			}
+
+		}
+
+		renderJSON(result);
+	}
 
 	public static Map getChartsParams() throws IOException {
 
@@ -127,19 +189,16 @@ public class Reports extends Basic {
 			outlet = session.get("shopName");
 
 		searchs.put("shopName", outlet);
-		String dateFrom = request.params.get("dateFrom");
+		String type = request.params.get("type");
+		searchs.put("type", StringUtils.defaultIfEmpty(type, null));
+		String date = request.params.get("date");
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom))
-			dateFrom = sdf.format(today) + " 00:00:00";
-		searchs.put("dateFrom", dateFrom);
-		String dateTo = request.params.get("dateTo");
-		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo))
-			dateTo = sdf.format(today) + " 23:59:59";
-		searchs.put("dateTo", dateTo);
-
+		if (StringUtils.isEmpty(date)) {
+			date = sdf.format(today);
+		}
+		searchs.put("date", date);
 		session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
-
 		return searchs;
 
 	}
@@ -612,5 +671,5 @@ public class Reports extends Basic {
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Expires", "0");
 	}
-	
+
 }

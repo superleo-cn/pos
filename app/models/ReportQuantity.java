@@ -16,5 +16,6 @@ public class ReportQuantity {
 	public String label, foodNameZh;
 	public Long value;
 	public Date orderDate;
+	public String orderDateStr;
 
 }

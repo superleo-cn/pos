@@ -24,7 +24,9 @@ define([
             "click #exportCashCollection" :"exportCashCollection",
             "click #exportCashierClosing" :"exportCashierClosing",
             "click #exportPL" :"exportPL",
-            "click #clearReport" :"clearReport"
+            "click #clearReport" :"clearReport",
+            	
+            "change #type" :"changeDashboardType"
         },
         clearReport:function() {
             that.$el.find('#item').val('');
@@ -35,6 +37,7 @@ define([
             that.$el.find('#timeFrom').val('');
             that.$el.find('#dateTo').val('');
             that.$el.find('#timeTo').val('');
+            that.$el.find('#date').val('');
         },
         exportExpenses:function() {
             window.open("/reports/exportExpensesDetails?_dc"+new Date());
@@ -57,16 +60,26 @@ define([
         exportPL:function() {
             window.open("/reports/exportPL?_dc"+new Date());
         },
+        changeDashboardType:function() {
+        	var type = $("#type").val();
+        	var format = 'yy-mm-dd';
+        	if(type == "Daily"){
+        		format = 'yy-mm-dd';
+        	}else if(type == "Monthly"){
+        		format = 'yy-mm';
+        	}
+        	$( "#date" ).datepicker( "option", "dateFormat", format );
+        },
         searchReport:function() {
             var page =this.page;
             if(page=='reportDashboard') {
                 var outlet = that.$el.find('#outlet').val();
-                var dateFrom = that.$el.find('#dateFrom').val();
-                var dateTo = that.$el.find('#dateTo').val();
+                var type = that.$el.find('#type').val();
+                var date = that.$el.find('#date').val();
                
-                reportQuantity(outlet, dateFrom, dateTo);
-                pieChartMoney(outlet, dateFrom, dateTo);
-                lineChartMoney(outlet, dateFrom, dateTo);
+                reportQuantity(outlet, type, date);
+                pieChartMoney(outlet, type, date);
+                lineChartMoney(outlet, type, date);
             	
             }
             else if(page=='reportTransaction') {
@@ -209,13 +222,13 @@ define([
             }
             if(page=='reportDashboard') {
               
-            	var outlet = that.$el.find('#outlet').val();
-                var dateFrom = that.$el.find('#dateFrom').val();
-                var dateTo = that.$el.find('#dateTo').val();
-               
-                reportQuantity(outlet, dateFrom, dateTo);
-                pieChartMoney(outlet, dateFrom, dateTo);
-                lineChartMoney(outlet, dateFrom, dateTo);
+            	 var outlet = that.$el.find('#outlet').val();
+                 var type = that.$el.find('#type').val();
+                 var date = that.$el.find('#date').val();
+                
+                 reportQuantity(outlet, type, date);
+                 pieChartMoney(outlet, type, date);
+                 lineChartMoney(outlet, type, date);
                
             }
             else if(page=='reportTransaction') {
@@ -348,6 +361,7 @@ define([
 
             $("#dateFrom").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
             $("#dateTo").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true  });
+            $("#date").datepicker({ dateFormat: 'yy-mm-dd',changeYear :true,changeMonth: true});
 
             var item = that.$el.find('#item');
             if(item!=null) {
@@ -434,11 +448,11 @@ define([
     return  ReportView;
 });
 
-function reportQuantity(outlet, dateFrom, dateTo){
+function reportQuantity(outlet, type, date){
 	 $.ajax({
 		 url: "/reports/pieChartQuantity",
          dataType: "json",
-         data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+         data:{"shopName" : outlet, "type": type, "date": date},
          async: true,
          type: "post",
          success: function (datas) {
@@ -454,7 +468,8 @@ function reportQuantity(outlet, dateFrom, dateTo){
          	        dataFormat: 'json',
          	        dataSource: {
          	            chart: {
-         	                "caption": "Daily Sale Quantity Report",
+         	            	"numberPrefix": "S$",		
+         	                "caption": "Sale Quantity Report",
          	                "subCaption": "",
          	                "bgcolor": "FFFFFF",
          	                "showvalues": "1",
@@ -491,11 +506,11 @@ function reportQuantity(outlet, dateFrom, dateTo){
 }
 
 
-function pieChartMoney(outlet, dateFrom, dateTo){
+function pieChartMoney(outlet, type, date){
 	$.ajax({
 		url: "/reports/pieChartMoney",
         dataType: "json",
-        data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+        data:{"shopName" : outlet, "type": type, "date": date},
         async: true,
         type: "post",
         success: function (datas) {
@@ -511,7 +526,8 @@ function pieChartMoney(outlet, dateFrom, dateTo){
         	        dataFormat: 'json',
         	        dataSource: {
         	            chart: {
-        	                "caption": "Daily Sale Money Report",
+        	            	"numberPrefix": "S$",		
+        	                "caption": "Sale Money Report",
         	                "subCaption": "",
         	                "bgcolor": "FFFFFF",
         	                "showvalues": "1",
@@ -548,11 +564,11 @@ function pieChartMoney(outlet, dateFrom, dateTo){
 }
 
 
-function lineChartMoney(outlet, dateFrom, dateTo){	
+function lineChartMoney(outlet, type, date){	
 	$.ajax({
 	   url: "/reports/lineChartMoney",
        dataType: "json",
-       data:{"shopName" : outlet, "dateFrom": dateFrom, "dateTo": dateTo},
+       data:{"shopName" : outlet, "type": type, "date": date},
        async: true,
        type: "post",
        success: function (datas) {
@@ -568,9 +584,10 @@ function lineChartMoney(outlet, dateFrom, dateTo){
        	        dataFormat: 'json',
        	        dataSource: {
        	        	chart: {
+       	             "numberPrefix": "S$",		
        	             "compactdatamode": "1",
        	             "dataseparator": "|",
-       	             "caption": "Daily Sale Report",
+       	             "caption": "Sale Report",
        	             "subcaption": "",
        	             "axis": "linear",
        	             "numberprefix": "$",
