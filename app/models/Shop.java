@@ -36,6 +36,14 @@ public class Shop {
 	@Required(message = "Expiry date cannot be empty")
 	public Date expiryDate;
 
+	public String address;
+
+	public String contact;
+
+	public String website;
+
+	public String email;
+
 	public String createBy, modifiedBy;
 
 	public Date createDate, modifiedDate;
@@ -65,7 +73,7 @@ public class Shop {
 	}
 
 	public static List<Shop> listJson(Long id) {
-		return Ebean.find(Shop.class).select("id, name, code, status, expiryDate").where().eq("id", id).findList();
+		return Ebean.find(Shop.class).select("id, name, code, status, expiryDate, address, contact, website, email").where().eq("id", id).findList();
 	}
 
 	public static void store(Shop shop) {
