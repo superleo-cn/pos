@@ -47,7 +47,7 @@ public class Transactions extends Basic {
 						if (flag) {
 							datas.add(transaction.androidId);
 						}
-					}else{
+					} else if (CollectionUtils.size(list) > 0) {
 						size++;
 						datas.add(transaction.androidId);
 					}
