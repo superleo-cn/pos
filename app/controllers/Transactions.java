@@ -47,6 +47,9 @@ public class Transactions extends Basic {
 						if (flag) {
 							datas.add(transaction.androidId);
 						}
+					}else{
+						size++;
+						datas.add(transaction.androidId);
 					}
 				}
 
