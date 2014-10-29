@@ -26,13 +26,12 @@ public class Transactions extends Basic {
 	@Transactional
 	public static void store(Transaction[] transactions) {
 		Map result = new HashMap();
-		String str = "";
 		int size = 0; // successful transaction records
 		try {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
+					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
 							+ "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
 							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
@@ -77,13 +76,12 @@ public class Transactions extends Basic {
 	@Transactional
 	public static void storeWithAttrs(Transaction[] transactions) {
 		Map result = new HashMap();
-		String str = "";
 		int size = 0; // successful transaction records
 		try {
 			if (CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					str += "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
+					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
 							+ "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
 							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
@@ -110,6 +108,9 @@ public class Transactions extends Basic {
 						if (flag) {
 							datas.add(transaction.androidId);
 						}
+					} else if (CollectionUtils.size(list) > 0) {
+						size++;
+						datas.add(transaction.androidId);
 					}
 				}
 

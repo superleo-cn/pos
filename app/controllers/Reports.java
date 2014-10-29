@@ -101,6 +101,82 @@ public class Reports extends Basic {
 		}
 		renderJSON(list);
 	}
+	
+	public static void lineChartQuantity() throws IOException {
+		DecimalFormat df = new DecimalFormat("0");
+		Map searchs = getChartsParams();
+		Map result = new HashMap();
+		String type = (String) searchs.get("type");
+		List<ReportMoney> list = null;
+		if (StringUtils.equals(type, "Daily")) {
+			list = Dashboard.dailyLineChartQuantity(searchs);
+			Map<String, String> report = new HashMap<String, String>();
+			if (list != null && list.size() > 0) {
+				StringBuilder cats = new StringBuilder();
+				StringBuilder datas = new StringBuilder();
+
+				for (ReportMoney money : list) {
+					report.put(money.orderHour, df.format(money.value));
+				}
+
+				for (int i = 1; i <= 24; i++) {
+					String key = String.format("%02d", i);
+					String val = report.get(key);
+					if (StringUtils.isEmpty(val)) {
+						datas.append("0|");
+					} else {
+						datas.append(val + "|");
+					}
+					cats.append(key + "|");
+				}
+				cats.deleteCharAt(cats.length() - 1);
+				datas.deleteCharAt(datas.length() - 1);
+				result.put("categories", cats.toString());
+				result.put("dataset", datas.toString());
+			}
+
+		} else if (StringUtils.equals(type, "Monthly")) {
+			list = Dashboard.monthlyLineChartQuantity(searchs);
+			Map<String, String> report = new HashMap<String, String>();
+			if (list != null && list.size() > 0) {
+				String month = searchs.get("date") + "-01";
+				int daysInMonth = 0;
+				Date date = null;
+				try {
+					Calendar c = Calendar.getInstance();
+					date = new SimpleDateFormat("yyyy-MM-dd").parse(month);
+					c.setTime(date);
+					daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				StringBuilder cats = new StringBuilder();
+				StringBuilder datas = new StringBuilder();
+
+				for (ReportMoney money : list) {
+					report.put(money.orderDateStr, df.format(money.value));
+				}
+
+				for (int i = 1; i <= daysInMonth; i++) {
+					String key = String.format("%02d", i);
+					String val = report.get(key);
+					if (StringUtils.isEmpty(val)) {
+						datas.append("0|");
+					} else {
+						datas.append(val + "|");
+					}
+					cats.append(key + "|");
+				}
+				cats.deleteCharAt(cats.length() - 1);
+				datas.deleteCharAt(datas.length() - 1);
+				result.put("categories", cats.toString());
+				result.put("dataset", datas.toString());
+			}
+
+		}
+
+		renderJSON(result);
+	}
 
 	public static void lineChartMoney() throws IOException {
 		DecimalFormat df = new DecimalFormat("0.00");

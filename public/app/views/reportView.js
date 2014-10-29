@@ -79,7 +79,9 @@ define([
                
                 reportQuantity(outlet, type, date);
                 pieChartMoney(outlet, type, date);
+                lineChartQuantity(outlet, type, date);
                 lineChartMoney(outlet, type, date);
+                
             	
             }
             else if(page=='reportTransaction') {
@@ -228,8 +230,8 @@ define([
                 
                  reportQuantity(outlet, type, date);
                  pieChartMoney(outlet, type, date);
+                 lineChartQuantity(outlet, type, date);
                  lineChartMoney(outlet, type, date);
-               
             }
             else if(page=='reportTransaction') {
                     that.oTable = that.$el.find('#privia_grid').dataTable( {
@@ -468,7 +470,7 @@ function reportQuantity(outlet, type, date){
          	        dataFormat: 'json',
          	        dataSource: {
          	            chart: {
-         	            	"numberPrefix": "S$",		
+         	            	"numberPrefix": "",
          	                "caption": "Sale Quantity Report",
          	                "subCaption": "",
          	                "bgcolor": "FFFFFF",
@@ -564,6 +566,83 @@ function pieChartMoney(outlet, type, date){
 }
 
 
+function lineChartQuantity(outlet, type, date){	
+	$.ajax({
+	   url: "/reports/lineChartQuantity",
+       dataType: "json",
+       data:{"shopName" : outlet, "type": type, "date": date},
+       async: true,
+       type: "post",
+       success: function (datas) {
+    	   
+       	FusionCharts.ready(function () {
+       	    // Create a new instance of FusionCharts for rendering inside an HTML
+       	    // `&lt;div&gt;` element with id `my-chart-container`.
+       	    var myChart = new FusionCharts({
+       	        type: 'ZoomLine',
+       	        renderAt: 'lineChartQuantity',
+       	        width: "100%", 
+       	        height: "70%", 
+       	        dataFormat: 'json',
+       	        dataSource: {
+       	        	chart: {
+       	             "numberPrefix": "",
+       	             "compactdatamode": "1",
+       	             "dataseparator": "|",
+       	             "caption": "Sale Quantity Report",
+       	             "subcaption": "",
+       	             "axis": "linear",
+       	             "numberprefix": "",
+       	             "formatnumberscale": "0",
+       	             "allowpinmode": "0",
+       	             "enableiconmousecursors": "0",
+       	             "dynamicaxis": "1",
+       	             "showlegend": "0",
+       	             "slantlabels": "1",
+       	             "rotatelabels": "0",
+       	             "bgcolor": "FFFFFF",
+       	             "showalternatehgridcolor": "0",
+       	             "showplotborder": "0",
+       	             "showvalues": "0",
+       	             "divlinecolor": "CCCCCC",
+       	             "showcanvasborder": "0",
+       	             "linecolor": "008ee4",
+       	             "showshadow": "0",
+       	             "linethickness": "3",
+       	             "captionpadding": "20",
+       	             "canvasbottommargin": "30",
+       	             "yaxisvaluespadding": "10",
+       	             "scrollcolor": "CCCCCC",
+       	             "canvasborderalpha": "0",
+       	             "anchorradius": "3",
+       	             "showborder": "0"
+       	         },
+       	         categories: [
+       	             {
+       	                 "category": datas.categories
+       	             }
+       	         ],
+       	         dataset: [
+       	             {
+       	                 "seriesname": "Close",
+       	                 "data": datas.dataset
+       	             }
+       	         ]
+       	        }
+       	    });
+       	    // Render the chart.
+       	    myChart.render();
+       	});
+       	
+       	
+       },
+       error: function (request,error) {
+           //alert('Network error has occurred please try again!');
+       }
+   });
+}
+
+
 function lineChartMoney(outlet, type, date){	
 	$.ajax({
 	   url: "/reports/lineChartMoney",
@@ -587,7 +666,7 @@ function lineChartMoney(outlet, type, date){
        	             "numberPrefix": "S$",		
        	             "compactdatamode": "1",
        	             "dataseparator": "|",
-       	             "caption": "Sale Report",
+       	             "caption": "Sale Money Report",
        	             "subcaption": "",
        	             "axis": "linear",
        	             "numberprefix": "$",

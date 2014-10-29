@@ -27,9 +27,8 @@ public class CashTransactions extends Basic {
 		try {
 			if (CollectionUtils.size(cashTransactions) > 0) {
 				List datas = new ArrayList();
-				String str = "";
 				for (CashTransaction transaction : cashTransactions) {
-					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+					String str = "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.cash.price
 							+ "], [cashId = " + transaction.cash.id + "],[quantity = " + transaction.quantity + "]";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);

@@ -5,13 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.ConsumeTransaction;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import models.CashTransaction;
-import models.ConsumeTransaction;
-import models.Transaction;
 
 import com.avaje.ebean.annotation.Transactional;
 
@@ -29,9 +27,8 @@ public class ConsumeTransactions extends Basic {
 		try {
 			if (CollectionUtils.size(consumeTransactions) > 0) {
 				List datas = new ArrayList();
-				String str = "";
 				for (ConsumeTransaction transaction : consumeTransactions) {
-					str += "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
+					String str = "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
 							+ "], [userId = " + transaction.user.id + "], [price = " + transaction.price + "]";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = ConsumeTransaction.store(transaction);

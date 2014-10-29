@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.CashTransaction;
 import models.ConsumeTransaction;
 import models.DailySummary;
 
@@ -29,15 +28,14 @@ public class DailySummarys extends Basic {
 		try {
 			if (CollectionUtils.size(dailySummaries) > 0) {
 				List datas = new ArrayList();
-				String str = "";
 				for (DailySummary dailySummary : dailySummaries) {
-					str = "[androidId = " + dailySummary.androidId + "], [shopId = " + dailySummary.shop.id + "],"
-							+ "[userId = " + dailySummary.user.id + "], [A.OpenBalance = " + dailySummary.aOpenBalance
-							+ "]," + "[B.Expenses = " + dailySummary.bExpenses + "], [C.CashCollected = "
-							+ dailySummary.cCashCollected + "], " + "[D.DailyTurnover = " + dailySummary.dDailyTurnover
-							+ "], [E.NextOpenBalance = " + dailySummary.eNextOpenBalance + "], "
-							+ "[F.BringBackCash = " + dailySummary.fBringBackCash + "], " + "[G.TotalBalance = "
-							+ dailySummary.gTotalBalance + "]";
+					String str = "[androidId = " + dailySummary.androidId + "], [shopId = " + dailySummary.shop.id
+							+ "]," + "[userId = " + dailySummary.user.id + "], [A.OpenBalance = "
+							+ dailySummary.aOpenBalance + "]," + "[B.Expenses = " + dailySummary.bExpenses
+							+ "], [C.CashCollected = " + dailySummary.cCashCollected + "], " + "[D.DailyTurnover = "
+							+ dailySummary.dDailyTurnover + "], [E.NextOpenBalance = " + dailySummary.eNextOpenBalance
+							+ "], " + "[F.BringBackCash = " + dailySummary.fBringBackCash + "], "
+							+ "[G.TotalBalance = " + dailySummary.gTotalBalance + "]";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = DailySummary.store(dailySummary);
 					if (flag) {
