@@ -1,11 +1,13 @@
-import java.util.HashMap;
-import java.util.Map;
+import jobs.Bootstrap;
 
 import org.junit.Test;
 
-import play.mvc.Http.Response;
 import play.test.FunctionalTest;
 
 public class ApplicationTest extends FunctionalTest {
-
+	@Test(timeout = 400000)
+	public void testSubmitAudit() {
+		Bootstrap boot = new Bootstrap();
+		boot.doJob();
+	}
 }
