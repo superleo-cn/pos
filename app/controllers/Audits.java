@@ -27,7 +27,7 @@ public class Audits extends Basic {
 	public static void store(Audit[] audits) {
 		Map result = new HashMap();
 		try {
-			if (CollectionUtils.size(audits) > 0) {
+			if (audits != null && CollectionUtils.size(audits) > 0) {
 				List datas = new ArrayList();
 				String str = "";
 				for (Audit audit : audits) {
