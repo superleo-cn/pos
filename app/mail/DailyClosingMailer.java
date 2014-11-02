@@ -20,7 +20,6 @@ public class DailyClosingMailer {
 			HtmlEmail email = new HtmlEmail();
 			String sendFrom = Play.configuration.getProperty("mail.smtp.user");
 			email.addTo(sendTo);
-			email.addTo("178930214@qq.com");
 			email.addBcc(RECEIVE_DAILY_SUM_EMAIL);
 			email.setFrom(sendFrom, "Weebo");
 			email.setSubject(String.format(DAILY_SUM_TITLE, shopName));
