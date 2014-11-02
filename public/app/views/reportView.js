@@ -490,7 +490,7 @@ function reportQuantity(outlet, type, date){
          	                "legendshadow": "0",
          	                "legendnumcolumns": "3",
          	                "showBorder": "0",
-         	                "pieRadius": "140",
+         	                "pieRadius": "120",
          	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
          	            },
          	            data:datas
@@ -549,7 +549,7 @@ function pieChartMoney(outlet, type, date){
         	                "legendshadow": "0",
         	                "legendnumcolumns": "3",
         	                "showBorder": "0",
-        	                "pieRadius": "140",
+        	                "pieRadius": "120",
         	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
         	            },
         	            data:datas
