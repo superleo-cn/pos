@@ -26,7 +26,7 @@ public class DailySummarys extends Basic {
 		Map result = new HashMap();
 
 		try {
-			if (CollectionUtils.size(dailySummaries) > 0) {
+			if (dailySummaries != null && CollectionUtils.size(dailySummaries) > 0) {
 				List datas = new ArrayList();
 				for (DailySummary dailySummary : dailySummaries) {
 					String str = "[androidId = " + dailySummary.androidId + "], [shopId = " + dailySummary.shop.id

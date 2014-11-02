@@ -28,7 +28,7 @@ public class Transactions extends Basic {
 		Map result = new HashMap();
 		int size = 0; // successful transaction records
 		try {
-			if (CollectionUtils.size(transactions) > 0) {
+			if (transactions != null && CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
 					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
@@ -78,7 +78,7 @@ public class Transactions extends Basic {
 		Map result = new HashMap();
 		int size = 0; // successful transaction records
 		try {
-			if (CollectionUtils.size(transactions) > 0) {
+			if (transactions != null && CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
 					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId

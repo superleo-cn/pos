@@ -25,7 +25,7 @@ public class CashTransactions extends Basic {
 		Map result = new HashMap();
 
 		try {
-			if (CollectionUtils.size(cashTransactions) > 0) {
+			if (cashTransactions != null && CollectionUtils.size(cashTransactions) > 0) {
 				List datas = new ArrayList();
 				for (CashTransaction transaction : cashTransactions) {
 					String str = "[androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
