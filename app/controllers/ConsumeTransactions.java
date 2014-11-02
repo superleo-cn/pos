@@ -27,7 +27,7 @@ public class ConsumeTransactions extends Basic {
 		Map result = new HashMap();
 
 		try {
-			if (CollectionUtils.size(consumeTransactions) > 0) {
+			if (consumeTransactions != null && CollectionUtils.size(consumeTransactions) > 0) {
 				List datas = new ArrayList();
 				String str = "";
 				for (ConsumeTransaction transaction : consumeTransactions) {
