@@ -85,8 +85,17 @@ public class Shop {
 	}
 
 	public static List<Shop> listJson(Long id) {
-		return Ebean.find(Shop.class).select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
+		return Ebean
+				.find(Shop.class)
+				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
 				.where().eq("id", id).findList();
+	}
+
+	public static List<Shop> list() {
+		return Ebean
+				.find(Shop.class)
+				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
+				.findList();
 	}
 
 	public static void store(Shop shop) {

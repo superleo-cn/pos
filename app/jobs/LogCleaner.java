@@ -13,11 +13,10 @@ import play.jobs.On;
 import play.jobs.OnApplicationStart;
 
 /** Fire at 12pm (noon) every day **/
-@OnApplicationStart
 @On("0 0 2 * * ?")
-public class Bootstrap extends Job {
+public class LogCleaner extends Job {
 
-	final static Logger logger = LoggerFactory.getLogger(Bootstrap.class);
+	final static Logger logger = LoggerFactory.getLogger(LogCleaner.class);
 
 	public void doJob() {
 		logger.info("Start to clean log history.");

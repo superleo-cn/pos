@@ -315,4 +315,39 @@ public class Dashboard {
 		return query.findList();
 	}
 
+	/** get daily result */
+	public static List<ReportMoney> dailyClosingSummary(Map search) {
+		String sql = "SELECT id, shop_name, order_date, value FROM (SELECT id, shop_name,"
+				+ " DATE_FORMAT(order_date, '%Y-%m-%d') as order_date, sum(total_retail_price) as value FROM report_transaction_detail GROUP BY"
+				+ " id, shop_name, DATE_FORMAT(order_date, '%Y-%m-%d') ) a order by order_date asc";
+
+		RawSql rawSql = RawSqlBuilder
+				.parse(sql)
+				// map resultSet columns to bean properties
+				.columnMapping("id", "id").columnMapping("shop_name", "shopName")
+				.columnMapping("order_date", "orderDate")
+				.columnMapping("value", "value").create();
+
+		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
+		query.setRawSql(rawSql);
+
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
+				play.Logger.info("Value " + value);
+				if (StringUtils.isEmpty(value))
+					continue;
+
+				else if (key.equalsIgnoreCase("shopName")) {
+					query.where().eq("shopName", value);
+				} else if (key.equalsIgnoreCase("date")) {
+					query.where().eq("orderDate", value);
+				}
+			}
+		}
+
+		return query.findList();
+	}
 }
