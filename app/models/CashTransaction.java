@@ -10,12 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import play.data.validation.Required;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -23,11 +21,12 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
-import constants.Constants;
-
 @Entity
 @Table(name = "tb_cash_transaction")
 public class CashTransaction {
+
+	final static Logger logger = LoggerFactory.getLogger(CashTransaction.class);
+
 	@Id
 	public Long id;
 
@@ -83,8 +82,7 @@ public class CashTransaction {
 	public static boolean store(CashTransaction cashTransaction) {
 		try {
 			if (cashTransaction.id == null || cashTransaction.id == 0) {
-				if (cashTransaction.cash != null && cashTransaction.cash.id != null && cashTransaction.user != null
-						&& cashTransaction.user.id != null) {
+				if (cashTransaction.cash != null && cashTransaction.cash.id != null && cashTransaction.user != null && cashTransaction.user.id != null) {
 					Cash cash = Cash.view(cashTransaction.cash.id);
 					User user = User.view(cashTransaction.user.id);
 					if (cash != null && user != null) {
@@ -98,7 +96,7 @@ public class CashTransaction {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Store Cash Transaction Error", e);
 		}
 		return false;
 	}

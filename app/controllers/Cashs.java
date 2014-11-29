@@ -12,6 +12,14 @@ import models.Shop;
 import constants.Constants;
 import constants.Messages;
 
+/**
+ * Notice:
+ * 
+ * This is the cash function is not available for the tablet.
+ * 
+ * @author superleo
+ * 
+ */
 public class Cashs extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Cashs.class);

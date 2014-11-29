@@ -30,7 +30,7 @@ public class DailyClosingMailer {
 			logger.error("Error", me);
 		}
 	}
-	
+
 	public static void sendSMS(String date, String shopName, String mobileNo, String result) {
 		try {
 			String subject = String.format(DAILY_SUM_TITLE, shopName);

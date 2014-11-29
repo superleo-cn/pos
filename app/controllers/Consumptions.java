@@ -3,16 +3,24 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.Consumption;
+import models.Shop;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import constants.Constants;
 import constants.Messages;
-import models.Consumption;
-import models.Food;
-import models.Shop;
 
+/**
+ * Notice:
+ * 
+ * This is the cash function is not available for the tablet.
+ * 
+ * @author superleo
+ * 
+ */
 public class Consumptions extends Basic {
 
 	final static Logger logger = LoggerFactory.getLogger(Consumptions.class);

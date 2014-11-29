@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import play.Play;
 import play.jobs.Job;
 import play.jobs.On;
-import play.jobs.OnApplicationStart;
 
 /** Fire at 12pm (noon) every day **/
 @On("0 0 2 * * ?")

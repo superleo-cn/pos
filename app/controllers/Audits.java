@@ -22,17 +22,16 @@ public class Audits extends Basic {
 	public static void index() {
 		render("/pages/audits.html");
 	}
-	
+
 	@Transactional
 	public static void store(Audit[] audits) {
 		Map result = new HashMap();
 		try {
 			if (audits != null && CollectionUtils.size(audits) > 0) {
 				List datas = new ArrayList();
-				String str = "";
 				for (Audit audit : audits) {
-					str += "[androidId = " + audit.androidId + "], [shopId = " + audit.shop.id + "], [userId = "
-							+ audit.user.id + "], [action = " + audit.action + "], [actionDate = " + audit.actionDate + "]\n";
+					String str = "[androidId = " + audit.androidId + "], [shopId = " + audit.shop.id + "], [userId = " + audit.user.id + "], [action = " + audit.action
+							+ "], [actionDate = " + audit.actionDate + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					boolean flag = Audit.store(audit);
 					if (flag) {
@@ -53,7 +52,7 @@ public class Audits extends Basic {
 			String errMsg = "All the Audits submitted unsuccessfully. Error message is: " + e.getMessage();
 			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, errMsg);
-			logger.error("[System]-[Info]-{}]", new Object[] { errMsg, e });
+			logger.error("[System]-[Info]-{}]", new Object[] { errMsg });
 		}
 		renderJSON(result);
 	}

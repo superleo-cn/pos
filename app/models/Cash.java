@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.data.validation.Required;
@@ -21,8 +19,6 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
-
-import constants.Constants;
 
 @Entity
 @Table(name = "tb_cash")
@@ -92,8 +88,7 @@ public class Cash {
 
 	public static List<Cash> listByShop(Long id) {
 		if (id != null) {
-			return Ebean.find(Cash.class).select("id, price, position").where()
-					.eq("shop.id", id).eq("status", true).findList();
+			return Ebean.find(Cash.class).select("id, price, position").where().eq("shop.id", id).eq("status", true).findList();
 		}
 		return null;
 	}

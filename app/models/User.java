@@ -11,18 +11,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.avaje.ebean.*;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import play.data.validation.Required;
-import utils.MyPropertiesUtils;
 import utils.Pagination;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.ExpressionList;
+import com.avaje.ebean.Page;
+import com.avaje.ebean.PagingList;
 import com.avaje.ebean.annotation.Transactional;
 
 import constants.Constants;
@@ -64,41 +64,37 @@ public class User {
 
 	/* the following are service methods */
 	public static User loginPage(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
-				.eq("status", true).findList();
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username)
+				.eq("password", user.password).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
 		return null;
 	}
 
-	//STATUS: LOCKED (Please don't change)
+	// STATUS: LOCKED (Please don't change)
 	public static User loginJson(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-				.fetch("shop", "id, code, name").where().eq("username", user.username).eq("shop.id", user.shop.id).eq("status", true)
-				.ne("usertype", Constants.USERTYPE_ADMIN).findList();
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id, code, name").where().eq("username", user.username)
+				.eq("shop.id", user.shop.id).eq("status", true).ne("usertype", Constants.USERTYPE_ADMIN).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
 		return null;
 	}
 
-    public static User login(User user) {
-        List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-                .fetch("shop", "id").where().eq("username", user.username).eq("status", true)
-                .findList();
-        if (CollectionUtils.size(users) > 0) {
-            return users.get(0);
-        }
-        return null;
-    }
+	public static User login(User user) {
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username).eq("status", true)
+				.findList();
+		if (CollectionUtils.size(users) > 0) {
+			return users.get(0);
+		}
+		return null;
+	}
 
-    //STATUS: LOCKED (Please don't change)
+	// STATUS: LOCKED (Please don't change)
 	public static User loginAdminJson(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status")
-				.fetch("shop", "id").where().eq("username", user.username).eq("password", user.password)
-				.eq("status", true).findList();
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username)
+				.eq("password", user.password).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
@@ -106,44 +102,45 @@ public class User {
 	}
 
 	public static Pagination search(String queryName, Pagination pagination) {
-        pagination = pagination == null ? new Pagination() : pagination;
-        ExpressionList expList = Ebean.find(User.class).where();
-        if (StringUtils.isNotEmpty(queryName)) {
-            queryName = StringUtils.trimToNull(queryName);
-            expList.where().ilike("realname", "%" + queryName + "%");
-        }
-        PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
-        pagingList.setFetchAhead(false);
-        Page page = pagingList.getPage(pagination.currentPage);
-        pagination.recordList = page.getList();
-        pagination.pageCount = page.getTotalPageCount();
-        pagination.recordCount = page.getTotalRowCount();
-        return pagination;
-    }
+		pagination = pagination == null ? new Pagination() : pagination;
+		ExpressionList expList = Ebean.find(User.class).where();
+		if (StringUtils.isNotEmpty(queryName)) {
+			queryName = StringUtils.trimToNull(queryName);
+			expList.where().ilike("realname", "%" + queryName + "%");
+		}
+		PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
+		pagingList.setFetchAhead(false);
+		Page page = pagingList.getPage(pagination.currentPage);
+		pagination.recordList = page.getList();
+		pagination.pageCount = page.getTotalPageCount();
+		pagination.recordCount = page.getTotalRowCount();
+		return pagination;
+	}
 
-    public static Pagination search(Map search, Pagination pagination) {
-        pagination = pagination == null ? new Pagination() : pagination;
-        ExpressionList expList = Ebean.find(User.class).where();
-        if (search.keySet()!=null) {
-            Iterator searchKeys = search.keySet().iterator();
-            while(searchKeys.hasNext()){
-                String key = (String) searchKeys.next();
-                String value = (String) search.get(key);
-                play.Logger.info("Value " + value);
-                if(StringUtils.isEmpty(value)) continue;
-
-                expList.where().eq(key,  value);
-            }
-        }
-        expList.select("realname");
-        PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
-        pagingList.setFetchAhead(false);
-        Page page = pagingList.getPage(pagination.currentPage);
-        pagination.recordList = page.getList();
-        pagination.pageCount = page.getTotalPageCount();
-        pagination.recordCount = page.getTotalRowCount();
-        return pagination;
-    }
+	public static Pagination search(Map search, Pagination pagination) {
+		pagination = pagination == null ? new Pagination() : pagination;
+		ExpressionList expList = Ebean.find(User.class).where();
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
+				play.Logger.info("Value " + value);
+				if (StringUtils.isEmpty(value)) {
+					continue;
+				}
+				expList.where().eq(key, value);
+			}
+		}
+		expList.select("realname");
+		PagingList<User> pagingList = expList.findPagingList(pagination.pageSize);
+		pagingList.setFetchAhead(false);
+		Page page = pagingList.getPage(pagination.currentPage);
+		pagination.recordList = page.getList();
+		pagination.pageCount = page.getTotalPageCount();
+		pagination.recordCount = page.getTotalRowCount();
+		return pagination;
+	}
 
 	public static User view(Long id) {
 		if (id != null) {
@@ -161,11 +158,10 @@ public class User {
 				updateUser.userMac = user.userMac;
 				updateUser.password = user.password;
 				updateUser.lastLoginDate = new Date();
-				logger.info("[System]-[Info]-[User({}) Login, IP is {}, Mac is {}]", new Object[] {
-						updateUser.username, updateUser.userIp, updateUser.userMac });
+				logger.info("[System]-[Info]-[User({}) Login, IP is {}, Mac is {}]", new Object[] { updateUser.username, updateUser.userIp, updateUser.userMac });
 				updateUser.modifiedDate = new Date();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Store User Error", e);
 			}
 			Ebean.update(updateUser);
 		} else {

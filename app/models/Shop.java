@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import play.data.validation.Required;
 import utils.Pagination;
@@ -21,6 +23,9 @@ import com.avaje.ebean.PagingList;
 @Entity
 @Table(name = "tb_shop")
 public class Shop {
+
+	final static Logger logger = LoggerFactory.getLogger(Shop.class);
+
 	@Id
 	public Long id;
 
@@ -85,17 +90,14 @@ public class Shop {
 	}
 
 	public static List<Shop> listJson(Long id) {
-		return Ebean
-				.find(Shop.class)
-				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
-				.where().eq("id", id).findList();
+		return Ebean.find(Shop.class)
+				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter").where()
+				.eq("id", id).findList();
 	}
 
 	public static List<Shop> list() {
-		return Ebean
-				.find(Shop.class)
-				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
-				.findList();
+		return Ebean.find(Shop.class)
+				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter").findList();
 	}
 
 	public static void store(Shop shop) {
@@ -105,7 +107,7 @@ public class Shop {
 				PropertyUtils.copyProperties(newUser, shop);
 				newUser.modifiedDate = new Date();
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Store Shop Error", e);
 			}
 			Ebean.update(newUser);
 		} else {

@@ -65,8 +65,7 @@ public class Category {
 	}
 
 	public static List<Category> listByShop(Long id) {
-		return Ebean.find(Category.class).select("id, name, nameZh, code, status, position").where().eq("shop.id", id)
-				.eq("status", true).order("position").findList();
+		return Ebean.find(Category.class).select("id, name, nameZh, code, status, position").where().eq("shop.id", id).eq("status", true).order("position").findList();
 	}
 
 	public static void bulkStore(List<Category> list) {

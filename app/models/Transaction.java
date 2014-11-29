@@ -1,11 +1,7 @@
 package models;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,7 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import utils.Pagination;
 
@@ -27,11 +24,12 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
-import constants.Constants;
-
 @Entity
 @Table(name = "tb_transaction")
 public class Transaction {
+
+	final static Logger logger = LoggerFactory.getLogger(Transaction.class);
+
 	@Id
 	public Long id;
 
@@ -117,8 +115,7 @@ public class Transaction {
 	public static boolean store(Transaction transaction) {
 		try {
 			if (transaction.id == null || transaction.id == 0) {
-				if (transaction.food != null && transaction.user != null && transaction.food.id != null
-						&& transaction.user.id != null) {
+				if (transaction.food != null && transaction.user != null && transaction.food.id != null && transaction.user.id != null) {
 					Food food = Food.view(transaction.food.id);
 					User user = User.view(transaction.user.id);
 					if (food != null && transaction.quantity != null) {
@@ -141,7 +138,7 @@ public class Transaction {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Store Transaction Error", e);
 		}
 		return false;
 	}

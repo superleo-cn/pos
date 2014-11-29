@@ -31,13 +31,10 @@ public class Transactions extends Basic {
 			if (transactions != null && CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
-							+ "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
-							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
-							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
-							+ transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice
-							+ "], [totalPackage = " + transaction.totalPackage + "], [freeOfCharge = "
-							+ transaction.freeOfCharge + "], [orderDate = " + transaction.orderDate + "]\n";
+					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId + "], [androidId = " + transaction.androidId + "], [shopId = "
+							+ transaction.shop.id + "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
+							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice + "], [totalPackage = "
+							+ transaction.totalPackage + "], [freeOfCharge = " + transaction.freeOfCharge + "], [orderDate = " + transaction.orderDate + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					List<Transaction> list = Transaction.getByTransactionId(transaction.transactionId);
 					if (CollectionUtils.size(list) == 0) {
@@ -53,8 +50,7 @@ public class Transactions extends Basic {
 				}
 
 				result.put(Constants.DATAS, datas);
-				logger.info(Messages.TRANSACTION_MESSAGE,
-						new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
+				logger.info(Messages.TRANSACTION_MESSAGE, new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
 				if (CollectionUtils.size(datas) == size) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
@@ -68,7 +64,7 @@ public class Transactions extends Basic {
 			String errMsg = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
 			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, errMsg);
-			logger.error("[System]-[Info]-{}]", new Object[] { errMsg, e });
+			logger.error("[System]-[Info]-{}]", new Object[] { errMsg });
 		}
 		renderJSON(result);
 	}
@@ -81,13 +77,10 @@ public class Transactions extends Basic {
 			if (transactions != null && CollectionUtils.size(transactions) > 0) {
 				List datas = new ArrayList();
 				for (Transaction transaction : transactions) {
-					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId
-							+ "], [androidId = " + transaction.androidId + "], [shopId = " + transaction.shop.id
-							+ "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity
-							+ "], [foodId = " + transaction.food.id + "], [totalDiscount = "
-							+ transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice
-							+ "], [totalPackage = " + transaction.totalPackage + "], [freeOfCharge = "
-							+ transaction.freeOfCharge + "], [orderDate = " + transaction.orderDate + "]\n";
+					String str = "[date = " + new Date() + "], [transactionId = " + transaction.transactionId + "], [androidId = " + transaction.androidId + "], [shopId = "
+							+ transaction.shop.id + "], [userId = " + transaction.user.id + "], [quantity = " + transaction.quantity + "], [foodId = " + transaction.food.id
+							+ "], [totalDiscount = " + transaction.totalDiscount + "], [totalRetailPrice = " + transaction.totalRetailPrice + "], [totalPackage = "
+							+ transaction.totalPackage + "], [freeOfCharge = " + transaction.freeOfCharge + "], [orderDate = " + transaction.orderDate + "]\n";
 					logger.info("[System]-[Info]-[The transaction data is : {}]", str);
 					List<Transaction> list = Transaction.getByTransactionId(transaction.transactionId);
 					if (CollectionUtils.size(list) == 0) {
@@ -115,8 +108,7 @@ public class Transactions extends Basic {
 				}
 
 				result.put(Constants.DATAS, datas);
-				logger.info(Messages.TRANSACTION_MESSAGE,
-						new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
+				logger.info(Messages.TRANSACTION_MESSAGE, new Object[] { datas.size(), Transaction.class.getSimpleName(), transactions.length });
 				if (CollectionUtils.size(datas) == size) {
 					result.put(Constants.CODE, Constants.SUCCESS);
 					result.put(Constants.MESSAGE, "Transaction successfully.");
@@ -130,7 +122,7 @@ public class Transactions extends Basic {
 			String errMsg = "All the Transaction submitted unsuccessfully. Error message is: " + e.getMessage();
 			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, errMsg);
-			logger.error("[System]-[Info]-{}]", new Object[] { errMsg, e });
+			logger.error("[System]-[Info]-{}]", new Object[] { errMsg });
 		}
 		renderJSON(result);
 	}

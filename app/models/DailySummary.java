@@ -1,7 +1,6 @@
 package models;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,6 +19,7 @@ import com.avaje.ebean.Ebean;
 public class DailySummary {
 
 	final static Logger logger = LoggerFactory.getLogger(DailySummary.class);
+
 	@Id
 	public Long id;
 
@@ -44,7 +44,7 @@ public class DailySummary {
 	public Float fBringBackCash;
 
 	public Float gTotalBalance;
-	
+
 	public Float hCard;
 
 	public String middleCalculateTime;
@@ -67,8 +67,7 @@ public class DailySummary {
 	public static boolean store(DailySummary dailySummary) {
 		try {
 			if (dailySummary.id == null || dailySummary.id == 0) {
-				if (dailySummary.shop != null && dailySummary.shop.id != null && dailySummary.user != null
-						&& dailySummary.user.id != null) {
+				if (dailySummary.shop != null && dailySummary.shop.id != null && dailySummary.user != null && dailySummary.user.id != null) {
 					User user = User.view(dailySummary.user.id);
 					if (user != null) {
 						dailySummary.createBy = user.username;
@@ -79,15 +78,12 @@ public class DailySummary {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Store Daily Summary Error", e);
 		}
 		return false;
 	}
 
 	public static boolean search(DailySummary dailySummary) {
-		List<DailySummary> dailySummaryList = Ebean.find(DailySummary.class).select("id").where()
-				.eq("user.id", dailySummary.user.id).eq("shop.id", dailySummary.shop.id).eq("createBy", true)
-				.findList();
 		return false;
 	}
 }

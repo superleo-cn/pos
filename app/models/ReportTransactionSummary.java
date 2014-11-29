@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import utils.Pagination;
 
@@ -21,173 +23,163 @@ import com.avaje.ebean.PagingList;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.Sql;
 
-/**
- * Created with IntelliJ IDEA.
- * User: lala
- * Date: 11/14/13
- * Time: 12:05 AM
- * To change this template use File | Settings | File Templates.
- */
-
 @Entity
 @Sql
 public class ReportTransactionSummary implements Comparable<ReportTransactionSummary> {
 
-    @Transient
-    public Long no;
+	final static Logger logger = LoggerFactory.getLogger(ReportTransactionSummary.class);
 
-    @Transient
-    public String item;
-    public String foodName,foodNameZh;
-    public String shopName;
-    public Long totalQuantity;
-    public Double totalPrice;
+	@Transient
+	public Long no;
 
-    /* the following are service methods */
-    public static Pagination search(Map search, Pagination pagination) {
-        pagination = pagination == null ? new Pagination() : pagination;
+	@Transient
+	public String item;
+	public String foodName, foodNameZh;
+	public String shopName;
+	public Long totalQuantity;
+	public Double totalPrice;
 
-        Query query  = Ebean.find(ReportTransactionDetail.class).orderBy("shopName");
-        ExpressionList expList = query.where();
+	/* the following are service methods */
+	public static Pagination search(Map search, Pagination pagination) {
+		pagination = pagination == null ? new Pagination() : pagination;
 
-        if (search.keySet()!=null) {
-            Iterator searchKeys = search.keySet().iterator();
-            while(searchKeys.hasNext()){
-                String key = (String) searchKeys.next();
-                String value = (String) search.get(key);
-                play.Logger.info("Value " + value);
-                if(StringUtils.isEmpty(value)) continue;
+		Query query = Ebean.find(ReportTransactionDetail.class).orderBy("shopName");
+		ExpressionList expList = query.where();
 
-                if(key.equalsIgnoreCase("food")) {
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
+				logger.info("Value " + value);
+				if (StringUtils.isEmpty(value)) {
+					continue;
+				}
+				if (key.equalsIgnoreCase("food")) {
 
-                    expList.where().or(
-                            Expr.like("foodName", "%" + value + "%"),
-                            Expr.like("foodNameZh", "%" + value + "%")
-                    );
-                }
-                else if(key.equalsIgnoreCase("shopName")){
-                    expList.where().ilike(key, "%" + value+ "%");
-                }
-                else if(key.equalsIgnoreCase("dateFrom")){
-                    expList.where().ge("orderDate",  value);
-                }
-                else if(key.equalsIgnoreCase("dateTo")){
-                    expList.where().le("orderDate", value);
-                }
-            }
-        }
+					expList.where().or(Expr.like("foodName", "%" + value + "%"), Expr.like("foodNameZh", "%" + value + "%"));
+				} else if (key.equalsIgnoreCase("shopName")) {
+					expList.where().ilike(key, "%" + value + "%");
+				} else if (key.equalsIgnoreCase("dateFrom")) {
+					expList.where().ge("orderDate", value);
+				} else if (key.equalsIgnoreCase("dateTo")) {
+					expList.where().le("orderDate", value);
+				}
+			}
+		}
 
-        PagingList<ReportTransactionDetail> pagingList = expList.findPagingList(pagination.pageSize);
-        pagingList.setFetchAhead(false);
-        List<ReportTransactionDetail> tmpList = expList.findList();
-        ArrayList<ReportTransactionSummary> list = new ArrayList<ReportTransactionSummary>();
+		PagingList<ReportTransactionDetail> pagingList = expList.findPagingList(pagination.pageSize);
+		pagingList.setFetchAhead(false);
+		List<ReportTransactionDetail> tmpList = expList.findList();
+		ArrayList<ReportTransactionSummary> list = new ArrayList<ReportTransactionSummary>();
 
-        if(tmpList!=null) {
-            for(ReportTransactionDetail report:tmpList) {
-                if(pagination.zh)
-                    report.item = report.foodNameZh;
-                else
-                    report.item = report.foodName;
-            }
+		if (tmpList != null) {
+			for (ReportTransactionDetail report : tmpList) {
+				if (pagination.zh) {
+					report.item = report.foodNameZh;
+				} else {
+					report.item = report.foodName;
+				}
+			}
 
-            Map<String,ReportTransactionSummary> summaryMap = new LinkedHashMap<String, ReportTransactionSummary>(  );
-            for(ReportTransactionDetail report:tmpList) {
-                String shop = report.shopName;
-                String item = report.item;
-                ReportTransactionSummary reportTransactionSummary = summaryMap.get(shop+item);
-                if(summaryMap.get(shop+item)==null){
-                    reportTransactionSummary = new ReportTransactionSummary();
-                    reportTransactionSummary.shopName=shop;
-                    reportTransactionSummary.item=item;
-                    if(report.quantity==null) report.quantity=0l;
-                    if(report.totalRetailPrice==null) report.totalRetailPrice=0.0;
-                    reportTransactionSummary.totalQuantity=report.quantity;
-                    reportTransactionSummary.totalPrice=report.totalRetailPrice;
-                    summaryMap.put(shop+item,reportTransactionSummary);
-                }
-                else {
+			Map<String, ReportTransactionSummary> summaryMap = new LinkedHashMap<String, ReportTransactionSummary>();
+			for (ReportTransactionDetail report : tmpList) {
+				String shop = report.shopName;
+				String item = report.item;
+				ReportTransactionSummary reportTransactionSummary = summaryMap.get(shop + item);
+				if (summaryMap.get(shop + item) == null) {
+					reportTransactionSummary = new ReportTransactionSummary();
+					reportTransactionSummary.shopName = shop;
+					reportTransactionSummary.item = item;
+					if (report.quantity == null) {
+						report.quantity = 0l;
+					}
+					if (report.totalRetailPrice == null) {
+						report.totalRetailPrice = 0.0;
+					}
+					reportTransactionSummary.totalQuantity = report.quantity;
+					reportTransactionSummary.totalPrice = report.totalRetailPrice;
+					summaryMap.put(shop + item, reportTransactionSummary);
+				} else {
+					if (report.quantity == null) {
+						report.quantity = 0l;
+					}
+					if (report.totalRetailPrice == null) {
+						report.totalRetailPrice = 0.0;
+					}
+					reportTransactionSummary.totalQuantity += report.quantity;
+					reportTransactionSummary.totalPrice += report.totalRetailPrice;
+				}
+			}
 
-                    if(report.quantity==null) report.quantity=0l;
-                    if(report.totalRetailPrice==null) report.totalRetailPrice=0.0;
+			Collection<ReportTransactionSummary> tmp2List = (Collection) summaryMap.values();
+			if (tmp2List != null) {
+				Long no = 1l;
+				int startIndex = ((pagination.currentPage - 1) * pagination.pageSize);
+				for (ReportTransactionSummary report : tmp2List) {
+					report.no = no;
+					no++;
+				}
 
-                    reportTransactionSummary.totalQuantity+=report.quantity;
-                    reportTransactionSummary.totalPrice+=report.totalRetailPrice;
-                }
-            }
+				list.addAll(tmp2List);
 
-            Collection<ReportTransactionSummary> tmp2List = (Collection) summaryMap.values();
+				int endIndex = (startIndex + pagination.pageSize);
+				if (pagination.all) {
+					endIndex = tmp2List.size();
+				}
+				if (endIndex >= tmp2List.size()) {
+					endIndex = tmp2List.size();
+				}
 
+				logger.info("start " + startIndex + " end " + endIndex);
+				list = new ArrayList<ReportTransactionSummary>(list.subList(startIndex, endIndex));
+				pagination.iTotalDisplayRecords = tmp2List.size();
+				pagination.iTotalRecords = tmp2List.size();
+			} else {
+				pagination.iTotalDisplayRecords = 0;
+				pagination.iTotalRecords = 0;
+			}
+			pagination.recordList = list;
+		}
+		return pagination;
+	}
 
-            if(tmp2List!=null) {
-                Long no = 1l;
-                int startIndex =  ((pagination.currentPage-1)*pagination.pageSize);
-                for(ReportTransactionSummary report:tmp2List) {
-                    report.no = no;
-                    no++;
-                }
+	public Long getNo() {
+		return no;
+	}
 
-                list.addAll(tmp2List);
+	public String getItem() {
+		return item;
+	}
 
-                int endIndex = (startIndex+pagination.pageSize);
-                if(pagination.all) {
-                    endIndex = tmp2List.size();
-                }
-                if(endIndex>=tmp2List.size())
-                    endIndex=tmp2List.size();
+	public String getFoodName() {
+		return foodName;
+	}
 
-                play.Logger.info("start "+startIndex+" end "+endIndex);
-                list = new ArrayList<ReportTransactionSummary>(list.subList(startIndex,endIndex));
-                pagination.iTotalDisplayRecords = tmp2List.size();
-                pagination.iTotalRecords = tmp2List.size();
-            }
-            else {
+	public String getFoodNameZh() {
+		return foodNameZh;
+	}
 
-                pagination.iTotalDisplayRecords = 0;
-                pagination.iTotalRecords = 0;
-            }
+	public String getShopName() {
+		return shopName;
+	}
 
-            pagination.recordList = list;
+	public Long getTotalQuantity() {
+		return totalQuantity;
+	}
 
-        }
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
 
-
-        return pagination;
-    }
-
-    public Long getNo() {
-        return no;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public String getFoodName() {
-        return foodName;
-    }
-
-    public String getFoodNameZh() {
-        return foodNameZh;
-    }
-
-    public String getShopName() {
-        return shopName;
-    }
-
-    public Long getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    @Override
-    public int compareTo(ReportTransactionSummary o) {
-        if(o==null) return 0;
-        if(foodName==null || shopName==null) return 0;
-        ReportTransactionSummary reportTransactionSummary = (ReportTransactionSummary)o;
-
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	@Override
+	public int compareTo(ReportTransactionSummary o) {
+		if (o == null) {
+			return 0;
+		}
+		if (foodName == null || shopName == null) {
+			return 0;
+		}
+		return 0;
+	}
 }

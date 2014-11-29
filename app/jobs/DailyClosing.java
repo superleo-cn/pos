@@ -20,12 +20,12 @@ import play.jobs.Job;
 import play.jobs.On;
 
 /** Fire at 00:10 (noon) every day **/
-//@OnApplicationStart
+// @OnApplicationStart
 @On("0 10 0 * * ?")
 public class DailyClosing extends Job {
 
 	final static Logger logger = LoggerFactory.getLogger(DailyClosing.class);
-	
+
 	public void doJob() {
 		getDailyEmail();
 		logger.info("complete daily report sending history.");
@@ -39,22 +39,19 @@ public class DailyClosing extends Job {
 		Date yesterday = c.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(yesterday);
-		searchs.put("date", "2014-10-18");
-		//searchs.put("date", date);
+		// searchs.put("date", "2014-10-18");
+		searchs.put("date", date);
 		List<Shop> shops = Shop.list();
-		if(shops != null){
-			for(Shop s : shops){
+		if (shops != null) {
+			for (Shop s : shops) {
 				searchs.put("shopName", s.name);
 				List<ReportMoney> list = Dashboard.dailyClosingSummary(searchs);
-				if(list != null && list.size() > 0){
+				if (list != null && list.size() > 0) {
 					ReportMoney money = list.get(0);
 					DailyClosingMailer.send(date, s.name, s.email, df.format(money.value));
-					DailyClosingMailer.sendSMS(date, s.name, s.contact, df.format(money.value));
+					// DailyClosingMailer.sendSMS(date, s.name, s.contact, df.format(money.value));
 				}
 			}
 		}
-		
-		List<ReportMoney> list = Dashboard.dailyClosingSummary(searchs);
-		System.out.println(list);
 	}
 }

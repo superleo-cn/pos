@@ -24,17 +24,17 @@ public class Versions extends Basic {
 			result.put(Constants.DATAS, Version.getLastVersion());
 		} catch (Exception e) {
 			result.put(Constants.CODE, Constants.ERROR);
-			result.put(Constants.MESSAGE, Messages.VERSION_LIST_ERROR_MESSAGE);
-			logger.error(Messages.VERSION_LIST_ERROR, new Object[] { e });
+			result.put(Constants.MESSAGE, Messages.VERSION_LIST_ERROR);
+			logger.error(Messages.VERSION_LIST_ERROR_MESSAGE, new Object[] { e.getMessage() });
 		}
 		renderJSON(result);
 
 	}
-	
+
 	public static void index() {
 		List<Version> versions = Version.getLastVersion();
 		Version version = null;
-		if(versions != null){
+		if (versions != null) {
 			version = versions.get(0);
 		}
 		render("/pages/upload.html", version);

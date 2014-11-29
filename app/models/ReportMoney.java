@@ -4,11 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-/**
- * Created with IntelliJ IDEA. User: lala Date: 11/15/13 Time: 1:55 AM To change
- * this template use File | Settings | File Templates.
- */
-@Entity  
+
+@Entity
 public class ReportMoney {
 
 	public Long id;

@@ -22,9 +22,9 @@ import constants.Constants;
 
 @With(value = { TimeInterceptor.class, ConstantsInterceptor.class })
 public class Basic extends Controller {
-	
+
 	@Before
-	public static void allowOrign(){
+	public static void allowOrign() {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 	}
 
@@ -32,11 +32,10 @@ public class Basic extends Controller {
 	static void checkAuthentification() {
 		if (StringUtils.isEmpty(session.get(Constants.CURRENT_USERNAME))) {
 			// flash.put("error", "You need login first");
-			//Auth.index();
+			// Auth.index();
 		}
 		// TODO: refactor
-		// Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(),
-		// "365d");
+		// Cache.safeSet(Constants.GLOBLE_FACILITIES, Facility.findAll(), "365d");
 	}
 
 	@Catch(Exception.class)
@@ -52,7 +51,7 @@ public class Basic extends Controller {
 	public static String uploadFile(File apkFile) {
 		String filename = apkFile.getName();
 		try {
-			if(!StringUtils.containsIgnoreCase(filename, ".apk")){
+			if (!StringUtils.containsIgnoreCase(filename, ".apk")) {
 				filename = filename + ".apk";
 			}
 			FileUtils.copyFile(apkFile, new File("public/versions/" + filename));
@@ -62,29 +61,32 @@ public class Basic extends Controller {
 		return filename;
 	}
 
-	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index","Appraisals.index" })
+	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index", "Appraisals.index" })
 	public static void navigationAdd() {
 		Map navigation = (Map) renderArgs.get("navigation");
-		if (navigation == null)
+		if (navigation == null) {
 			navigation = new HashMap();
+		}
 		navigation.put("add", true);
 		renderArgs.put("navigation", navigation);
 	}
 
-	@Before(only = { "Users.view", "Employees.view", "Customers.view", "Suppliers.view","Appraisals.view","Appraisals.add","Employees.add" })
+	@Before(only = { "Users.view", "Employees.view", "Customers.view", "Suppliers.view", "Appraisals.view", "Appraisals.add", "Employees.add" })
 	public static void navigationSave() {
 		Map navigation = (Map) renderArgs.get("navigation");
-		if (navigation == null)
+		if (navigation == null) {
 			navigation = new HashMap();
+		}
 		navigation.put("save", true);
 		renderArgs.put("navigation", navigation);
 	}
 
-	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index","Appraisals.index" })
+	@Before(only = { "Users.index", "Employees.index", "Customers.index", "Suppliers.index", "Appraisals.index" })
 	public static void navigationList() {
 		Map navigation = (Map) renderArgs.get("navigation");
-		if (navigation == null)
+		if (navigation == null) {
 			navigation = new HashMap();
+		}
 		navigation.put("list", true);
 		renderArgs.put("navigation", navigation);
 	}
@@ -92,8 +94,9 @@ public class Basic extends Controller {
 	@Before(only = { "Home.index", "Auth.index", "Auth.login" })
 	public static void navigationNoBack() {
 		Map navigation = (Map) renderArgs.get("navigation");
-		if (navigation == null)
+		if (navigation == null) {
 			navigation = new HashMap();
+		}
 		navigation.put("noback", true);
 		renderArgs.put("navigation", navigation);
 	}

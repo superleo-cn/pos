@@ -3,10 +3,11 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.avaje.ebean.annotation.Transactional;
-
 import models.User;
 import utils.Pagination;
+
+import com.avaje.ebean.annotation.Transactional;
+
 import constants.Pages;
 
 public class Users extends Basic {
@@ -24,7 +25,7 @@ public class Users extends Basic {
 		User user = User.view(id);
 		render(Pages.USER_FORM, user);
 	}
-	
+
 	@Transactional
 	public static void store(User user) {
 		User.store(user);

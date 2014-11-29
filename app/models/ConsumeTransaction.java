@@ -10,12 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import play.data.validation.Required;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
@@ -23,11 +21,12 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 
-import constants.Constants;
-
 @Entity
 @Table(name = "tb_consume_transaction")
 public class ConsumeTransaction {
+
+	final static Logger logger = LoggerFactory.getLogger(ConsumeTransaction.class);
+
 	@Id
 	public Long id;
 
@@ -79,8 +78,7 @@ public class ConsumeTransaction {
 	public static boolean store(ConsumeTransaction consumeTransaction) {
 		try {
 			if (consumeTransaction.id == null || consumeTransaction.id == 0) {
-				if (consumeTransaction.consumption != null && consumeTransaction.consumption.id != null
-						&& consumeTransaction.user != null && consumeTransaction.user.id != null) {
+				if (consumeTransaction.consumption != null && consumeTransaction.consumption.id != null && consumeTransaction.user != null && consumeTransaction.user.id != null) {
 					Consumption consumption = Consumption.view(consumeTransaction.consumption.id);
 					User user = User.view(consumeTransaction.user.id);
 					if (consumption != null && user != null) {
@@ -92,7 +90,7 @@ public class ConsumeTransaction {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Store Consume Transaction Error", e);
 		}
 		return false;
 	}

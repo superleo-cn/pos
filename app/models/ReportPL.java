@@ -1,206 +1,175 @@
 package models;
 
-import com.avaje.ebean.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import utils.Pagination;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-import java.util.*;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 
-/**
- * Created with IntelliJ IDEA.
- * User: lala
- * Date: 11/15/13
- * Time: 1:55 AM
- * To change this template use File | Settings | File Templates.
- */
 public class ReportPL {
 
+	final static Logger logger = LoggerFactory.getLogger(ReportPL.class);
 
-    public Long no;
+	public Long no;
 
-    public String item;
+	public String item;
 
-    public String shopName;
+	public String shopName;
 
-    public Double sales,costOfSales,expenses,netProfit;
+	public Double sales, costOfSales, expenses, netProfit;
 
+	/* the following are service methods */
+	public static Pagination search(Map search, Pagination pagination) {
+		pagination = pagination == null ? new Pagination() : pagination;
+		String sql = "SELECT ts.name shopName, SUM(c_cash_collected-e_next_open_balance) AS sales, SUM(b_expenses) AS expenses FROM tb_daily_summary td,tb_shop ts WHERE  td.create_date BETWEEN :dateFrom AND :dateTo  and ts.name like :shopName  "
+				+ "GROUP BY ts.name";
+		SqlQuery query = Ebean.createSqlQuery(sql);
 
-    /* the following are service methods */
-    public static Pagination search(Map search, Pagination pagination) {
-        pagination = pagination == null ? new Pagination() : pagination;
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
+				logger.info("value " + value);
+				if (StringUtils.isEmpty(value)) {
+					continue;
+				}
 
-        pagination = pagination == null ? new Pagination() : pagination;
+				if (key.equalsIgnoreCase("dateFrom")) {
+					query.setParameter(key, value + " 00:00:00");
+				} else if (key.equalsIgnoreCase("dateTo")) {
+					query.setParameter(key, value + " 23:59:59");
+				} else if (key.equalsIgnoreCase("shopName")) {
+					query.setParameter(key, "%" + value + "%");
+				}
+			}
+		}
 
-        String sql =
-                "SELECT " +
-                        "    ts.name shopName, " +
-                        "     SUM(c_cash_collected-e_next_open_balance) AS sales ,  " +
-                        "    SUM(b_expenses)       AS expenses   " +
-                        "    " +
-                        "FROM " +
-                        "    tb_daily_summary td,tb_shop ts " +
-                        "WHERE " +
-                        "    td.shop_id=ts.id and" +
-                        "    td.create_date BETWEEN :dateFrom AND :dateTo  and ts.name like :shopName  " +
-                        "GROUP BY" +
-                        "    ts.name";
-        SqlQuery query  = Ebean.createSqlQuery(sql);
+		List<SqlRow> tmpList = query.findList();
+		ArrayList<ReportPL> list = new ArrayList<ReportPL>();
 
-        if (search.keySet()!=null) {
-            Iterator searchKeys = search.keySet().iterator();
-            while(searchKeys.hasNext()){
-                String key = (String) searchKeys.next();
-                String value = (String) search.get(key);
-                play.Logger.info("value " + value);
-                if(StringUtils.isEmpty(value)) continue;
+		logger.info("current page" + pagination.currentPage);
+		int startIndex = ((pagination.currentPage - 1) * pagination.pageSize);
 
-                if(key.equalsIgnoreCase("dateFrom")){
-                   query.setParameter(key, value+" 00:00:00");
-                }
-                else if(key.equalsIgnoreCase("dateTo")){
-                    query.setParameter(key, value+" 23:59:59");
-                }
-                else if(key.equalsIgnoreCase("shopName")) {
-                    query.setParameter(key,"%"+value+"%");
-                }
-            }
-        }
+		if (tmpList != null) {
+			Long no = 1l;
+			for (SqlRow report : tmpList) {
+				ReportPL reportPL = new ReportPL();
+				reportPL.no = no;
+				reportPL.shopName = (String) report.get("shopName");
+				reportPL.sales = (Double) report.get("sales");
+				reportPL.costOfSales = 0.0;
+				reportPL.expenses = (Double) report.get("expenses");
+				reportPL.netProfit = reportPL.sales - reportPL.expenses;
+				list.add(reportPL);
+				no++;
+			}
+		}
 
+		sql = "SELECT ts.name shopName, SUM(total_cost_price) AS total_cost_price FROM tb_transaction tt,tb_shop ts WHERE tt.shop_id=ts.id and tt.create_date BETWEEN :dateFrom AND :dateTo and ts.name like :shopName   "
+				+ "GROUP BY ts.name";
+		query = Ebean.createSqlQuery(sql);
 
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
 
-        List<SqlRow> tmpList = query.findList();
-        ArrayList<ReportPL> list = new ArrayList<ReportPL>();
+				logger.info("Key " + key + " Value " + value);
+				if (StringUtils.isEmpty(value)) {
+					continue;
+				}
 
-        play.Logger.info("current page"+pagination.currentPage);
-        int startIndex =  ((pagination.currentPage-1)*pagination.pageSize);
+				if (key.equalsIgnoreCase("dateFrom")) {
+					query.setParameter(key, value + " 00:00:00");
+				} else if (key.equalsIgnoreCase("dateTo")) {
+					query.setParameter(key, value + " 23:59:59");
+				} else if (key.equalsIgnoreCase("shopName")) {
+					query.setParameter(key, "%" + value + "%");
+				}
 
-        if(tmpList!=null) {
-            Long no = 1l;
+			}
+		}
+		tmpList = query.findList();
 
-            Double cash,sales,expenses,net;
-            for(SqlRow report:tmpList) {
-                ReportPL reportPL = new ReportPL();
+		logger.info(" size " + tmpList.size());
+		if (tmpList != null) {
+			for (SqlRow report : tmpList) {
+				for (ReportPL exising : list) {
+					if (exising.shopName.equalsIgnoreCase((String) report.get("shopName"))) {
+						exising.costOfSales = (Double) report.get("total_cost_price");
+						exising.netProfit = exising.netProfit - exising.costOfSales;
+					}
+				}
+			}
+		}
 
-                reportPL.no = no;
-                reportPL.shopName= (String) report.get("shopName");
-                reportPL.sales        = (Double) report.get("sales");
-                reportPL.costOfSales        = 0.0;
-                reportPL.expenses        = (Double) report.get("expenses");
-                reportPL.netProfit        = reportPL.sales-reportPL.expenses;
-                list.add(reportPL);
-                no++;
-            }
-        }
+		pagination.iTotalDisplayRecords = list.size();
+		pagination.iTotalRecords = list.size();
 
+		int endIndex = (startIndex + pagination.pageSize);
+		if (endIndex >= list.size()) {
+			endIndex = list.size();
+		}
 
-        sql =
-                "SELECT " +
-                        "    ts.name shopName, " +
-                        "     SUM(total_cost_price) AS total_cost_price " +
-                        "FROM " +
-                        "    tb_transaction tt,tb_shop ts " +
-                        "WHERE " +
-                        "    tt.shop_id=ts.id and" +
-                        "    tt.create_date BETWEEN :dateFrom AND :dateTo and ts.name like :shopName   " +
-                        "GROUP BY" +
-                        "    ts.name";
-        query  = Ebean.createSqlQuery(sql);
+		logger.info("start " + startIndex + " end " + endIndex);
+		list = new ArrayList<ReportPL>(list.subList(startIndex, endIndex));
 
-        if (search.keySet()!=null) {
-            Iterator searchKeys = search.keySet().iterator();
-            while(searchKeys.hasNext()){
-                String key = (String) searchKeys.next();
-                String value = (String) search.get(key);
+		pagination.recordList = list;
+		return pagination;
+	}
 
-                play.Logger.info("Key " + key+" Value " + value);
+	public Long getNo() {
+		return no;
+	}
 
-                if(StringUtils.isEmpty(value)) continue;
+	public String getItem() {
+		return item;
+	}
 
-                if(key.equalsIgnoreCase("dateFrom")){
-                    query.setParameter(key,value+" 00:00:00");
-                }
-                else if(key.equalsIgnoreCase("dateTo")){
-                    query.setParameter(key,value+" 23:59:59");
-                }
-               else if(key.equalsIgnoreCase("shopName")) {
-                    query.setParameter(key,"%"+value+"%");
-                }
+	public String getShopName() {
+		return shopName;
+	}
 
-            }
-        }
-        tmpList = query.findList();
+	public Double getSales() {
+		return sales;
+	}
 
-        play.Logger.info(" size "+tmpList.size());
-        if(tmpList!=null) {
-            for(SqlRow report:tmpList) {
-                double  cost = 0.0;
-                for(ReportPL exising:list ){
-                    if(exising.shopName.equalsIgnoreCase((String)report.get("shopName")) ) {
-                        exising.costOfSales = (Double) report.get("total_cost_price");
-                        exising.netProfit = exising.netProfit-exising.costOfSales;
-                    }
-                }
-            }
-        }
+	public void setSales(Double sales) {
+		this.sales = sales;
+	}
 
+	public Double getCostOfSales() {
+		return costOfSales;
+	}
 
-        pagination.iTotalDisplayRecords = list.size();
-        pagination.iTotalRecords = list.size();
+	public void setCostOfSales(Double costOfSales) {
+		this.costOfSales = costOfSales;
+	}
 
+	public Double getExpenses() {
+		return expenses;
+	}
 
-    int endIndex = (startIndex+pagination.pageSize);
-    if(endIndex>=list.size())
-    endIndex=list.size();
+	public void setExpenses(Double expenses) {
+		this.expenses = expenses;
+	}
 
-    play.Logger.info("start "+startIndex+" end "+endIndex);
-    list = new ArrayList<ReportPL>(list.subList(startIndex,endIndex));
+	public Double getNetProfit() {
+		return netProfit;
+	}
 
-    pagination.recordList = list;
-    return pagination;
-}
-
-    public Long getNo() {
-        return no;
-    }
-    public String getItem() {
-        return item;
-    }
-
-    public String getShopName() {
-        return shopName;
-    }
-
-    public Double getSales() {
-        return sales;
-    }
-
-    public void setSales(Double sales) {
-        this.sales = sales;
-    }
-
-    public Double getCostOfSales() {
-        return costOfSales;
-    }
-
-    public void setCostOfSales(Double costOfSales) {
-        this.costOfSales = costOfSales;
-    }
-
-    public Double getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(Double expenses) {
-        this.expenses = expenses;
-    }
-
-    public Double getNetProfit() {
-        return netProfit;
-    }
-
-    public void setNetProfit(Double netProfit) {
-        this.netProfit = netProfit;
-    }
+	public void setNetProfit(Double netProfit) {
+		this.netProfit = netProfit;
+	}
 }

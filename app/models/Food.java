@@ -93,9 +93,9 @@ public class Food implements Comparable {
 				String key = (String) searchKeys.next();
 				String value = (String) search.get(key);
 				play.Logger.info("value " + value);
-				if (StringUtils.isEmpty(value))
+				if (StringUtils.isEmpty(value)) {
 					continue;
-
+				}
 				if (key.equalsIgnoreCase("shopName")) {
 					expList.where().ilike("shop.name", "%" + value + "%");
 				}
@@ -155,9 +155,8 @@ public class Food implements Comparable {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class)
-					.select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag")
-					.fetch("category", "id").where().eq("shop.id", id).eq("status", true).order("position").findList();
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag").fetch("category", "id").where()
+					.eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
 					if (o != null) {
@@ -178,9 +177,7 @@ public class Food implements Comparable {
 		if (!(o instanceof Food))
 			return 0;
 		Food food = (Food) o;
-		return name.compareTo(food.name); // To change body of implemented
-											// methods use File | Settings |
-											// File Templates.
+		return name.compareTo(food.name);
 	}
 
 	public static void bulkStore(List<Food> list) {

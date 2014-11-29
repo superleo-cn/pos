@@ -1,29 +1,28 @@
 package models;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.avaje.ebean.*;
-import com.avaje.ebean.Query;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import play.data.validation.Required;
-import utils.Pagination;
-
-import constants.Constants;
+import com.avaje.ebean.Ebean;
 
 @Entity
 @Table(name = "tb_version")
 public class Version {
+
+	final static Logger logger = LoggerFactory.getLogger(Version.class);
+
 	@Id
 	public Long id;
-	
+
 	public String name;
-	
+
 	public String versionSn;
 
 	public Long versionNo;
@@ -51,7 +50,7 @@ public class Version {
 			Ebean.save(version);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Store Version Error", e);
 		}
 		return false;
 	}
