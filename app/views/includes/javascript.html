@@ -1,7 +1,6 @@
-
 <!-- Bootstrap framework -->
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" media="screen,print" />
-<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css"  media="screen,print" />
+<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css" media="screen,print" />
 <link rel="stylesheet" href="/bootstrap-glyphicons/css/bootstrap.icon-large.min.css" />
 
 <!-- breadcrumbs-->
@@ -24,51 +23,41 @@
 <link rel="stylesheet" href="/lib/fullcalendar/fullcalendar_gebo.css" />
 
 <!-- gebo color theme-->
-<link rel="stylesheet" href="/css/blue.css" id="link_theme" media="screen,print"  />
-
+<link rel="stylesheet" href="/css/blue.css" id="link_theme" media="screen,print" />
 <link rel="stylesheet" href="/css/style.css" media="screen,print" />
-
 
 <link rel="stylesheet" href="/css/print.css" media="print" />
 <!-- main styles -->
 <link rel="stylesheet" href="/css/fineuploader-3.5.0.css" />
 
-
 <link rel="stylesheet" href="/css/select2.css" />
-
 <link rel="stylesheet" href="/css/select2-bootstrap.css" />
-
 <link rel="stylesheet" href="/lib/pickadate/themes/default.css" />
-
 <link rel="stylesheet" href="/lib/pickadate/themes/default.time.css" />
-
 <link rel="stylesheet" href="/css/select2-bootstrap.css" />
-
-
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans" />
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="favicon.ico" />
 <script>
-    //* hide all elements & show preloader
-    document.documentElement.className += 'js';
+	//* hide all elements & show preloader
+	document.documentElement.className += 'js';
 
+	function changePassword() {
+		$('#modalView').modal();
 
-    function changePassword(){
-        $('#modalView').modal();
+	}
+	function savePassword() {
+		var password = $('#password').val();
+		$.get('/changePassword?password=' + password, function() {
+			$('#password').val('')
+		});
+		$('#modalView').modal('hide');
+	}
 
-    }
-    function savePassword(){
-        var password = $('#password').val();
-        $.get('/changePassword?password='+password,function(){
-            $('#password').val('')
-        });
-        $('#modalView').modal('hide');
-    }
-
-    function closePassword() {
-        $('#modalView').modal('hide');
-    }
+	function closePassword() {
+		$('#modalView').modal('hide');
+	}
 </script>
 
 
