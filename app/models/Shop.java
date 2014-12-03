@@ -88,6 +88,18 @@ public class Shop {
 		}
 		return null;
 	}
+	
+	public static Shop findByName(String shopName) {
+		if (StringUtils.isNotEmpty(shopName)) {
+			 List<Shop> list = Ebean.find(Shop.class)
+				.select("id, name, gstRegNo, gstRate, serviceRate").where()
+				.eq("name", shopName).findList();
+			 if(list != null && list.size() > 0){
+				 return list.get(0);
+			 }
+		}
+		return null;
+	}
 
 	public static List<Shop> listJson(Long id) {
 		return Ebean.find(Shop.class)

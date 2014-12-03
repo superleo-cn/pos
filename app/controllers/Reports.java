@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -317,6 +318,42 @@ public class Reports extends Basic {
 
 		session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
 		renderJSON(ReportTransactionSummary.search(searchs, pagination));
+	}
+
+	public static void transactionSummary() throws IOException {
+
+		Map searchs = new HashMap();
+		String outlet = request.params.get("sSearch_1");
+		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
+			outlet = "%";
+		}
+
+		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
+			outlet = session.get("shopName");
+		}
+
+		searchs.put("shopName", outlet);
+		String dateFrom = request.params.get("sSearch_2");
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
+			dateFrom = sdf.format(today) + " 00:00:00";
+		}
+		searchs.put("dateFrom", dateFrom);
+		String dateTo = request.params.get("sSearch_3");
+		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
+			dateTo = sdf.format(today) + " 23:59:59";
+		}
+		searchs.put("dateTo", dateTo);
+
+		session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
+
+		Shop shop = Shop.findByName(outlet);
+		Pagination pagination = new Pagination();
+		if(shop != null){
+			pagination = ReportTransactionSummary.search(searchs, shop);
+		}
+		renderJSON(pagination);
 	}
 
 	public static void pl() throws IOException {

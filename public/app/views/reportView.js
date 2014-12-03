@@ -4,11 +4,12 @@ define([
     'backbone',
     'text!../templates/reportDashboard.html',
     'text!../templates/reportTransaction.html',
+    'text!../templates/reportSummary.html',
     'text!../templates/reportCashierClosing.html',
     'text!../templates/reportLoginAudit.html',
     'text!../templates/reportPL.html',
     '../models/report'
-], function($, _, Backbone,reportDashboard,reportTransaction,reportCashierClosing,reportLoginAudit,reportPL,Model){
+], function($, _, Backbone,reportDashboard,reportTransaction,reportSummary,reportCashierClosing,reportLoginAudit,reportPL,Model){
 
     var ReportView = Backbone.View.extend({
         el: $('#container'),
@@ -81,7 +82,6 @@ define([
                 pieChartMoney(outlet, type, date);
                 lineChartQuantity(outlet, type, date);
                 lineChartMoney(outlet, type, date);
-                
             	
             }
             else if(page=='reportTransaction') {
@@ -105,41 +105,49 @@ define([
                 that.oTable.fnMultiFilter({"no":item,"item":outlet,"shopName":dateFrom,"totalQuantity":dateTo});
 
             }
-            else  if(page=='reportLoginAudit') {
+            else if(page=='reportSummary') {
+                  var outlet = that.$el.find('#outlet').val();
+                  var dateFrom = that.$el.find('#dateFrom').val();
+                  var timeFrom = that.$el.find('#timeFrom').val();
+                  if(timeFrom=='') {
+                      timeFrom='00:00';
+                  }
+                  if(timeFrom!='' && dateFrom!='')
+                      dateFrom = dateFrom+' '+timeFrom;
+                  var dateTo = that.$el.find('#dateTo').val();
+                  var timeTo = that.$el.find('#timeTo').val();
+                  if(timeTo=='') {
+                      timeTo='23:59';
+                  }
+                  if(timeTo!='' && dateTo!='')
+                      dateTo = dateTo+' '+timeTo;
+                  //that.oTable.fnMultiFilter({"shopName":outlet,"dateFrom":dateFrom,"dateTo":dateTo});
+                  that.oTable.fnMultiFilter({"shopName":outlet,"totalQuantity":dateFrom,"retailPrice":dateTo});
+            }
+            else if(page=='reportLoginAudit') {
 
                 var user = that.$el.find('#user').val();
                 var outlet = that.$el.find('#outlet').val();
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var dateTo = that.$el.find('#dateTo').val();
-
                 that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"createDate":dateTo});
 
             }
-            else  if(page=='reportCashierClosing') {
+            else if(page=='reportCashierClosing') {
 
                 var cashier = that.$el.find('#cashier').val();
-
                 var outlet = that.$el.find('#outlet').val();
-
                 var dateFrom = that.$el.find('#dateFrom').val();
-
                 var dateTo = that.$el.find('#dateTo').val();
-
-
                 that.oTable.fnMultiFilter({"no":cashier,"realName":outlet,"createDate":dateFrom,"shopName":dateTo});
 
             }
-            else  if(page=='reportPL') {
+            else if(page=='reportPL') {
 
                 var outlet = that.$el.find('#outlet').val();
-
                 var dateFrom = that.$el.find('#dateFrom').val();
-
                 var dateTo = that.$el.find('#dateTo').val();
-
-
                 that.oTable.fnMultiFilter({"shopName":outlet,"sales":dateFrom,"costOfSales":dateTo});
-
             }
         },
         initialize:function(options){
@@ -151,13 +159,10 @@ define([
 
             this.listenTo(this.model,'error', function(model,e) {
                 var err;
-
-
             });
+            
             this.listenTo(this.model,'sync', function(e) {
                 console.log('sukses');
-
-
             });
 
         },
@@ -183,7 +188,7 @@ define([
             app.router.navigate('/quote',{trigger:true});
         },
         render: function(page,cb){
-            console.log('render quote view');
+            console.log('=>render quote view' + page);
             var that = this;
             var id = this.options.id;
             var data = {};
@@ -192,6 +197,8 @@ define([
                 template=reportDashboard;
             else if(page=='reportTransaction')
                 template=reportTransaction;
+            else if(page=='reportSummary')
+                template=reportSummary;
             else  if(page=='reportCashierClosing')
                 template=reportCashierClosing;
             else  if(page=='reportLoginAudit')
@@ -234,14 +241,14 @@ define([
                  lineChartMoney(outlet, type, date);
             }
             else if(page=='reportTransaction') {
-                    that.oTable = that.$el.find('#privia_grid').dataTable( {
+            	that.oTable = that.$el.find('#privia_grid').dataTable( {
                     "bProcessing": true,
                     "bServerSide": true,
                     "iDisplayLength" : 100,
                     "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap_alt",
                     "sAjaxDataProp" : "recordList",
-                   "aoColumnDefs": [
+                    "aoColumnDefs": [
                         {
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
@@ -257,6 +264,38 @@ define([
                         { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/transaction"
+                } );
+
+                that.$el.find('#dateFrom,#dateTo').val(moment().format('YYYY-MM-DD'));
+                that.$el.find('#timeFrom,#timeTo').pickatime({ formatLabel:'HH:i',format:'HH:i'});
+
+            }
+            else if(page=='reportSummary') {
+            	that.oTable = that.$el.find('#privia_grid').dataTable( {
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "iDisplayLength" : 100,
+                    "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+                    "sPaginationType": "bootstrap_alt",
+                    "sAjaxDataProp" : "recordList",
+                    "aoColumnDefs": [
+                        {
+                            "mRender": function ( data, type, row ) {
+                                return data.toFixed(2);
+                            },
+                            "aTargets": [3, 4, 5, 6]
+                        }
+                    ],
+                    "aoColumns": [
+                        { "mData": "no",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
+                        { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "retailPrice" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "gst" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "sc" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
+                    ],
+                    "sAjaxSource": "/reports/transactionSummary"
                 } );
 
                 that.$el.find('#dateFrom,#dateTo').val(moment().format('YYYY-MM-DD'));
@@ -441,7 +480,6 @@ define([
                 });
             }
            // that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
-
 
         }
 

@@ -59,19 +59,17 @@ define([
             var data = {};
             var template;
 
+            template=formTemplate;
 
-                template=formTemplate;
+            console.log(this.model.toJSON());
+            var compiledTemplate = _.template( template, this.model.toJSON() );
+            // Append our compiled template to this Views "el"
+            this.$el.html( compiledTemplate );
 
-                console.log(this.model.toJSON());
-                var compiledTemplate = _.template( template, this.model.toJSON() );
-                // Append our compiled template to this Views "el"
-                this.$el.html( compiledTemplate );
+            // this.$el.css('width',600);
+            this.$el.find('#modalView').modal();
 
-
-//                this.$el.css('width',600);
-                this.$el.find('#modalView').modal();
-
-                if(cb) cb();
+            if(cb) cb();
             
         }
     });

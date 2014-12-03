@@ -21,6 +21,8 @@ import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.PagingList;
 import com.avaje.ebean.Query;
+import com.avaje.ebean.RawSql;
+import com.avaje.ebean.RawSqlBuilder;
 import com.avaje.ebean.annotation.Sql;
 
 @Entity
@@ -33,11 +35,11 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 	public Long no;
 
 	@Transient
-	public String item;
+	public String id, item;
 	public String foodName, foodNameZh;
 	public String shopName;
 	public Long totalQuantity;
-	public Double totalPrice;
+	public Double gst, sc, retailPrice, totalPrice;
 
 	/* the following are service methods */
 	public static Pagination search(Map search, Pagination pagination) {
@@ -140,6 +142,73 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 				pagination.iTotalRecords = 0;
 			}
 			pagination.recordList = list;
+		}
+		return pagination;
+	}
+
+	public static Pagination search(Map search, Shop shop) {
+		String sql = 
+					"select id, shop_name, quantity, retail_price, gst, sc, total_price from (" +
+					"SELECT id, " +
+					    "shop_name, " +
+					   " quantity,  " +
+					   " retail_price, " +
+					   " gst, " +
+					   " sc, " +
+					   " retail_price+gst+sc AS total_price " +
+					"FROM " +
+					   " ( " +
+					   "     SELECT id, " +
+					    "        shop_name, " +
+					    "        SUM(quantity)                  AS quantity, " +
+					    "        SUM(total_retail_price)        AS retail_price, " +
+					    "        SUM(total_retail_price) * " + (Integer.parseInt(shop.gstRate) / 100.0) + " AS gst, " +
+					    "        SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc " +
+					    "    FROM " +
+					    "        report_transaction_detail " +
+					    "    WHERE " +
+					    "        order_date >= :dateFrom and order_date <= :dateTo " +
+					"        GROUP BY " +
+					"            shop_name ) b" + 
+					")a";
+
+		RawSql rawSql = RawSqlBuilder.parse(sql)
+				// map resultSet columns to bean properties
+				.columnMapping("id", "id").columnMapping("shop_name", "shopName").columnMapping("quantity", "totalQuantity").columnMapping("gst", "gst")
+				.columnMapping("sc", "sc").columnMapping("retail_price", "retailPrice").columnMapping("total_price", "totalPrice").create();
+
+		Query<ReportTransactionSummary> query = Ebean.find(ReportTransactionSummary.class);
+		query.setRawSql(rawSql);
+		
+
+
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				String value = (String) search.get(key);
+				logger.info("Value " + value);
+				if (StringUtils.isEmpty(value)) {
+					continue;
+				}
+				if (key.equalsIgnoreCase("shopName")) {
+					query.where().ilike(key, "%" + value + "%");
+				} else if (key.equalsIgnoreCase("dateFrom")) {
+					query.setParameter("dateFrom", value);
+				} else if (key.equalsIgnoreCase("dateTo")) {
+					query.setParameter("dateTo", value);
+				}
+			}
+		}
+
+		List <ReportTransactionSummary> list = query.findList();
+		Pagination pagination = new Pagination();
+		if(list != null && list.size() > 0){
+			ReportTransactionSummary obj = list.get(0);
+			obj.no = 1L;
+			pagination.recordList = list;
+			pagination.iTotalDisplayRecords = pagination.recordList.size();
+			pagination.iTotalRecords = pagination.recordList.size();
 		}
 		return pagination;
 	}

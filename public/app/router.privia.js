@@ -15,6 +15,7 @@ function($, _, Backbone, ReportView, CommonView, ModalView, ItemView) {
 			// Define some URL routes
 			'reportDashboard' : 'showReportDashboard',
 			'reportTransaction' : 'showReportTransaction',
+			'reportSummary' : 'showReportSummary',
 			'reportCashierClosing' : 'showReportCashierClosing',
 			'reportLoginAudit' : 'showReportLoginAudit',
 			'reportPL' : 'showReportPL',
@@ -63,6 +64,10 @@ function($, _, Backbone, ReportView, CommonView, ModalView, ItemView) {
 		showReportTransaction : function() {
 			console.log('showReportTransaction');
 			new ReportView().render('reportTransaction');
+		},
+		showReportSummary : function() {
+			console.log('showReportSummary');
+			new ReportView().render('reportSummary');
 		},
 		showReportCashierClosing : function() {
 			console.log('showReportCashierClosing');

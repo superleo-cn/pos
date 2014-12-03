@@ -1,0 +1,51 @@
+ 
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Transaction Summary</h3>
+        <form id="reportForm">
+        <div class="row-fluid">
+            <div class="span3 adminFields">
+                <label for="outlet">Outlet</label>
+                <input type="text" class="span10" id="outlet" value="ALL">
+            </div>
+            <div class="span3 controls controls-row">
+                <label for="dateFrom">Date From</label>
+                <input type="text" class="span6" id="dateFrom" style="margin-right:10px" onfocus="blur()">
+                <input type="text" class="span4" style="margin-left:0" id="timeFrom" data-minute-step="1">
+            </div>
+            <div class="span3 controls controls-row">
+                <label for="dateTo">Date To</label>
+                <input type="text" class="span6" id="dateTo" style="margin-right:10px" onfocus="blur()">
+                <input type="text" class="span4" id="timeTo" style="margin-left:0" data-minute-step="1">
+            </div>
+        </div>
+            <div class="form-actions">
+                <a class="btn btn-primary" id="searchReport" data-loading-text="Loading ...">Search</a>
+                <a class="btn btn-success" data-loading-text="Loading ..."  id="exportTransactionSummary"><i class="icon-ok icon-white"></i> Export Summary </a>
+                <a class="btn btn-warning" data-loading-text="Loading ..." id="clearReport"><i class="icon-ok icon-white"></i> Reset </a>
+            </div>
+        </form>
+        <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th width="30%">Outlet</th>
+                    <th>Quantity</th>
+                   	<th>Sale Price (S$)</th>
+                    <th>GST (S$)</th>
+                    <th>Service Charge (S$)</th>
+                    <th>Total Price (S$)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody></table>
+
+        </div>
+    </div>
+    <script>
+
+
+
+    </script>
