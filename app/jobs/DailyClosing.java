@@ -21,7 +21,7 @@ import play.jobs.On;
 
 /** Fire at 00:10 (noon) every day **/
 // @OnApplicationStart
-@On("0 20 0 * * ?")
+@On("0 30 0 * * ?")
 public class DailyClosing extends Job {
 
 	final static Logger logger = LoggerFactory.getLogger(DailyClosing.class);
