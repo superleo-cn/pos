@@ -13,7 +13,7 @@ public class SmsUtil {
 	
 	public static void main(String[] args){
 		try {
-			sendMsg("6590093243", "aaa");
+			sendMsg("6598522683", "Test From tablet");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -30,7 +30,7 @@ public class SmsUtil {
 				mobileNo = "65" + mobileNo;
 			}
 			String sURL = "http://gateway.onewaysms.sg:10002/api.aspx?apiusername=APIPKMESZCF7I&apipassword=APIPKMESZCF7IPKMES&mobileno="
-					+ mobileNo + "&senderid=PospalWeebo&languagetype=1&message=" + URLEncoder.encode(sMsg, "UTF-8");
+					+ mobileNo + "&senderid=WeeboPos&languagetype=1&message=" + URLEncoder.encode(sMsg, "UTF-8");
 			URL url = new URL(sURL);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(false);
