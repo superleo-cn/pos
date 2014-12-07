@@ -1,0 +1,17 @@
+{
+	"home": {
+    	"title": "Welcome to Backend WEEBO POS CLOUD"
+  	},
+  	"report": {
+  		"dashboard" : {
+  			"title": "Report Dashboard"
+  		},
+  		"transaction" : {
+  			"title": "Transaction"
+  		},
+  		"summaryTransaction" : {
+  			"title": "Summary Transaction"
+  		}
+    	
+  	}
+}

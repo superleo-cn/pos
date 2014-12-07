@@ -32,6 +32,7 @@ require.config({
 		"gebo_common" : "/js/gebo_common",
 		"moment" : "../lib/moment_js/moment.min",
 		"fusioncharts" : "../lib/fusioncharts/fusioncharts",
+		"i18next" : "../lib/i18next/i18next-1.7.5.min",
 		"router" : "router.privia",
 		"app" : "app.privia"
 	},
@@ -118,13 +119,16 @@ require.config({
 		},
 		'fusioncharts' : {
 			deps : [ 'jquery' ]
+		},
+		'i18next' : {
+			deps : [ 'jquery' ]
 		}
 	}
 });
 
 require([ 'app', 'router', 'backbone', 'jquery.ui', 'jquery.validate', 'jquery.form', 'jquery.actual', 'bootstrap', 'bootstrap-timepicker', 'jquery.serializeObject', 'dataTables',
 		'dataTables.sorting', 'dataTables.bootstrap', 'antiscroll', 'jquery.fineuploader', 'select2', 'stepy', 'flot', 'flot.categories', 'flot.time', 'flot.pie', 'qtip2',
-		'backbone.syphon', 'jquery.inputmask', 'moment', 'gebo_common', 'pickadate.picker.time', 'fusioncharts' ], function(app, Router) {
+		'backbone.syphon', 'jquery.inputmask', 'moment', 'gebo_common', 'pickadate.picker.time', 'fusioncharts', 'i18next' ], function(app, Router) {
 
 	$.fn.dataTableExt.oApi.fnMultiFilter = function(oSettings, oData) {
 		for ( var key in oData) {
@@ -158,5 +162,10 @@ require([ 'app', 'router', 'backbone', 'jquery.ui', 'jquery.validate', 'jquery.f
 	// Trigger the initial route and enable HTML5 History API support, set the
 	// root folder to '/' by default. Change in app.js.
 	Backbone.history.start();
+	
+	i18n.init({ lng: "en" }, function(t) {
+		// programatical access
+		 $("body").i18n();
+	});
 
 });

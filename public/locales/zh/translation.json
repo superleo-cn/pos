@@ -1,0 +1,17 @@
+{
+	"home": {
+    	"title": "欢迎使用威搏POS云后台"
+  	},
+  	"report": {
+  		"dashboard" : {
+  			"title": "综合报表"
+  		},
+  		"transaction" : {
+  			"title": "交易列表"
+  		},
+  		"summaryTransaction" : {
+  			"title": "交易汇总"
+  		}
+    	
+  	}
+}

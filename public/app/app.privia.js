@@ -3,13 +3,13 @@ define([ 'jquery',
   'backbone',
   'text!./templates/sidebarsMenuSection.html','antiscroll','jquery.actual'], function($, _, Backbone,sidebarsTemplate) {
 
-    console.log('Initialize App'); 
+console.log('Initialize App'); 
     
-  // Provide a global location to place configuration settings and module
-  // creation.
-  var app = {
-  // The root path to run the application.
-  root: '/'
+// Provide a global location to place configuration settings and module
+// creation.
+var app = {
+	// The root path to run the application.
+	root: '/'
 };
 var compiledTemplate = _.template(sidebarsTemplate, {'akses':arrAkses} );
 
@@ -24,14 +24,14 @@ $('#sidebarsMenu').html(compiledTemplate);
     var lastWindowHeight = $(window).height();
     var lastWindowWidth = $(window).width();
     $(window).on("debouncedresize",function() {
-      if($(window).height()!=lastWindowHeight || $(window).width()!=lastWindowWidth){
-        lastWindowHeight = $(window).height();
-        lastWindowWidth = $(window).width();
-        gebo_sidebar.update_scroll();
-        if(!is_touch_device()){
-                    $('.sidebar_switch').qtip('hide');
-                }
-      }
+    	if($(window).height()!=lastWindowHeight || $(window).width()!=lastWindowWidth){
+    		lastWindowHeight = $(window).height();
+    		lastWindowWidth = $(window).width();
+	        gebo_sidebar.update_scroll();
+	        if(!is_touch_device()){
+	        	$('.sidebar_switch').qtip('hide');
+	        }
+    	}
     });
     //* tooltips
     /*gebo_tips.init();

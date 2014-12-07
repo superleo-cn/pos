@@ -12,7 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import play.Logger;
-import play.Play;
+import play.i18n.Lang;
 import play.mvc.Before;
 import play.mvc.Catch;
 import play.mvc.Controller;
@@ -26,6 +26,11 @@ public class Basic extends Controller {
 	@Before
 	public static void allowOrign() {
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		String lang = Lang.get();
+		String param = request.params.get("lang");
+		if (StringUtils.isNotEmpty(param) && !StringUtils.equals(lang, param)) {
+			Lang.change(param);
+		}
 	}
 
 	@Before(unless = { "Auth.index", "Auth.login", "Auth.logout" })

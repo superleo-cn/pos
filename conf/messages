@@ -1,3 +1,11 @@
-# You can specialize this file for each language.
-# For example, for French create a messages.fr file
-#
+# English
+global.lang = Choose your prefer language
+
+login.title = Login
+login.form.title = Sign in to WEEBO POS CLOUD
+login.form.input = Please enter your username and password
+login.form.username = Username
+login.form.password = Password
+login.form.signIn = Sign In
+
+login.form.error.login = Wrong username/password

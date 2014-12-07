@@ -7,7 +7,7 @@ public class Constants {
 
 	// website URL
 	public static String WEBSITE_URL = "http://pos.emd.com.sg/";
-	// public static String WEBSITE_URL = "http://192.168.0.123:9000/";
+	// public static String WEBSITE_URL = "http://192.168.0.15:9000/";
 	public static String PICTURE_URL = WEBSITE_URL + "public/upload/";
 
 	// code status

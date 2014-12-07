@@ -1,39 +1,42 @@
 #{extends '/layout/plain.html' /}
-#{set title:'Login' /}
-
+#{set title: 'login.title'  /}
 
 <div class="login_box">
 
     <form method="post" id="login_form">
-        <div class="top_b">Sign in to WEEBO POS CLOUD</div>
+        <div class="top_b">&{'login.form.title'}</div>
         <div class="alert alert-info alert-login" id="loginAlert">
-            Enter valid username and password
+            &{'login.form.input'}
         </div>
         <div class="cnt_b">
             <div class="formRow">
                 <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span><input type="text" id="username" name="username" placeholder="Username" />
+                    <span class="add-on"><i class="icon-user"></i></span><input type="text" id="username" name="username" placeholder="&{'login.form.username'}" />
                 </div>
             </div>
             <div class="formRow">
                 <div class="input-prepend">
-                    <span class="add-on"><i class="icon-lock"></i></span><input type="password" id="password" name="password" placeholder="Password"  />
+                    <span class="add-on"><i class="icon-lock"></i></span><input type="password" id="password" name="password" placeholder="&{'login.form.password'}"  />
                 </div>
             </div>
 
-   *{         <input type="text" name="user.userIp" id="userIp" value="${user?.userIp}" placeholder="IP" required>
-            <input type="text" name="user.userMac" id="userMac" value="${user?.userMac}" placeholder="MAC" required>}*
+   			*{   	
+   			<input type="text" name="user.userIp" id="userIp" value="${user?.userIp}" placeholder="IP" required>
+            <input type="text" name="user.userMac" id="userMac" value="${user?.userMac}" placeholder="MAC" required>
+            }*
         </div>
         <div class="btm_b clearfix">
-            <button class="btn btn-inverse pull-right" type="submit">Sign In</button>
+            <button class="btn btn-inverse pull-right" type="submit">&{'login.form.signIn'}</button>
             <!--  <span class="link_reg"><a href="#reg_form">Not registered? Sign up here</a></span> -->
         </div>
     </form>
 
-
     <div class="links_b links_btm clearfix">
-        <span class="linkform"><a href="#pass_form"></a></span>
-        <span class="linkform" style="display:none">Never mind, <a href="#login_form">send me back to the sign-in screen</a></span>
+        <span class="linkform">&{'global.lang'}: </span>
+        <span class="linkform">
+        	<a href="@{Auth.index()}?lang=en">English</a>
+        	<a href="@{Auth.index()}?lang=zh">中文</a>
+        </span>
     </div>
 </div>
 
@@ -69,8 +72,6 @@
         });
 
         //* validation
-
-
         var options = {
             success: showResponse,
             url :'@{Auth.login()}',
@@ -80,11 +81,10 @@
 
         function showResponse(responseText, statusText, xhr, $form) {
         	location.href="/home";
-
         }
+        
         function errorHandler(context, xhr, status, responseText) {
-            var errorText = 'Wrong username/password';
-
+            var errorText = "&{'login.form.error.login'}";
             $('#loginAlert').hide().fadeIn(400).removeClass('alert-info').addClass('alert-error').text(errorText);
         }
     });

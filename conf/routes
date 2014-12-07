@@ -58,6 +58,7 @@ GET     /lib/                                	staticDir:public/lib
 GET     /img/                                	staticDir:public/img
 GET     /versions/                              staticDir:public/versions
 GET     /upload/                              	staticDir:public/upload
+GET     /locales/                              	staticDir:public/locales
 
 GET    /masterItem/search             			MasterItem.search
 PUT    /masterItem/{id}             			MasterItem.update
