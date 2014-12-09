@@ -69,6 +69,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 				}
 			}
 		}
+		expList.orderBy("position asc");
 
 		PagingList<ReportTransactionDetail> pagingList = expList.findPagingList(pagination.pageSize);
 		pagingList.setFetchAhead(false);
