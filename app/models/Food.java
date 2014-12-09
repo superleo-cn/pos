@@ -120,12 +120,12 @@ public class Food implements Comparable {
 		return pagination;
 	}
 
-	public static Pagination searchDistinct2(String queryName, Pagination pagination) {
+	public static Pagination searchDistinct2(String shopId, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
 		ExpressionList expList = Ebean.find(Food.class).where();
-		if (StringUtils.isNotEmpty(queryName)) {
-			queryName = StringUtils.trimToNull(queryName);
-			expList.where().ilike("name", "%" + queryName + "%");
+		if (StringUtils.isNotEmpty(shopId)) {
+			shopId = StringUtils.trimToNull(shopId);
+			expList.where().ilike("shop.id",shopId);
 		}
 		List<Food> list = expList.order("name").findList();
 		Set<String> set = new TreeSet<String>();

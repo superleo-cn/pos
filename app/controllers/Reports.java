@@ -50,14 +50,24 @@ public class Reports extends Basic {
 		Pagination pagination = new Pagination();
 		pagination.currentPage = 0;
 		pagination.pageSize = 100;
-		renderJSON(Shop.search(null, pagination));
+		String shopName = null;
+		String type = session.get(Constants.CURRENT_USERTYPE);
+		if(!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)){
+			shopName = session.get(Constants.CURRENT_SHOPNAME);	
+		}
+		renderJSON(Shop.search(shopName, pagination));
 	}
 
 	public static void items() {
 		Pagination pagination = new Pagination();
 		pagination.currentPage = 0;
 		pagination.pageSize = 100;
-		renderJSON(Food.searchDistinct2(null, pagination));
+		String shopId = null;
+		String type = session.get(Constants.CURRENT_USERTYPE);
+		if(!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)){
+			shopId = session.get(Constants.CURRENT_SHOPID);	
+		}
+		renderJSON(Food.searchDistinct2(shopId, pagination));
 	}
 
 	public static void cashiers() {
