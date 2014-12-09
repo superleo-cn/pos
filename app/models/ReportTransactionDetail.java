@@ -37,6 +37,7 @@ public class ReportTransactionDetail {
 
 	public Double retailPrice, costPrice, totalCostPrice, totalDiscount, totalRetailPrice, totalPackage;
 	public Long quantity;
+	public Integer position;
 	public String freeOfCharge;
 
 	/* the following are service methods */
@@ -66,6 +67,7 @@ public class ReportTransactionDetail {
 				}
 			}
 		}
+		expList.orderBy("position asc");
 		List<ReportTransactionDetail> list = new ArrayList<ReportTransactionDetail>();
 		if (!pagination.all) {
 			PagingList<ReportTransactionDetail> pagingList = expList.findPagingList(pagination.pageSize);
