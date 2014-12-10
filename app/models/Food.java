@@ -58,6 +58,8 @@ public class Food implements Comparable {
 	public Float retailPrice;
 
 	public String picture;
+	
+	public String packageable;
 
 	@Transient
 	public String getPictureUrl() {
@@ -155,7 +157,7 @@ public class Food implements Comparable {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag").fetch("category", "id").where()
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag, packageable").fetch("category", "id").where()
 					.eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
