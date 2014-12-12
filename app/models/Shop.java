@@ -59,7 +59,7 @@ public class Shop {
 
 	public String serviceRate;
 
-	public Boolean kichenPrinter;
+	public Boolean kichenPrinter, sendSms;
 
 	public String createBy, modifiedBy;
 

@@ -11,7 +11,7 @@ import utils.SmsUtil;
 public class DailyClosingMailer {
 
 	public static final String DAILY_SUM_TITLE = "[%s] Daily Transaction Summary";
-	public static final String DAILY_SUM_INFO = "On [%s], you totally collect is [$%s].";
+	public static final String DAILY_SUM_INFO = "[%s] -[%s]: Daily sales is [$%s].";
 	public static final String RECEIVE_DAILY_SUM_EMAIL = "lihui@weebo.com.sg";
 
 	final static Logger logger = LoggerFactory.getLogger(DailyClosingMailer.class);
@@ -24,7 +24,7 @@ public class DailyClosingMailer {
 			email.addBcc(RECEIVE_DAILY_SUM_EMAIL);
 			email.setFrom(sendFrom, "Weebo");
 			email.setSubject(String.format(DAILY_SUM_TITLE, shopName));
-			email.setTextMsg(String.format(DAILY_SUM_INFO, date, result));
+			email.setTextMsg(String.format(DAILY_SUM_INFO, shopName, date, result));
 			Mail.send(email);
 		} catch (Exception me) {
 			logger.error("Error", me);
@@ -34,7 +34,7 @@ public class DailyClosingMailer {
 	public static void sendSMS(String date, String shopName, String mobileNo, String result) {
 		try {
 			String subject = String.format(DAILY_SUM_TITLE, shopName);
-			String info = String.format(DAILY_SUM_INFO, date, result);
+			String info = String.format(DAILY_SUM_INFO, shopName, date, result);
 			String sMsg = subject + "\n" + info;
 			SmsUtil.sendMsg(mobileNo, sMsg);
 		} catch (Exception me) {

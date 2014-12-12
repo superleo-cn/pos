@@ -49,7 +49,9 @@ public class DailyClosing extends Job {
 				if (list != null && list.size() > 0) {
 					ReportMoney money = list.get(0);
 					DailyClosingMailer.send(date, s.name, s.email, df.format(money.value));
-					DailyClosingMailer.sendSMS(date, s.name, s.contact, df.format(money.value));
+					if(s.sendSms != null && s.sendSms){
+						DailyClosingMailer.sendSMS(date, s.name, s.contact, df.format(money.value));
+					}
 				}
 			}
 		}
