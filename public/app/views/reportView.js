@@ -238,7 +238,10 @@ define([
             	 var outlet = that.$el.find('#outlet').val();
                  var type = that.$el.find('#type').val();
                  var date = that.$el.find('#date').val();
-                
+                 if(date == null || date == ""){
+                	 that.$el.find('#date').val(moment().format('YYYY-MM-DD'));
+                 }
+                 
                  reportQuantity(outlet, type, date);
                  pieChartMoney(outlet, type, date);
                  lineChartQuantity(outlet, type, date);
@@ -257,12 +260,12 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [5 ]
+                            "aTargets": [4 ]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
-                        { "mData": "itemCategory",  "bSortable": false  },
+                        //{ "mData": "itemCategory",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },
