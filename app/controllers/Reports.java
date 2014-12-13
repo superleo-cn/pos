@@ -299,20 +299,20 @@ public class Reports extends Basic {
 		}
 		searchs.put("food", food);
 
-		String outlet = request.params.get("sSearch_2");
+		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
 			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
-		String dateFrom = request.params.get("sSearch_3");
+		String dateFrom = request.params.get("sSearch_2");
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
 			dateFrom = sdf.format(today) + " 00:00:00";
 		}
 		searchs.put("dateFrom", dateFrom);
-		String dateTo = request.params.get("sSearch_4");
+		String dateTo = request.params.get("sSearch_3");
 		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
 			dateTo = sdf.format(today) + " 23:59:59";
 		}
