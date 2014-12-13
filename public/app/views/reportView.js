@@ -32,9 +32,9 @@ define([
         },
         clearReport:function() {
             that.$el.find('#item').val('');
-            that.$el.find('#outlet').val('ALL');
-            that.$el.find('#cashier').val('ALL');
-            that.$el.find('#user').val('ALL');
+            that.$el.find('#outlet').val('--Please Select--');
+            that.$el.find('#cashier').val('--Please Select--');
+            that.$el.find('#user').val('--Please Select--');
             that.$el.find('#dateFrom').val('');
             that.$el.find('#timeFrom').val('');
             that.$el.find('#dateTo').val('');
@@ -415,7 +415,7 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/items',function(response){
-                    response.recordList.unshift({id:'ALL',name:'ALL'});
+                    response.recordList.unshift({id:'--Please Select--',name:'--Please Select--'});
 
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.name,name:obj.name};
@@ -434,7 +434,7 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/shops',function(response){
-                    response.recordList.unshift({id:'ALL',name:'ALL'});
+                    response.recordList.unshift({id:'--Please Select--',name:'--Please Select--'});
 
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.name,name:obj.name};
@@ -453,7 +453,7 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/cashiers',function(response){
-                    response.recordList.unshift({id:'ALL',realname:'ALL'});
+                    response.recordList.unshift({id:'--Please Select--',realname:'--Please Select--'});
 
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.realname,name:obj.realname};
@@ -472,7 +472,7 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/users',function(response){
-                    response.recordList.unshift({id:'ALL',realname:'ALL'});
+                    response.recordList.unshift({id:'--Please Select--',realname:'--Please Select--'});
 
                     var record = $.map(response.recordList, function(obj){
                         return {id:obj.realname,name:obj.realname};
