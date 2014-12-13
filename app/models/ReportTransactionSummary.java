@@ -79,10 +79,10 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 			for (ReportTransactionDetail report : tmpList) {
 				if (pagination.zh) {
 					report.item = report.foodNameZh;
-					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>","");
+					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>", "");
 				} else {
 					report.item = report.foodName;
-					report.itemCategory = report.categoryName.replaceAll("\\<.*?>","");
+					report.itemCategory = report.categoryName.replaceAll("\\<.*?>", "");
 				}
 			}
 
@@ -151,40 +151,20 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 	}
 
 	public static Pagination search(Map search, Shop shop) {
-		String sql = 
-					"select id, shop_name, quantity, retail_price, gst, sc, total_price from (" +
-					"SELECT id, " +
-					    "shop_name, " +
-					   " quantity,  " +
-					   " retail_price, " +
-					   " gst, " +
-					   " sc, " +
-					   " retail_price+gst+sc AS total_price " +
-					"FROM " +
-					   " ( " +
-					   "     SELECT id, " +
-					    "        shop_name, " +
-					    "        SUM(quantity)                  AS quantity, " +
-					    "        SUM(total_retail_price)        AS retail_price, " +
-					    "        SUM(total_retail_price) * " + (Integer.parseInt(shop.gstRate) / 100.0) + " AS gst, " +
-					    "        SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc " +
-					    "    FROM " +
-					    "        report_transaction_detail " +
-					    "    WHERE " +
-					    "        order_date >= :dateFrom and order_date <= :dateTo " +
-					"        GROUP BY " +
-					"            shop_name ) b" + 
-					")a";
+		String sql = "select id, shop_name, quantity, retail_price, gst, sc, total_price from (" + "SELECT id, " + "shop_name, " + " quantity,  " + " retail_price, " + " gst, "
+				+ " sc, " + " retail_price+gst+sc AS total_price " + "FROM " + " ( " + "     SELECT id, " + "        shop_name, "
+				+ "        SUM(quantity)                  AS quantity, " + "        SUM(total_retail_price)        AS retail_price, " + "        SUM(total_retail_price) * "
+				+ (Integer.parseInt(shop.gstRate) / 100.0) + " AS gst, " + "        SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc "
+				+ "    FROM " + "        report_transaction_detail " + "    WHERE " + "        order_date >= :dateFrom and order_date <= :dateTo " + "        GROUP BY "
+				+ "            shop_name ) b" + ")a";
 
 		RawSql rawSql = RawSqlBuilder.parse(sql)
 				// map resultSet columns to bean properties
-				.columnMapping("id", "id").columnMapping("shop_name", "shopName").columnMapping("quantity", "totalQuantity").columnMapping("gst", "gst")
-				.columnMapping("sc", "sc").columnMapping("retail_price", "retailPrice").columnMapping("total_price", "totalPrice").create();
+				.columnMapping("id", "id").columnMapping("shop_name", "shopName").columnMapping("quantity", "totalQuantity").columnMapping("gst", "gst").columnMapping("sc", "sc")
+				.columnMapping("retail_price", "retailPrice").columnMapping("total_price", "totalPrice").create();
 
 		Query<ReportTransactionSummary> query = Ebean.find(ReportTransactionSummary.class);
 		query.setRawSql(rawSql);
-		
-
 
 		if (search.keySet() != null) {
 			Iterator searchKeys = search.keySet().iterator();
@@ -205,9 +185,9 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 			}
 		}
 
-		List <ReportTransactionSummary> list = query.findList();
+		List<ReportTransactionSummary> list = query.findList();
 		Pagination pagination = new Pagination();
-		if(list != null && list.size() > 0){
+		if (list != null && list.size() > 0) {
 			ReportTransactionSummary obj = list.get(0);
 			obj.no = 1L;
 			pagination.recordList = list;
@@ -243,6 +223,38 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 
 	public Double getTotalPrice() {
 		return totalPrice;
+	}
+
+	public Double getGst() {
+		return gst;
+	}
+
+	public void setGst(Double gst) {
+		this.gst = gst;
+	}
+
+	public Double getSc() {
+		return sc;
+	}
+
+	public void setSc(Double sc) {
+		this.sc = sc;
+	}
+
+	public Double getRetailPrice() {
+		return retailPrice;
+	}
+
+	public void setRetailPrice(Double retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+
+	public void setTotalQuantity(Long totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	@Override
