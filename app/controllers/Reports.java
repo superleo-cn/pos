@@ -399,7 +399,7 @@ public class Reports extends Basic {
 		pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
 		Map searchs = new HashMap();
 		String cashier = request.params.get("sSearch_0");
-		if (StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier) || "ALL".equalsIgnoreCase(cashier)) {
+		if (StringUtils.isEmpty(cashier) || "undefined".equalsIgnoreCase(cashier) || "ALL".equalsIgnoreCase(cashier) || "--Please Select--".equalsIgnoreCase(cashier)) {
 			cashier = "%";
 		}
 
