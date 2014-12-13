@@ -750,6 +750,62 @@ public class Reports extends Basic {
 			logger.error("Error", e);
 		}
 	}
+	
+	public static void exportSummary() throws IOException {
+
+		InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/Summary.jasper");
+		
+		Pagination pagination = new Pagination();
+		pagination.all = true;
+		pagination.currentPage = 1;
+		Shop shop = null;
+		Map searchs = new HashMap();
+		if (session.get("reportTransactionSearchs") != null)
+			searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
+		else {
+			
+			String outlet = request.params.get("sSearch_1");
+			if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
+				outlet = "%";
+			}
+
+			if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
+				outlet = session.get("shopName");
+			}
+
+			searchs.put("shopName", outlet);
+			String dateFrom = request.params.get("sSearch_2");
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
+				dateFrom = sdf.format(today) + " 00:00:00";
+			}
+			searchs.put("dateFrom", dateFrom);
+			String dateTo = request.params.get("sSearch_3");
+			if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
+				dateTo = sdf.format(today) + " 23:59:59";
+			}
+			searchs.put("dateTo", dateTo);
+			session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
+
+		}
+
+		shop = Shop.findByName((String)searchs.get("shopName"));
+		if(shop != null){
+			pagination = ReportTransactionSummary.search(searchs, shop);
+		}
+
+		JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+		JasperPrint print = null;
+		try {
+			Map parameters = new HashMap();
+			parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+			print = JasperFillManager.fillReport(is, parameters, dataSource);
+			exportXls(print, "TransactionSummary.xls");
+		} catch (JRException e) {
+			logger.error("Error", e);
+		}
+	}
 
 	private static void exportXls(JasperPrint print, String fileName) throws JRException {
 

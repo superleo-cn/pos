@@ -19,6 +19,7 @@ define([
             "click #searchReport"   : "searchReport",
             "click #exportTransactionDetail" :"exportTransactionDetail",
             "click #exportTransactionSummary" :"exportTransactionSummary",
+            "click #exportSummary" :"exportSummary",
             "click #exportLoginAudit" :"exportLoginAudit",
 
             "click #exportExpenses" :"exportExpenses",
@@ -51,6 +52,9 @@ define([
         },
         exportTransactionSummary:function() {
             window.open("/reports/exportTransactionSummary?_dc"+new Date());
+        },
+        exportSummary:function() {
+            window.open("/reports/exportSummary?_dc"+new Date());
         },
         exportCashierClosing:function() {
             window.open("/reports/exportCashierClosing?_dc"+new Date());
