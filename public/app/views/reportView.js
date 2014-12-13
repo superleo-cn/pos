@@ -509,7 +509,7 @@ function reportQuantity(outlet, type, date){
          	        dataSource: {
          	            chart: {
          	            	"numberPrefix": "",
-         	                "caption": "Sale Quantity Report",
+         	                "caption": "Sales Quantity Report",
          	                "subCaption": "",
          	                "bgcolor": "FFFFFF",
          	                "showvalues": "1",
@@ -568,7 +568,7 @@ function pieChartMoney(outlet, type, date){
         	        dataSource: {
         	            chart: {
         	            	"numberPrefix": "S$",		
-        	                "caption": "Sale Money Report",
+        	                "caption": "Sales Money Report",
         	                "subCaption": "",
         	                "bgcolor": "FFFFFF",
         	                "showvalues": "1",
@@ -629,7 +629,7 @@ function lineChartQuantity(outlet, type, date){
        	             "numberPrefix": "",
        	             "compactdatamode": "1",
        	             "dataseparator": "|",
-       	             "caption": "Sale Quantity Report",
+       	             "caption": "Sales Quantity Report",
        	             "subcaption": "",
        	             "axis": "linear",
        	             "numberprefix": "",

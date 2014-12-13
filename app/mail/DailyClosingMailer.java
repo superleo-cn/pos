@@ -1,5 +1,6 @@
 package mail;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,12 @@ public class DailyClosingMailer {
 			String subject = String.format(DAILY_SUM_TITLE, shopName);
 			String info = String.format(DAILY_SUM_INFO, shopName, date, result);
 			String sMsg = subject + "\n" + info;
-			SmsUtil.sendMsg(mobileNo, sMsg);
+			if (StringUtils.isNotEmpty(mobileNo)) {
+				String[] arr = mobileNo.split(",");
+				for (String mobile : arr) {
+					SmsUtil.sendMsg(mobile, sMsg);
+				}
+			}
 		} catch (Exception me) {
 			logger.error("Error", me);
 		}
