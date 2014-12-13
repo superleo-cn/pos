@@ -517,7 +517,7 @@ function reportQuantity(outlet, type, date){
          	        dataSource: {
          	            chart: {
          	            	"numberPrefix": "",
-         	                "caption": "Sales Quantity Report",
+         	                "caption": "Quantity Report",
          	                "subCaption": "",
          	                "bgcolor": "FFFFFF",
          	                "showvalues": "1",
@@ -536,7 +536,7 @@ function reportQuantity(outlet, type, date){
          	                "legendshadow": "0",
          	                "legendnumcolumns": "3",
          	                "showBorder": "0",
-         	                "pieRadius": "120",
+         	                "pieRadius": "90",
          	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
          	            },
          	            data:datas
@@ -576,7 +576,7 @@ function pieChartMoney(outlet, type, date){
         	        dataSource: {
         	            chart: {
         	            	"numberPrefix": "S$",		
-        	                "caption": "Sales Money Report",
+        	                "caption": "Sales Report",
         	                "subCaption": "",
         	                "bgcolor": "FFFFFF",
         	                "showvalues": "1",
@@ -595,7 +595,7 @@ function pieChartMoney(outlet, type, date){
         	                "legendshadow": "0",
         	                "legendnumcolumns": "3",
         	                "showBorder": "0",
-        	                "pieRadius": "120",
+        	                "pieRadius": "90",
         	                "palettecolors": "#f8bd19,#e44a00,#008ee4,#33bdda,#6baa01,#583e78"
         	            },
         	            data:datas
@@ -637,7 +637,7 @@ function lineChartQuantity(outlet, type, date){
        	             "numberPrefix": "",
        	             "compactdatamode": "1",
        	             "dataseparator": "|",
-       	             "caption": "Sales Quantity Report",
+       	             "caption": "Quantity Report",
        	             "subcaption": "",
        	             "axis": "linear",
        	             "numberprefix": "",
@@ -713,7 +713,7 @@ function lineChartMoney(outlet, type, date){
        	             "numberPrefix": "S$",		
        	             "compactdatamode": "1",
        	             "dataseparator": "|",
-       	             "caption": "Sale Money Report",
+       	             "caption": "Sales Report",
        	             "subcaption": "",
        	             "axis": "linear",
        	             "numberprefix": "$",
