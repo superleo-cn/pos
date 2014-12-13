@@ -265,7 +265,7 @@ public class Reports extends Basic {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("shopName");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
@@ -301,7 +301,7 @@ public class Reports extends Basic {
 
 		String outlet = request.params.get("sSearch_2");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
@@ -327,7 +327,7 @@ public class Reports extends Basic {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
@@ -366,7 +366,7 @@ public class Reports extends Basic {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
@@ -406,7 +406,7 @@ public class Reports extends Basic {
 		searchs.put("user.realname", cashier);
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shop.name", outlet);
@@ -445,7 +445,7 @@ public class Reports extends Basic {
 
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopName");
+			outlet = session.get("shopname");
 		}
 
 		searchs.put("shopName", outlet);
@@ -481,7 +481,7 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -515,7 +515,7 @@ public class Reports extends Basic {
 		} else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -549,7 +549,7 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -582,7 +582,7 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("user.realname", cashier);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shop.name", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -613,7 +613,7 @@ public class Reports extends Basic {
 		if (session.get("reportPlSearch") != null)
 			searchs = new ObjectMapper().readValue(session.get("reportPlSearch"), Map.class);
 		else {
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -647,7 +647,7 @@ public class Reports extends Basic {
 		else {
 			String food = "%";
 			searchs.put("food", food);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -684,7 +684,7 @@ public class Reports extends Basic {
 		else {
 			String food = "%";
 			searchs.put("food", food);
-			String outlet = session.get("shopName");
+			String outlet = session.get("shopname");
 			searchs.put("shopName", outlet);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateFrom = sdf.format(new Date());
@@ -721,7 +721,7 @@ public class Reports extends Basic {
 			
 			String outlet = request.params.get("sSearch_1");
 			if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-				outlet = session.get("shopName");
+				outlet = session.get("shopname");
 			}
 
 			searchs.put("shopName", outlet);
