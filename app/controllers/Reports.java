@@ -264,11 +264,7 @@ public class Reports extends Basic {
 	public static Map getChartsParams() throws IOException {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("shopName");
-		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
+		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
 			outlet = session.get("shopName");
 		}
 
@@ -305,10 +301,6 @@ public class Reports extends Basic {
 
 		String outlet = request.params.get("sSearch_2");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 			outlet = session.get("shopName");
 		}
 
@@ -335,10 +327,6 @@ public class Reports extends Basic {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 			outlet = session.get("shopName");
 		}
 
@@ -378,12 +366,9 @@ public class Reports extends Basic {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 			outlet = session.get("shopName");
 		}
+
 		searchs.put("shopName", outlet);
 
 		String dateFrom = request.params.get("sSearch_2");
@@ -421,12 +406,9 @@ public class Reports extends Basic {
 		searchs.put("user.realname", cashier);
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 			outlet = session.get("shopName");
 		}
+
 		searchs.put("shop.name", outlet);
 
 		String dateFrom = request.params.get("sSearch_2");
@@ -463,12 +445,9 @@ public class Reports extends Basic {
 
 		String outlet = request.params.get("sSearch_1");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-			outlet = "%";
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 			outlet = session.get("shopName");
 		}
+
 		searchs.put("shopName", outlet);
 
 		String dateFrom = request.params.get("sSearch_2");
@@ -502,16 +481,12 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
 			String dateTo = "2222-01-01";
 			searchs.put("dateTo", dateTo);
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportCashierClosing.search((Map) searchs, pagination);
@@ -540,16 +515,12 @@ public class Reports extends Basic {
 		} else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
 			String dateTo = "2222-01-01";
 			searchs.put("dateTo", dateTo);
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportExpensesDetails.search((Map) searchs, pagination);
@@ -578,16 +549,12 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("realName", cashier);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
 			String dateTo = "2222-01-01";
 			searchs.put("dateTo", dateTo);
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportCollectionDetails.search((Map) searchs, pagination);
@@ -615,7 +582,7 @@ public class Reports extends Basic {
 		else {
 			String cashier = "%";
 			searchs.put("user.realname", cashier);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shop.name", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
@@ -646,16 +613,12 @@ public class Reports extends Basic {
 		if (session.get("reportPlSearch") != null)
 			searchs = new ObjectMapper().readValue(session.get("reportPlSearch"), Map.class);
 		else {
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 			String dateFrom = "2000-01-01";
 			searchs.put("dateFrom", dateFrom);
 			String dateTo = "2222-01-01";
 			searchs.put("dateTo", dateTo);
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportPL.search((Map) searchs, pagination);
@@ -684,7 +647,7 @@ public class Reports extends Basic {
 		else {
 			String food = "%";
 			searchs.put("food", food);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -692,10 +655,6 @@ public class Reports extends Basic {
 			searchs.put("dateFrom", dateFrom + " 00:00:00");
 			String dateTo = sdf.format(new Date());
 			searchs.put("dateTo", dateTo + " 23:59:59");
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportTransactionDetail.search((Map) searchs, pagination);
@@ -725,17 +684,13 @@ public class Reports extends Basic {
 		else {
 			String food = "%";
 			searchs.put("food", food);
-			String outlet = "%";
+			String outlet = session.get("shopName");
 			searchs.put("shopName", outlet);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateFrom = sdf.format(new Date());
 			searchs.put("dateFrom", dateFrom + " 00:00:00");
 			String dateTo = sdf.format(new Date());
 			searchs.put("dateTo", dateTo + " 23:59:59");
-		}
-
-		if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
-			searchs.put("shopName", session.get("shopName"));
 		}
 
 		pagination = ReportTransactionSummary.search(searchs, pagination);
@@ -766,10 +721,6 @@ public class Reports extends Basic {
 			
 			String outlet = request.params.get("sSearch_1");
 			if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-				outlet = "%";
-			}
-
-			if (session.get(Constants.CURRENT_USERTYPE).equals(Constants.USERTYPE_OPERATOR)) {
 				outlet = session.get("shopName");
 			}
 
