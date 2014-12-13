@@ -30,10 +30,10 @@ public class ReportTransactionDetail {
 	@Transient
 	public Long no;
 	public Date createDate, orderDate;
-	public String foodName, foodNameZh, shopName;
+	public String categoryName, categoryNameZh, foodName, foodNameZh, shopName;
 
 	@Transient
-	public String item;
+	public String item, itemCategory;
 
 	public Double retailPrice, costPrice, totalCostPrice, totalDiscount, totalRetailPrice, totalPackage;
 	public Long quantity;
@@ -67,7 +67,6 @@ public class ReportTransactionDetail {
 				}
 			}
 		}
-		expList.orderBy("position asc");
 		List<ReportTransactionDetail> list = new ArrayList<ReportTransactionDetail>();
 		if (!pagination.all) {
 			PagingList<ReportTransactionDetail> pagingList = expList.findPagingList(pagination.pageSize);
@@ -90,8 +89,10 @@ public class ReportTransactionDetail {
 				report.no = no;
 				if (pagination.zh) {
 					report.item = report.foodNameZh;
+					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>","");
 				} else {
 					report.item = report.foodName;
+					report.itemCategory = report.categoryName.replaceAll("\\<.*?>","");
 				}
 				no++;
 			}

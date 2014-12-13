@@ -253,11 +253,12 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [4 ]
+                            "aTargets": [5 ]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
+                        { "mData": "itemCategory",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },

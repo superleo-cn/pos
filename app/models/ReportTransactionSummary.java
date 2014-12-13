@@ -35,7 +35,7 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 	public Long no;
 
 	@Transient
-	public String id, item;
+	public String id, item, itemCategory;
 	public String foodName, foodNameZh;
 	public String shopName;
 	public Long totalQuantity;
@@ -80,8 +80,10 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 			for (ReportTransactionDetail report : tmpList) {
 				if (pagination.zh) {
 					report.item = report.foodNameZh;
+					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>","");
 				} else {
 					report.item = report.foodName;
+					report.itemCategory = report.categoryName.replaceAll("\\<.*?>","");
 				}
 			}
 
@@ -89,11 +91,13 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 			for (ReportTransactionDetail report : tmpList) {
 				String shop = report.shopName;
 				String item = report.item;
+				String itemCategory = report.itemCategory;
 				ReportTransactionSummary reportTransactionSummary = summaryMap.get(shop + item);
 				if (summaryMap.get(shop + item) == null) {
 					reportTransactionSummary = new ReportTransactionSummary();
 					reportTransactionSummary.shopName = shop;
 					reportTransactionSummary.item = item;
+					reportTransactionSummary.itemCategory = itemCategory;
 					if (report.quantity == null) {
 						report.quantity = 0l;
 					}

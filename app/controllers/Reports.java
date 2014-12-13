@@ -303,7 +303,7 @@ public class Reports extends Basic {
 		}
 		searchs.put("food", food);
 
-		String outlet = request.params.get("sSearch_1");
+		String outlet = request.params.get("sSearch_2");
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
 			outlet = "%";
 		}
@@ -313,14 +313,14 @@ public class Reports extends Basic {
 		}
 
 		searchs.put("shopName", outlet);
-		String dateFrom = request.params.get("sSearch_2");
+		String dateFrom = request.params.get("sSearch_3");
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
 			dateFrom = sdf.format(today) + " 00:00:00";
 		}
 		searchs.put("dateFrom", dateFrom);
-		String dateTo = request.params.get("sSearch_3");
+		String dateTo = request.params.get("sSearch_4");
 		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
 			dateTo = sdf.format(today) + " 23:59:59";
 		}
