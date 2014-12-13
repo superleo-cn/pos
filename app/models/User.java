@@ -75,7 +75,7 @@ public class User {
 	// STATUS: LOCKED (Please don't change)
 	public static User loginJson(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id, code, name").where().eq("username", user.username)
-				.eq("shop.id", user.shop.id).eq("status", true).ne("usertype", Constants.USERTYPE_ADMIN).findList();
+				.eq("shop.id", user.shop.id).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}

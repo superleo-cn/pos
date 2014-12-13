@@ -12,7 +12,9 @@
 <%
  }
  %>
-
+ <%
+	if(_.contains(akses,'SUPERADMIN')) {
+%>
     <div class="accordion-group">
         <div class="accordion-heading">
             <a href="#collapseMaster" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle collapsed">
@@ -28,6 +30,10 @@
             </div>
         </div>
     </div>
+    <%
+	 }
+	 %>
+    
 <div class="accordion-group">
     <div class="accordion-heading">
         <a href="#collapseTwo" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle collapsed">
