@@ -405,7 +405,7 @@ public class Reports extends Basic {
 
 		searchs.put("user.realname", cashier);
 		String outlet = request.params.get("sSearch_1");
-		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
+		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
 			outlet = session.get("shopname");
 		}
 
