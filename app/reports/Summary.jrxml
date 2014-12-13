@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2014-12-13T23:19:04 -->
+<!-- 2014-12-14T00:36:46 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionSummary" pageWidth="725" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="725" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4746e223-0a05-4add-92d0-e48fc8727bb3">
 	<property name="ireport.zoom" value="1.0000000000000016"/>
 	<property name="ireport.x" value="0"/>
@@ -96,11 +96,11 @@
 				<reportElement x="170" y="0" width="93" height="20" uuid="aed3483e-4af8-41d0-a8ff-0ca9774a43ea"/>
 				<textFieldExpression><![CDATA[$F{totalQuantity}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="263" y="0" width="130" height="20" uuid="f8f10b41-25d0-4281-9dc9-a561819bdcb4"/>
 				<textFieldExpression><![CDATA[$F{retailPrice}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="393" y="0" width="100" height="20" uuid="afef732a-d284-43a0-8fdc-521299f91fe5"/>
 				<textFieldExpression><![CDATA[$F{gst}]]></textFieldExpression>
 			</textField>
