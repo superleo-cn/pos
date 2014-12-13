@@ -294,7 +294,7 @@ public class Reports extends Basic {
 		pagination.pageSize = Integer.parseInt(request.params.get("iDisplayLength"));
 		Map searchs = new HashMap();
 		String food = request.params.get("sSearch_0");
-		if (StringUtils.isEmpty(food) || "undefined".equalsIgnoreCase(food) || "ALL".equalsIgnoreCase(food)) {
+		if (StringUtils.isEmpty(food) || "undefined".equalsIgnoreCase(food) || "ALL".equalsIgnoreCase(food) || "--Please Select--".equalsIgnoreCase(food)) {
 			food = "%";
 		}
 		searchs.put("food", food);
