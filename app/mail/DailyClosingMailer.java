@@ -13,6 +13,7 @@ public class DailyClosingMailer {
 
 	public static final String DAILY_SUM_TITLE = "[%s] Daily Transaction Summary";
 	public static final String DAILY_SUM_INFO = "[%s] -[%s]: Daily sales is [$%s].";
+	public static final String DAILY_SMS_SUM_INFO = "[%s][%s]: Daily Sales Summary - [$%s].";
 	public static final String RECEIVE_DAILY_SUM_EMAIL = "lihui@weebo.com.sg";
 
 	final static Logger logger = LoggerFactory.getLogger(DailyClosingMailer.class);
@@ -34,9 +35,7 @@ public class DailyClosingMailer {
 
 	public static void sendSMS(String date, String shopName, String mobileNo, String result) {
 		try {
-			String subject = String.format(DAILY_SUM_TITLE, shopName);
-			String info = String.format(DAILY_SUM_INFO, shopName, date, result);
-			String sMsg = subject + "\n" + info;
+			String sMsg = String.format(DAILY_SMS_SUM_INFO, shopName, date, result);
 			if (StringUtils.isNotEmpty(mobileNo)) {
 				String[] arr = mobileNo.split(",");
 				for (String mobile : arr) {
