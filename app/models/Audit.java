@@ -21,10 +21,12 @@ import org.slf4j.LoggerFactory;
 import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 import com.avaje.ebean.Query;
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tb_audit")
@@ -32,9 +34,11 @@ public class Audit {
 
 	final static Logger logger = LoggerFactory.getLogger(Audit.class);
 
+	@Expose
 	@Id
 	public Long id;
 
+	@Expose
 	@Transient
 	public Long no;
 
@@ -46,17 +50,22 @@ public class Audit {
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
 
+	@Expose
 	public String createBy, modifiedBy;
 
+	@Expose
 	public String action;
 
+	@Expose
 	public Date createDate, modifiedDate;
 
+	@Expose
 	public Date actionDate;
 
 	@Transient
 	public Long androidId;
 
+	@Expose
 	@Transient
 	public String shopName, realName;
 
@@ -132,7 +141,14 @@ public class Audit {
 			Iterator searchKeys = search.keySet().iterator();
 			while (searchKeys.hasNext()) {
 				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
+				Object obj = search.get(key);
+				String value = null;
+				List<String> values = null;
+				if (obj instanceof String) {
+					value = (String) obj;
+				} else {
+					values = (List<String>) obj;
+				}
 
 				logger.info("Key " + key + " Value " + value);
 				if (StringUtils.isEmpty(value)) {
@@ -143,11 +159,14 @@ public class Audit {
 					expList.where().ge("createDate", value + " 00:00:00");
 				} else if (key.equalsIgnoreCase("dateTo")) {
 					expList.where().le("createDate", value + " 23:59:59");
+				} else if (key.equalsIgnoreCase("shopName")) {
+					query.where().in("shopName", values);
 				} else {
 					expList.where().ilike(key, "%" + value + "%");
 				}
 			}
 		}
+		
 		List<Audit> list = new ArrayList<Audit>();
 		if (!pagination.all) {
 			PagingList<Audit> pagingList = expList.findPagingList(pagination.pageSize);

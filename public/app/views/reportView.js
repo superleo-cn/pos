@@ -134,7 +134,7 @@ define([
                 var outlet = that.$el.find('#outlet').val();
                 var dateFrom = that.$el.find('#dateFrom').val();
                 var dateTo = that.$el.find('#dateTo').val();
-                that.oTable.fnMultiFilter({"no":user,"user.realname":outlet,"shop.name":dateFrom,"createDate":dateTo});
+                that.oTable.fnMultiFilter({"no":user,"realName":outlet,"shopName":dateFrom,"createDate":dateTo});
 
             }
             else if(page=='reportCashierClosing') {
@@ -372,8 +372,8 @@ define([
                     ],
                     "aoColumns": [
                         { "mData": "no" ,  "bSortable": false },
-                        { "mData": "user.realname",  "bSortable": false  },
-                        { "mData": "shop.name",  "bSortable": false  },
+                        { "mData": "realName",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
                         { "mData": "createDate" ,  "bSortable": false },
                         { "mData": "action" ,  "bSortable": false }
                     ],

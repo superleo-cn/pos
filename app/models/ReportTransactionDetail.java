@@ -50,16 +50,19 @@ public class ReportTransactionDetail {
 			Iterator searchKeys = search.keySet().iterator();
 			while (searchKeys.hasNext()) {
 				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
+				Object obj = search.get(key);
+				String value = null;
+				List<String> values = null;
+				if (obj instanceof String) {
+					value = (String) obj;
+				} else {
+					values = (List<String>) obj;
 				}
-
+				
 				if (key.equalsIgnoreCase("food")) {
 					expList.where().or(Expr.like("foodName", "%" + value + "%"), Expr.like("foodNameZh", "%" + value + "%"));
 				} else if (key.equalsIgnoreCase("shopName")) {
-					expList.where().ilike(key, "%" + value + "%");
+					expList.where().in("shopName", values);
 				} else if (key.equalsIgnoreCase("dateFrom")) {
 					expList.where().ge("orderDate", value);
 				} else if (key.equalsIgnoreCase("dateTo")) {

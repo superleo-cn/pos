@@ -286,11 +286,13 @@ public class Reports extends Basic {
 			outlet = session.get("shopname");
 			String userId = session.get("userid");
 			List<Shop> list = Shop.listByUserId(userId);
-			if(list != null){
-				for(Shop s : list){
+			if (list != null) {
+				for (Shop s : list) {
 					shopIds.add(s.name);
 				}
 			}
+		} else {
+			shopIds.add(outlet);
 		}
 
 		searchs.put("shopName", shopIds);
@@ -325,11 +327,9 @@ public class Reports extends Basic {
 		searchs.put("food", food);
 
 		String outlet = request.params.get("sSearch_1");
-		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopname");
-		}
+		List<String> outlets = getShops(outlet);
 
-		searchs.put("shopName", outlet);
+		searchs.put("shopName", outlets);
 		String dateFrom = request.params.get("sSearch_2");
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -351,30 +351,45 @@ public class Reports extends Basic {
 
 		Map searchs = new HashMap();
 		String outlet = request.params.get("sSearch_1");
-		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopname");
-		}
+		List<String> outlets = getShops(outlet);
 
-		searchs.put("shopName", outlet);
-		String dateFrom = request.params.get("sSearch_2");
-		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
-			dateFrom = sdf.format(today) + " 00:00:00";
-		}
-		searchs.put("dateFrom", dateFrom);
-		String dateTo = request.params.get("sSearch_3");
-		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
-			dateTo = sdf.format(today) + " 23:59:59";
-		}
-		searchs.put("dateTo", dateTo);
-
-		session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
-
-		Shop shop = Shop.findByName(outlet);
 		Pagination pagination = new Pagination();
-		if (shop != null) {
-			pagination = ReportTransactionSummary.search(searchs, shop);
+		if (outlets != null && outlets.size() > 0) {
+			for (String shopName : outlets) {
+				searchs.put("shopName", shopName);
+				String dateFrom = request.params.get("sSearch_2");
+				Date today = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
+					dateFrom = sdf.format(today) + " 00:00:00";
+				}
+				searchs.put("dateFrom", dateFrom);
+				String dateTo = request.params.get("sSearch_3");
+				if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
+					dateTo = sdf.format(today) + " 23:59:59";
+				}
+				searchs.put("dateTo", dateTo);
+				session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
+
+				Shop shop = Shop.findByName(shopName);
+				if (shop != null) {
+					Pagination myPage = ReportTransactionSummary.search(searchs, shop);
+					if(myPage.iTotalRecords == 0){
+						ReportTransactionSummary summary = new ReportTransactionSummary();
+						summary.shopName = shopName;
+						summary.gst = 0.0;
+						summary.retailPrice = 0.0;
+						summary.sc = 0.0;
+						summary.totalQuantity = 0L;
+						summary.totalPrice = 0.0;
+						summary.no = 0L;
+						pagination.recordList.add(summary);
+					}else{
+						pagination.recordList.addAll(myPage.recordList);
+					}
+					pagination.recordCount++;
+				}
+			}
 		}
 		renderJSON(pagination);
 	}
@@ -430,8 +445,18 @@ public class Reports extends Basic {
 
 		searchs.put("user.realname", cashier);
 		String outlet = request.params.get("sSearch_1");
+		List<String> shopIds = new ArrayList<>();
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
 			outlet = session.get("shopname");
+			String userId = session.get("userid");
+			List<Shop> list = Shop.listByUserId(userId);
+			if (list != null) {
+				for (Shop s : list) {
+					shopIds.add(s.name);
+				}
+			}
+		} else {
+			shopIds.add(outlet);
 		}
 
 		searchs.put("shop.name", outlet);
@@ -449,8 +474,10 @@ public class Reports extends Basic {
 		searchs.put("dateTo", dateTo);
 
 		session.put("loginAuditSearch", new ObjectMapper().writeValueAsString(searchs));
-		renderJSON(Audit.search(searchs, pagination));
-
+		
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		Audit.search(searchs, pagination);
+		renderJSON(gson.toJson(pagination));
 	}
 
 	public static void cashierClosing() throws IOException {
@@ -781,6 +808,23 @@ public class Reports extends Basic {
 		} catch (JRException e) {
 			logger.error("Error", e);
 		}
+	}
+
+	private static List<String> getShops(String outlet) {
+		List<String> shopIds = new ArrayList<>();
+		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
+			outlet = session.get("shopname");
+			String userId = session.get("userid");
+			List<Shop> list = Shop.listByUserId(userId);
+			if (list != null) {
+				for (Shop s : list) {
+					shopIds.add(s.name);
+				}
+			}
+		} else {
+			shopIds.add(outlet);
+		}
+		return shopIds;
 	}
 
 	private static void exportXls(JasperPrint print, String fileName) throws JRException {
