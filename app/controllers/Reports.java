@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -280,11 +281,19 @@ public class Reports extends Basic {
 	public static Map getChartsParams() throws IOException {
 		Map searchs = new HashMap();
 		String outlet = request.params.get("shopName");
+		List<String> shopIds = new ArrayList<>();
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
 			outlet = session.get("shopname");
+			String userId = session.get("userid");
+			List<Shop> list = Shop.listByUserId(userId);
+			if(list != null){
+				for(Shop s : list){
+					shopIds.add(s.name);
+				}
+			}
 		}
 
-		searchs.put("shopName", outlet);
+		searchs.put("shopName", shopIds);
 		String type = request.params.get("type");
 		searchs.put("type", StringUtils.defaultIfEmpty(type, null));
 		String date = request.params.get("date");
