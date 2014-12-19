@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import play.cache.Cache;
 
 import com.avaje.ebean.annotation.Transactional;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import constants.Constants;
 import constants.Messages;
@@ -55,7 +57,8 @@ public class Auth extends Basic {
 			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
 
 		}
-		renderJSON(result);
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(result));
 	}
 
 	/**
@@ -120,7 +123,8 @@ public class Auth extends Basic {
 			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e });
 
 		}
-		renderJSON(result);
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(result));
 	}
 
 	@Transactional
@@ -145,7 +149,8 @@ public class Auth extends Basic {
 			logger.error(Messages.LOGIN_ERROR_MESSAGE, new Object[] { user.username, e.getMessage() });
 
 		}
-		renderJSON(result);
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(result));
 	}
 
 	@Transactional
