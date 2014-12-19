@@ -17,6 +17,32 @@ import com.avaje.ebean.annotation.Sql;
 @Entity
 @Sql
 public class Dashboard {
+	
+	
+	private static void setQuery(Query query, String dateName, Map search){
+		if (search.keySet() != null) {
+			Iterator searchKeys = search.keySet().iterator();
+			while (searchKeys.hasNext()) {
+				String key = (String) searchKeys.next();
+				Object obj = search.get(key);
+				String value = null;
+				List<String> values = null;
+				if (obj instanceof String) {
+					value = (String) obj;
+				} else {
+					values = (List<String>) obj;
+				}
+				play.Logger.info("Value " + value);
+				if (StringUtils.isEmpty(value) && values == null) {
+					continue;
+				} else if (key.equalsIgnoreCase("shopName")) {
+					query.where().in("shopName", values);
+				} else if (key.equalsIgnoreCase("date")) {
+					query.where().eq(dateName, value);
+				}
+			}
+		}
+	}
 
 	/** daily report **/
 	public static List<ReportQuantity> dailyPieChartQuantity(Map search) {
@@ -32,21 +58,7 @@ public class Dashboard {
 		Query<ReportQuantity> query = Ebean.find(ReportQuantity.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDate", value);
-				}
-			}
-		}
+		setQuery(query, "orderDate", search);
 
 		return query.findList();
 	}
@@ -64,21 +76,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDate", value);
-				}
-			}
-		}
+		setQuery(query, "orderDate", search);
 
 		return query.findList();
 	}
@@ -96,21 +94,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDate", value);
-				}
-			}
-		}
+		setQuery(query, "orderDate", search);
 
 		return query.findList();
 	}
@@ -128,21 +112,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDate", value);
-				}
-			}
-		}
+		setQuery(query, "orderDate", search);
 
 		return query.findList();
 	}
@@ -161,21 +131,7 @@ public class Dashboard {
 		Query<ReportQuantity> query = Ebean.find(ReportQuantity.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDateStr", value);
-				}
-			}
-		}
+		setQuery(query, "orderDateStr", search);
 
 		return query.findList();
 	}
@@ -193,21 +149,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDateStr", value);
-				}
-			}
-		}
+		setQuery(query, "orderDateStr", search);
 
 		return query.findList();
 	}
@@ -225,22 +167,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value))
-					continue;
-
-				else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderMonth", value);
-				}
-			}
-		}
+		setQuery(query, "orderMonth", search);
 
 		return query.findList();
 	}
@@ -258,22 +185,8 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderMonth", value);
-				}
-			}
-		}
-
+		setQuery(query, "orderMonth", search);
+		
 		return query.findList();
 	}
 
@@ -290,21 +203,7 @@ public class Dashboard {
 		Query<ReportMoney> query = Ebean.find(ReportMoney.class);
 		query.setRawSql(rawSql);
 
-		if (search.keySet() != null) {
-			Iterator searchKeys = search.keySet().iterator();
-			while (searchKeys.hasNext()) {
-				String key = (String) searchKeys.next();
-				String value = (String) search.get(key);
-				play.Logger.info("Value " + value);
-				if (StringUtils.isEmpty(value)) {
-					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().eq("shopName", value);
-				} else if (key.equalsIgnoreCase("date")) {
-					query.where().eq("orderDate", value);
-				}
-			}
-		}
+		setQuery(query, "orderDate", search);
 
 		return query.findList();
 	}
