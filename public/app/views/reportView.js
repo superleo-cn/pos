@@ -437,9 +437,9 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/shops',function(response){
-                    response.recordList.unshift({id:'--Please Select--',name:'--Please Select--'});
+                    response.unshift({id:'--Please Select--',name:'--Please Select--'});
 
-                    var record = $.map(response.recordList, function(obj){
+                    var record = $.map(response, function(obj){
                         return {id:obj.name,name:obj.name};
                     });
                     var shopStr ='';
@@ -456,9 +456,9 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/cashiers',function(response){
-                    response.recordList.unshift({id:'--Please Select--',realname:'--Please Select--'});
+                    response.unshift({id:'--Please Select--',realname:'--Please Select--'});
 
-                    var record = $.map(response.recordList, function(obj){
+                    var record = $.map(response, function(obj){
                         return {id:obj.realname,name:obj.realname};
                     });
                     var cashierStr ='';
@@ -475,9 +475,9 @@ define([
                 var format=function format(item) { return item.name; };
 
                 $.get('/reports/users',function(response){
-                    response.recordList.unshift({id:'--Please Select--',realname:'--Please Select--'});
+                    response.unshift({id:'--Please Select--',realname:'--Please Select--'});
 
-                    var record = $.map(response.recordList, function(obj){
+                    var record = $.map(response, function(obj){
                         return {id:obj.realname,name:obj.realname};
                     });
                     var userStr ='';

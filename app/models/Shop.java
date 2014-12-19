@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -17,8 +18,10 @@ import utils.Pagination;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
+import com.avaje.ebean.FetchConfig;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tb_shop")
@@ -26,12 +29,15 @@ public class Shop {
 
 	final static Logger logger = LoggerFactory.getLogger(Shop.class);
 
+	@Expose
 	@Id
 	public Long id;
 
+	@Expose
 	@Required(message = "Shop name cannot be empty")
 	public String name;
 
+	@Expose
 	@Required(message = "Shop code cannot be empty")
 	public String code;
 
@@ -65,6 +71,11 @@ public class Shop {
 
 	public Date createDate, modifiedDate;
 
+	// @ManyToOne
+	// @JoinColumn(name = "shop_id", referencedColumnName = "id")
+	@ManyToMany(mappedBy = "shops")
+	public List<User> users;
+
 	/* the following are service methods */
 	public static Pagination search(String queryName, Pagination pagination) {
 		pagination = pagination == null ? new Pagination() : pagination;
@@ -88,15 +99,13 @@ public class Shop {
 		}
 		return null;
 	}
-	
+
 	public static Shop findByName(String shopName) {
 		if (StringUtils.isNotEmpty(shopName)) {
-			 List<Shop> list = Ebean.find(Shop.class)
-				.select("id, name, gstRegNo, gstRate, serviceRate").where()
-				.eq("name", shopName).findList();
-			 if(list != null && list.size() > 0){
-				 return list.get(0);
-			 }
+			List<Shop> list = Ebean.find(Shop.class).select("id, name, gstRegNo, gstRate, serviceRate").where().eq("name", shopName).findList();
+			if (list != null && list.size() > 0) {
+				return list.get(0);
+			}
 		}
 		return null;
 	}
@@ -110,6 +119,12 @@ public class Shop {
 	public static List<Shop> list() {
 		return Ebean.find(Shop.class)
 				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter").findList();
+	}
+
+	public static List<Shop> listByUserId(String userId) {
+		return Ebean.find(Shop.class)
+				.select("id, name, code, status, expiryDate, address, contact, website, email, weChat, openTime, gstRegNo, gstRate, serviceRate, kichenPrinter")
+				.fetch("users", new FetchConfig().query()).where().eq("users.id", userId).findList();
 	}
 
 	public static void store(Shop shop) {

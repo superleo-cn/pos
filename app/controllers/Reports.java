@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +39,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import utils.Pagination;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import constants.Constants;
 
 public class Reports extends Basic {
@@ -47,15 +50,22 @@ public class Reports extends Basic {
 	final static Logger logger = LoggerFactory.getLogger(Reports.class);
 
 	public static void shops() {
-		Pagination pagination = new Pagination();
-		pagination.currentPage = 0;
-		pagination.pageSize = 100;
-		String shopName = null;
-		String type = session.get(Constants.CURRENT_USERTYPE);
-		if(!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)){
-			shopName = session.get(Constants.CURRENT_SHOPNAME);	
+		List<Shop> shops = null;
+		try {
+			Pagination pagination = new Pagination();
+			pagination.currentPage = 0;
+			pagination.pageSize = 100;
+			String userId = null;
+			String type = session.get(Constants.CURRENT_USERTYPE);
+			if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
+				userId = session.get(Constants.CURRENT_USERID);
+			}
+			shops = Shop.listByUserId(userId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		renderJSON(Shop.search(shopName, pagination));
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(shops));
 	}
 
 	public static void items() {
@@ -64,8 +74,8 @@ public class Reports extends Basic {
 		pagination.pageSize = 100;
 		String shopId = null;
 		String type = session.get(Constants.CURRENT_USERTYPE);
-		if(!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)){
-			shopId = session.get(Constants.CURRENT_SHOPID);	
+		if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
+			shopId = session.get(Constants.CURRENT_SHOPID);
 		}
 		renderJSON(Food.searchDistinct2(shopId, pagination));
 	}
@@ -76,7 +86,10 @@ public class Reports extends Basic {
 		pagination.pageSize = 1000;
 		Map<String, String> search = new HashMap<String, String>();
 		search.put("usertype", "CASHIER");
-		renderJSON(User.search(search, pagination));
+		User.search(search, pagination);
+		List<User> users = pagination.recordList;
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(users));
 	}
 
 	public static void users() {
@@ -84,7 +97,10 @@ public class Reports extends Basic {
 		pagination.currentPage = 0;
 		pagination.pageSize = 1000;
 		Map<String, String> search = new HashMap<String, String>();
-		renderJSON(User.search(search, pagination));
+		User.search(search, pagination);
+		List<User> users = pagination.recordList;
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(users));
 	}
 
 	public static void pieChartQuantity() throws IOException {
@@ -348,7 +364,7 @@ public class Reports extends Basic {
 
 		Shop shop = Shop.findByName(outlet);
 		Pagination pagination = new Pagination();
-		if(shop != null){
+		if (shop != null) {
 			pagination = ReportTransactionSummary.search(searchs, shop);
 		}
 		renderJSON(pagination);
@@ -705,11 +721,11 @@ public class Reports extends Basic {
 			logger.error("Error", e);
 		}
 	}
-	
+
 	public static void exportSummary() throws IOException {
 
 		InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/Summary.jasper");
-		
+
 		Pagination pagination = new Pagination();
 		pagination.all = true;
 		pagination.currentPage = 1;
@@ -718,7 +734,7 @@ public class Reports extends Basic {
 		if (session.get("reportTransactionSearchs") != null)
 			searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
 		else {
-			
+
 			String outlet = request.params.get("sSearch_1");
 			if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
 				outlet = session.get("shopname");
@@ -741,8 +757,8 @@ public class Reports extends Basic {
 
 		}
 
-		shop = Shop.findByName((String)searchs.get("shopName"));
-		if(shop != null){
+		shop = Shop.findByName((String) searchs.get("shopName"));
+		if (shop != null) {
 			pagination = ReportTransactionSummary.search(searchs, shop);
 		}
 

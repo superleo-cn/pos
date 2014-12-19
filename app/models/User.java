@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,8 +26,7 @@ import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
 import com.avaje.ebean.annotation.Transactional;
-
-import constants.Constants;
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "tb_user")
@@ -33,38 +34,61 @@ public class User {
 
 	final static Logger logger = LoggerFactory.getLogger(User.class);
 
+	@Expose
 	@Id
 	public Long id;
 
+	@Expose
 	@Required(message = "Username cannot be empty")
 	public String username;
 
+	@Expose
 	@Required(message = "Password cannot be empty")
 	public String password;
 
+	@Expose
 	public String realname;
 
+	@Expose
 	@Required(message = "User type cannot be empty")
 	public String usertype;
 
+	@Expose
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
 
+	@Expose
 	public String userIp;
 
+	@Expose
 	public String userMac;
 
+	@Expose
 	public String createBy, modifiedBy;
 
+	@Expose
 	public Date createDate, modifiedDate, lastLoginDate;
 
-	@ManyToOne
-	@JoinColumn(name = "shop_id", referencedColumnName = "id")
-	public Shop shop;
+	// @ManyToOne
+	// @JoinColumn(name = "shop_id", referencedColumnName = "id")
+	@ManyToMany
+	@JoinTable(name = "shop_user", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "shop_id", referencedColumnName = "id") })
+	public List<Shop> shops;
+
+	@Transient
+	public Long shopId;
+
+	@Transient
+	public Shop getMyShop() {
+		if (shops != null && shops.size() > 0) {
+			return shops.get(0);
+		}
+		return null;
+	}
 
 	/* the following are service methods */
 	public static User loginPage(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username)
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shops", "id").where().eq("username", user.username)
 				.eq("password", user.password).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
@@ -74,8 +98,8 @@ public class User {
 
 	// STATUS: LOCKED (Please don't change)
 	public static User loginJson(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id, code, name").where().eq("username", user.username)
-				.eq("shop.id", user.shop.id).eq("status", true).findList();
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shops", "id, code, name").where().eq("username", user.username)
+				.in("shop.id", user.shopId).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}
@@ -83,7 +107,7 @@ public class User {
 	}
 
 	public static User login(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username).eq("status", true)
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shops", "id").where().eq("username", user.username).eq("status", true)
 				.findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
@@ -93,7 +117,7 @@ public class User {
 
 	// STATUS: LOCKED (Please don't change)
 	public static User loginAdminJson(User user) {
-		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shop", "id").where().eq("username", user.username)
+		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shops", "id").where().eq("username", user.username)
 				.eq("password", user.password).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);

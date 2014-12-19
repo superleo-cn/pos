@@ -97,13 +97,13 @@ public class Auth extends Basic {
 				Audit audit = new Audit();
 				audit.action = "Login";
 				audit.user = dbUser;
-				if (dbUser.shop != null) {
-					audit.shop = dbUser.shop;
+				if (dbUser.shops != null) {
+					audit.shop = dbUser.getMyShop();
 				}
 				Audit.store(audit);
-				if (dbUser.shop != null) {
-					session.put(Constants.CURRENT_SHOPNAME, dbUser.shop.name);
-					session.put(Constants.CURRENT_SHOPID, dbUser.shop.id);
+				if (dbUser.shops != null) {
+					session.put(Constants.CURRENT_SHOPNAME, dbUser.getMyShop().name);
+					session.put(Constants.CURRENT_SHOPID, dbUser.getMyShop().id);
 				}
 
 				session.put(Constants.CURRENT_USERID, dbUser.id);
