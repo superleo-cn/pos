@@ -104,9 +104,12 @@ public class Auth extends Basic {
 						audit.shop = dbUser.getMyShop();
 					}
 					Audit.store(audit);
-					if (dbUser.shops != null) {
+					if (dbUser.getMyShop() != null) {
 						session.put(Constants.CURRENT_SHOPNAME, dbUser.getMyShop().name);
 						session.put(Constants.CURRENT_SHOPID, dbUser.getMyShop().id);
+					} else {
+						session.put(Constants.CURRENT_SHOPNAME, "Weebo POS");
+						session.put(Constants.CURRENT_SHOPID, 0);
 					}
 
 					session.put(Constants.CURRENT_USERID, dbUser.id);
