@@ -173,7 +173,7 @@ define([
                         { "mData": "nameZh",  "bSortable": false  },
                         { "mData": "costPrice",  "bSortable": false  },
                         { "mData": "retailPrice",  "bSortable": false  },
-                        { "mData": "shop.name",  "bSortable": false  },
+                        { "mData": "shopName",  "bSortable": false  },
                         { "mData": "id",  "bSortable": false  }
                     ],
                     "sAjaxSource": "/masterItem/search"
@@ -185,9 +185,9 @@ define([
                     var format=function format(item) { return item.name; };
 
                     $.get('/reports/shops',function(response){
-                        response.recordList.unshift({id:'ALL',name:'ALL'});
+                        response.unshift({id:'ALL',name:'ALL'});
 
-                        var record = $.map(response.recordList, function(obj){
+                        var record = $.map(response, function(obj){
                             return {id:obj.name,name:obj.name};
                         });
                         var shopStr ='';

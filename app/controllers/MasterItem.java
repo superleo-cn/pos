@@ -31,6 +31,7 @@ import au.com.bytecode.opencsv.CSVReader;
 
 import com.avaje.ebean.Ebean;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import constants.Constants;
 
@@ -246,6 +247,7 @@ public class MasterItem extends Basic {
 		}
 
 		searchs.put("shopName", outlet);
-		renderJSON(Food.search(searchs, pagination));
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		renderJSON(gson.toJson(Food.search(searchs, pagination)));
 	}
 }

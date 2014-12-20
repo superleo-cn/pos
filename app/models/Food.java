@@ -27,38 +27,50 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.PagingList;
+import com.google.gson.annotations.Expose;
 
 import constants.Constants;
 
 @Entity
 @Table(name = "tb_food")
 public class Food implements Comparable {
+
+	@Expose
 	@Id
 	public Long id;
 
+	@Expose
 	@Required(message = "SN cannot be empty")
 	public String sn;
 
+	@Expose
 	@Required(message = "Bar Code cannot be empty")
 	public String barCode;
 
+	@Expose
 	@Required(message = "Food name cannot be empty")
 	public String name;
 
+	@Expose
 	@Required(message = "Food chinese name cannot be empty")
 	public String nameZh;
 
+	@Expose
 	@Required(message = "Food type cannot be empty")
 	public String type;
 
+	@Expose
 	@Required(message = "Food cost price cannot be empty")
 	public Float costPrice;
 
+	@Expose
 	@Required(message = "Food retail price cannot be empty")
 	public Float retailPrice;
 
+	@Expose
 	public String picture;
-	
+
+	@Expose
 	public String packageable;
 
 	@Transient
@@ -66,6 +78,7 @@ public class Food implements Comparable {
 		return Constants.WEBSITE_URL + picture;
 	}
 
+	@Expose
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
 
@@ -73,17 +86,26 @@ public class Food implements Comparable {
 	@JoinColumn(name = "shop_id", referencedColumnName = "id")
 	public Shop shop;
 
+	@Expose
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
 	public Category category;
 
+	@Expose
 	public Integer position;
 
+	@Expose
 	public Boolean flag;
 
+	@Expose
 	public String createBy, modifiedBy;
 
+	@Expose
 	public Date createDate, modifiedDate;
+
+	@Expose
+	@Transient
+	public String shopName;
 
 	/* the following are service methods */
 	public static Pagination search(Map search, Pagination pagination) {
@@ -118,6 +140,12 @@ public class Food implements Comparable {
 			list = expList.findList();
 		}
 
+		if (list != null) {
+			for (Food food : list) {
+				food.shopName = food.shop.name;
+			}
+		}
+
 		pagination.recordList = list;
 		return pagination;
 	}
@@ -127,7 +155,7 @@ public class Food implements Comparable {
 		ExpressionList expList = Ebean.find(Food.class).where();
 		if (StringUtils.isNotEmpty(shopId)) {
 			shopId = StringUtils.trimToNull(shopId);
-			expList.where().ilike("shop.id",shopId);
+			expList.where().ilike("shop.id", shopId);
 		}
 		List<Food> list = expList.order("name").findList();
 		Set<String> set = new TreeSet<String>();
@@ -157,8 +185,8 @@ public class Food implements Comparable {
 
 	public static List<Food> listByShop(Long id) {
 		if (id != null) {
-			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag, packageable").fetch("category", "id").where()
-					.eq("shop.id", id).eq("status", true).order("position").findList();
+			List<Food> foods = Ebean.find(Food.class).select("id, sn, barCode, name, nameZh, type, retailPrice, picture, position, flag, packageable").fetch("category", "id")
+					.where().eq("shop.id", id).eq("status", true).order("position").findList();
 			CollectionUtils.forAllDo(foods, new Closure() {
 				public void execute(Object o) {
 					if (o != null) {
