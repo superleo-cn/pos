@@ -60,8 +60,11 @@ public class Reports extends Basic {
 			String type = session.get(Constants.CURRENT_USERTYPE);
 			if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
 				userId = session.get(Constants.CURRENT_USERID);
+				shops = Shop.listByUserId(userId);
+			} else {
+				shops = Shop.list();
 			}
-			shops = Shop.listByUserId(userId);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -77,16 +80,26 @@ public class Reports extends Basic {
 		String type = session.get(Constants.CURRENT_USERTYPE);
 		if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
 			shopId = session.get(Constants.CURRENT_SHOPID);
+			Food.searchDistinct2(shopId, pagination);
+		} else {
+			Food.searchDistinct2(null, pagination);
 		}
-		renderJSON(Food.searchDistinct2(shopId, pagination));
+		renderJSON(pagination);
 	}
 
 	public static void cashiers() {
 		Pagination pagination = new Pagination();
 		pagination.currentPage = 0;
 		pagination.pageSize = 1000;
+		String shopId = null;
 		Map<String, String> search = new HashMap<String, String>();
+		String type = session.get(Constants.CURRENT_USERTYPE);
 		search.put("usertype", "CASHIER");
+		User.search(search, pagination);
+		if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
+			shopId = session.get(Constants.CURRENT_SHOPID);
+			search.put("shopId", shopId);
+		}
 		User.search(search, pagination);
 		List<User> users = pagination.recordList;
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -97,7 +110,13 @@ public class Reports extends Basic {
 		Pagination pagination = new Pagination();
 		pagination.currentPage = 0;
 		pagination.pageSize = 1000;
+		String shopId = null;
 		Map<String, String> search = new HashMap<String, String>();
+		String type = session.get(Constants.CURRENT_USERTYPE);
+		if (!StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
+			shopId = session.get(Constants.CURRENT_SHOPID);
+			search.put("shopId", shopId);
+		}
 		User.search(search, pagination);
 		List<User> users = pagination.recordList;
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -374,7 +393,7 @@ public class Reports extends Basic {
 				Shop shop = Shop.findByName(shopName);
 				if (shop != null) {
 					Pagination myPage = ReportTransactionSummary.search(searchs, shop);
-					if(myPage.iTotalRecords == 0){
+					if (myPage.iTotalRecords == 0) {
 						ReportTransactionSummary summary = new ReportTransactionSummary();
 						summary.shopName = shopName;
 						summary.gst = 0.0;
@@ -384,7 +403,7 @@ public class Reports extends Basic {
 						summary.totalPrice = 0.0;
 						summary.no = 0L;
 						pagination.recordList.add(summary);
-					}else{
+					} else {
 						pagination.recordList.addAll(myPage.recordList);
 					}
 					pagination.recordCount++;
@@ -445,21 +464,9 @@ public class Reports extends Basic {
 
 		searchs.put("user.realname", cashier);
 		String outlet = request.params.get("sSearch_1");
-		List<String> shopIds = new ArrayList<>();
-		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopname");
-			String userId = session.get("userid");
-			List<Shop> list = Shop.listByUserId(userId);
-			if (list != null) {
-				for (Shop s : list) {
-					shopIds.add(s.name);
-				}
-			}
-		} else {
-			shopIds.add(outlet);
-		}
+		List<String> shops = getShops(outlet);
 
-		searchs.put("shop.name", outlet);
+		searchs.put("shopName", shops);
 
 		String dateFrom = request.params.get("sSearch_2");
 		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
@@ -474,7 +481,7 @@ public class Reports extends Basic {
 		searchs.put("dateTo", dateTo);
 
 		session.put("loginAuditSearch", new ObjectMapper().writeValueAsString(searchs));
-		
+
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		Audit.search(searchs, pagination);
 		renderJSON(gson.toJson(pagination));
@@ -813,9 +820,15 @@ public class Reports extends Basic {
 	private static List<String> getShops(String outlet) {
 		List<String> shopIds = new ArrayList<>();
 		if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "All".equalsIgnoreCase(outlet) || "--Please Select--".equalsIgnoreCase(outlet)) {
-			outlet = session.get("shopname");
-			String userId = session.get("userid");
-			List<Shop> list = Shop.listByUserId(userId);
+			String type = session.get(Constants.CURRENT_USERTYPE);
+			List<Shop> list = new ArrayList<>();
+			if (StringUtils.equals(type, Constants.USERTYPE_SUPER_ADMIN)) {
+				list = Shop.list();
+			} else {
+				outlet = session.get("shopname");
+				String userId = session.get("userid");
+				list = Shop.listByUserId(userId);
+			}
 			if (list != null) {
 				for (Shop s : list) {
 					shopIds.add(s.name);

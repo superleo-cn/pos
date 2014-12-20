@@ -151,7 +151,7 @@ public class Audit {
 				}
 
 				logger.info("Key " + key + " Value " + value);
-				if (StringUtils.isEmpty(value)) {
+				if (StringUtils.isEmpty(value) && values == null) {
 					continue;
 				}
 
@@ -160,7 +160,7 @@ public class Audit {
 				} else if (key.equalsIgnoreCase("dateTo")) {
 					expList.where().le("createDate", value + " 23:59:59");
 				} else if (key.equalsIgnoreCase("shopName")) {
-					query.where().in("shopName", values);
+					query.where().in("shop.name", values);
 				} else {
 					expList.where().ilike(key, "%" + value + "%");
 				}
