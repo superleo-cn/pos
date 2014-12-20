@@ -85,38 +85,42 @@ public class Auth extends Basic {
 			user.username = request.params.get("username");
 			user.password = request.params.get("password");
 			User dbUser = User.login(user);
-			boolean isCorrectRole = isLoginUser(dbUser);
+			if (dbUser != null) {
+				boolean isCorrectRole = isLoginUser(dbUser);
+				logger.info("[The user({}-{}) is trying to login to the system.]", new Object[] { dbUser.username, dbUser.usertype });
+				if (dbUser != null && isCorrectRole && dbUser.password.equalsIgnoreCase(user.password)) {
+					user.id = dbUser.id;
+					user.lastLoginDate = new Date();
+					User.store(user);
+					datas.add(dbUser);
+					result.put(Constants.CODE, Constants.SUCCESS);
+					result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
+					result.put(Constants.DATAS, datas);
 
-			logger.info("[The user({}-{}) is trying to login to the system.]", new Object[] { dbUser.username, dbUser.usertype });
-			if (dbUser != null && isCorrectRole && dbUser.password.equalsIgnoreCase(user.password)) {
-				user.id = dbUser.id;
-				user.lastLoginDate = new Date();
-				User.store(user);
-				datas.add(dbUser);
-				result.put(Constants.CODE, Constants.SUCCESS);
-				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
-				result.put(Constants.DATAS, datas);
+					Audit audit = new Audit();
+					audit.action = "Login";
+					audit.user = dbUser;
+					if (dbUser.shops != null) {
+						audit.shop = dbUser.getMyShop();
+					}
+					Audit.store(audit);
+					if (dbUser.shops != null) {
+						session.put(Constants.CURRENT_SHOPNAME, dbUser.getMyShop().name);
+						session.put(Constants.CURRENT_SHOPID, dbUser.getMyShop().id);
+					}
 
-				Audit audit = new Audit();
-				audit.action = "Login";
-				audit.user = dbUser;
-				if (dbUser.shops != null) {
-					audit.shop = dbUser.getMyShop();
+					session.put(Constants.CURRENT_USERID, dbUser.id);
+					session.put(Constants.CURRENT_USERNAME, dbUser.username);
+					session.put(Constants.CURRENT_USER_REALNAME, dbUser.realname);
+					session.put(Constants.CURRENT_USERTYPE, dbUser.usertype);
+					logger.info("[The user({}-{}) Login successfully.]", new Object[] { dbUser.username, dbUser.usertype });
+				} else {
+					error();
 				}
-				Audit.store(audit);
-				if (dbUser.shops != null) {
-					session.put(Constants.CURRENT_SHOPNAME, dbUser.getMyShop().name);
-					session.put(Constants.CURRENT_SHOPID, dbUser.getMyShop().id);
-				}
-
-				session.put(Constants.CURRENT_USERID, dbUser.id);
-				session.put(Constants.CURRENT_USERNAME, dbUser.username);
-				session.put(Constants.CURRENT_USER_REALNAME, dbUser.realname);
-				session.put(Constants.CURRENT_USERTYPE, dbUser.usertype);
-				logger.info("[The user({}-{}) Login successfully.]", new Object[] { dbUser.username, dbUser.usertype });
 			} else {
 				error();
 			}
+
 		} catch (Exception e) {
 			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, Messages.LOGIN_ERROR);
