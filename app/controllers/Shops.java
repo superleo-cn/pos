@@ -23,10 +23,11 @@ public class Shops extends Basic {
 			List<Shop> shops = Shop.listJson(id);
 			if (CollectionUtils.size(shops) > 0) {
 				result.put(Constants.CODE, Constants.SUCCESS);
+				result.put(Constants.DATAS, shops.get(0));
+				logger.info("===" + shops.get(0).users);
 			} else {
 				result.put(Constants.CODE, Constants.FAILURE);
 			}
-			result.put(Constants.DATAS, Shop.listJson(id));
 		} catch (Exception e) {
 			result.put(Constants.CODE, Constants.ERROR);
 			result.put(Constants.MESSAGE, Messages.SHOP_LIST_ERROR);
