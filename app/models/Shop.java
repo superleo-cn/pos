@@ -41,9 +41,11 @@ public class Shop {
 	@Required(message = "Shop code cannot be empty")
 	public String code;
 
+	@Expose
 	@Required(message = "Status cannot be empty")
 	public Boolean status;
 
+	@Expose
 	@Required(message = "Expiry date cannot be empty")
 	public Date expiryDate;
 
