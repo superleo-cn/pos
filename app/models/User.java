@@ -75,8 +75,13 @@ public class User {
 	@JoinTable(name = "shop_user", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "shop_id", referencedColumnName = "id") })
 	public List<Shop> shops;
 
+	@Expose
 	@Transient
 	public Long shopId;
+
+	@Expose
+	@Transient
+	public Shop shop;
 
 	@Transient
 	public Shop getMyShop() {
@@ -99,7 +104,7 @@ public class User {
 	// STATUS: LOCKED (Please don't change)
 	public static User loginJson(User user) {
 		List<User> users = Ebean.find(User.class).select("id, username, realname, usertype, status").fetch("shops", "id, code, name").where().eq("username", user.username)
-				.in("shop.id", user.shopId).eq("status", true).findList();
+				.eq("password", user.password).eq("status", true).findList();
 		if (CollectionUtils.size(users) > 0) {
 			return users.get(0);
 		}

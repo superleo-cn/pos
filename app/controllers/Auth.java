@@ -42,6 +42,7 @@ public class Auth extends Basic {
 				user.id = dbUser.id;
 				user.lastLoginDate = new Date();
 				User.store(user);
+				dbUser.shop = dbUser.getMyShop();
 				datas.add(dbUser);
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.MESSAGE, Messages.LOGIN_SUCCESS);
