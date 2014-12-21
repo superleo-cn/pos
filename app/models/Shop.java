@@ -47,28 +47,40 @@ public class Shop {
 	@Required(message = "Expiry date cannot be empty")
 	public Date expiryDate;
 
+	@Expose
 	public String address;
 
+	@Expose
 	public String contact;
 
+	@Expose
 	public String website;
 
+	@Expose
 	public String email;
 
+	@Expose
 	public String weChat;
 
+	@Expose
 	public String openTime;
 
+	@Expose
 	public String gstRegNo;
 
+	@Expose
 	public String gstRate;
 
+	@Expose
 	public String serviceRate;
 
+	@Expose
 	public Boolean kichenPrinter, sendSms;
 
+	@Expose
 	public String createBy, modifiedBy;
 
+	@Expose
 	public Date createDate, modifiedDate;
 
 	// @ManyToOne
