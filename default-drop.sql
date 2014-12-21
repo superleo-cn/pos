@@ -32,6 +32,8 @@ drop table report_transaction_detail;
 
 drop table tb_shop;
 
+drop table shop_user;
+
 drop table tb_transaction;
 
 drop table tb_transaction_attribute;

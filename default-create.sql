@@ -131,6 +131,7 @@ create table tb_food (
   cost_price                float,
   retail_price              float,
   picture                   varchar(255),
+  packageable               varchar(255),
   status                    tinyint(1) default 0,
   shop_id                   bigint,
   category_id               bigint,
@@ -198,6 +199,8 @@ create table report_quantity (
 create table report_transaction_detail (
   create_date               datetime,
   order_date                datetime,
+  category_name             varchar(255),
+  category_name_zh          varchar(255),
   food_name                 varchar(255),
   food_name_zh              varchar(255),
   shop_name                 varchar(255),
@@ -208,6 +211,7 @@ create table report_transaction_detail (
   total_retail_price        double,
   total_package             double,
   quantity                  bigint,
+  position                  integer,
   free_of_charge            varchar(255))
 ;
 
@@ -221,6 +225,13 @@ create table tb_shop (
   contact                   varchar(255),
   website                   varchar(255),
   email                     varchar(255),
+  we_chat                   varchar(255),
+  open_time                 varchar(255),
+  gst_reg_no                varchar(255),
+  gst_rate                  varchar(255),
+  service_rate              varchar(255),
+  kichen_printer            tinyint(1) default 0,
+  send_sms                  tinyint(1) default 0,
   create_by                 varchar(255),
   modified_by               varchar(255),
   create_date               datetime,
@@ -266,7 +277,6 @@ create table tb_user (
   create_date               datetime,
   modified_date             datetime,
   last_login_date           datetime,
-  shop_id                   bigint,
   constraint pk_tb_user primary key (id))
 ;
 
@@ -288,6 +298,12 @@ create table tb_transaction_attribute (
   transaction_id                 bigint not null,
   attribute_id                   bigint not null,
   constraint pk_tb_transaction_attribute primary key (transaction_id, attribute_id))
+;
+
+create table shop_user (
+  user_id                        bigint not null,
+  shop_id                        bigint not null,
+  constraint pk_shop_user primary key (user_id, shop_id))
 ;
 alter table tb_attribute add constraint fk_tb_attribute_food_1 foreign key (food_id) references tb_food (id) on delete restrict on update restrict;
 create index ix_tb_attribute_food_1 on tb_attribute (food_id);
@@ -327,11 +343,13 @@ alter table tb_transaction add constraint fk_tb_transaction_shop_18 foreign key 
 create index ix_tb_transaction_shop_18 on tb_transaction (shop_id);
 alter table tb_transaction add constraint fk_tb_transaction_food_19 foreign key (food_id) references tb_food (id) on delete restrict on update restrict;
 create index ix_tb_transaction_food_19 on tb_transaction (food_id);
-alter table tb_user add constraint fk_tb_user_shop_20 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
-create index ix_tb_user_shop_20 on tb_user (shop_id);
 
 
 
 alter table tb_transaction_attribute add constraint fk_tb_transaction_attribute_t_01 foreign key (transaction_id) references tb_transaction (id) on delete restrict on update restrict;
 
 alter table tb_transaction_attribute add constraint fk_tb_transaction_attribute_t_02 foreign key (attribute_id) references tb_attribute (id) on delete restrict on update restrict;
+
+alter table shop_user add constraint fk_shop_user_tb_user_01 foreign key (user_id) references tb_user (id) on delete restrict on update restrict;
+
+alter table shop_user add constraint fk_shop_user_tb_shop_02 foreign key (shop_id) references tb_shop (id) on delete restrict on update restrict;
