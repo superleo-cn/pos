@@ -27,7 +27,7 @@ public class Shops extends Basic {
 			List<Shop> shops = Shop.listJson(id);
 			if (CollectionUtils.size(shops) > 0) {
 				result.put(Constants.CODE, Constants.SUCCESS);
-				result.put(Constants.DATAS, shops.get(0));
+				result.put(Constants.DATAS, shops);
 			} else {
 				result.put(Constants.CODE, Constants.FAILURE);
 			}
