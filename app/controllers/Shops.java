@@ -10,6 +10,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import constants.Constants;
 import constants.Messages;
 
@@ -19,12 +22,12 @@ public class Shops extends Basic {
 
 	public static void listJson(Long id) {
 		Map result = new HashMap();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		try {
 			List<Shop> shops = Shop.listJson(id);
 			if (CollectionUtils.size(shops) > 0) {
 				result.put(Constants.CODE, Constants.SUCCESS);
 				result.put(Constants.DATAS, shops.get(0));
-				logger.info("===" + shops.get(0).users);
 			} else {
 				result.put(Constants.CODE, Constants.FAILURE);
 			}
@@ -33,8 +36,7 @@ public class Shops extends Basic {
 			result.put(Constants.MESSAGE, Messages.SHOP_LIST_ERROR);
 			logger.error(Messages.SHOP_LIST_ERROR_MESSAGE);
 		}
-		renderJSON(result);
-
+		renderJSON(gson.toJson(result));
 	}
 
 }
