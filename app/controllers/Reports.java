@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -744,7 +745,7 @@ public class Reports extends Basic {
 			String food = "%";
 			searchs.put("food", food);
 			String outlet = session.get("shopname");
-			searchs.put("shopName", outlet);
+			searchs.put("shopName", Arrays.asList(new String[]{outlet}));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateFrom = sdf.format(new Date());
 			searchs.put("dateFrom", dateFrom + " 00:00:00");
@@ -753,16 +754,20 @@ public class Reports extends Basic {
 		}
 
 		pagination = ReportTransactionSummary.search(searchs, pagination);
-		JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
-		JasperPrint print = null;
-		try {
-			Map parameters = new HashMap();
-			parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
-			print = JasperFillManager.fillReport(is, parameters, dataSource);
-			exportXls(print, "TransactionSummary.xls");
-		} catch (JRException e) {
-			logger.error("Error", e);
+		JRDataSource dataSource = null;
+		if(pagination.recordList != null && pagination.recordList.size() > 0){
+			dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+			JasperPrint print = null;
+			try {
+				Map parameters = new HashMap();
+				parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+				print = JasperFillManager.fillReport(is, parameters, dataSource);
+				exportXls(print, "TransactionSummary.xls");
+			} catch (JRException e) {
+				logger.error("Error", e);
+			}
 		}
+		
 	}
 
 	public static void exportSummary() throws IOException {
@@ -783,7 +788,7 @@ public class Reports extends Basic {
 				outlet = session.get("shopname");
 			}
 
-			searchs.put("shopName", outlet);
+			searchs.put("shopName", Arrays.asList(new String[]{outlet}));
 			String dateFrom = request.params.get("sSearch_2");
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -804,17 +809,20 @@ public class Reports extends Basic {
 		if (shop != null) {
 			pagination = ReportTransactionSummary.search(searchs, shop);
 		}
-
-		JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
-		JasperPrint print = null;
-		try {
-			Map parameters = new HashMap();
-			parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
-			print = JasperFillManager.fillReport(is, parameters, dataSource);
-			exportXls(print, "TransactionSummary.xls");
-		} catch (JRException e) {
-			logger.error("Error", e);
+		
+		if(pagination.recordList != null && pagination.recordList.size() > 0){
+			JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+			JasperPrint print = null;
+			try {
+				Map parameters = new HashMap();
+				parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+				print = JasperFillManager.fillReport(is, parameters, dataSource);
+				exportXls(print, "TransactionSummary.xls");
+			} catch (JRException e) {
+				logger.error("Error", e);
+			}
 		}
+		
 	}
 
 	private static List<String> getShops(String outlet) {
