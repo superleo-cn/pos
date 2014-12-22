@@ -390,7 +390,6 @@ public class Reports extends Basic {
 					dateTo = sdf.format(today) + " 23:59:59";
 				}
 				searchs.put("dateTo", dateTo);
-				session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
 
 				Shop shop = Shop.findByName(shopName);
 				if (shop != null) {
@@ -411,6 +410,8 @@ public class Reports extends Basic {
 					pagination.recordCount++;
 				}
 			}
+			searchs.put("shopName", outlets);
+			session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
 		}
 		renderJSON(pagination);
 	}
