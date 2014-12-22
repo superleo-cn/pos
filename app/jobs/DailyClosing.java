@@ -2,6 +2,7 @@ package jobs;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,12 +45,12 @@ public class DailyClosing extends Job {
 		List<Shop> shops = Shop.list();
 		if (shops != null) {
 			for (Shop s : shops) {
-				searchs.put("shopName", s.name);
+				searchs.put("shopName", Arrays.asList(new String[] { s.name }));
 				List<ReportMoney> list = Dashboard.dailyClosingSummary(searchs);
 				if (list != null && list.size() > 0) {
 					ReportMoney money = list.get(0);
 					DailyClosingMailer.send(date, s.name, s.email, df.format(money.value));
-					if(s.sendSms != null && s.sendSms){
+					if (s.sendSms != null && s.sendSms) {
 						DailyClosingMailer.sendSMS(date, s.name, s.contact, df.format(money.value));
 					}
 				}
