@@ -710,7 +710,7 @@ public class Reports extends Basic {
 			String food = "%";
 			searchs.put("food", food);
 			String outlet = session.get("shopname");
-			searchs.put("shopName", outlet);
+			searchs.put("shopName", Arrays.asList(new String[]{outlet}));
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateFrom = sdf.format(new Date());
