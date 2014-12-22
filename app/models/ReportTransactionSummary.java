@@ -76,12 +76,15 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 			Iterator searchKeys = search.keySet().iterator();
 			while (searchKeys.hasNext()) {
 				String key = (String) searchKeys.next();
+				if(key.equalsIgnoreCase("shopName")){
+					continue;
+				}
 				Object obj = search.get(key);
 				String value =  (String) obj;
 				play.Logger.info("Value " + value);
 				if (StringUtils.isEmpty(value)) {
 					continue;
-				} else if (key.equalsIgnoreCase("shopName")) {
+				} else if (key.equalsIgnoreCase("shopNameSummary")) {
 					query.where().eq("shopName", value);
 				} else if (key.equalsIgnoreCase("dateFrom")) {
 					query.setParameter("dateFrom", value);

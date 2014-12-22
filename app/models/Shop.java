@@ -114,6 +114,13 @@ public class Shop {
 		return null;
 	}
 
+	public static List<Shop> findByNames(List<String> shopName) {
+		if (shopName != null && shopName.size() > 0) {
+			return Ebean.find(Shop.class).select("id, name, gstRegNo, gstRate, serviceRate").where().in("name", shopName).findList();
+		}
+		return null;
+	}
+	
 	public static Shop findByName(String shopName) {
 		if (StringUtils.isNotEmpty(shopName)) {
 			List<Shop> list = Ebean.find(Shop.class).select("id, name, gstRegNo, gstRate, serviceRate").where().eq("name", shopName).findList();
