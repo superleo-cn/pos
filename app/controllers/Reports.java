@@ -377,6 +377,7 @@ public class Reports extends Basic {
 		if (outlets != null && outlets.size() > 0) {
 			for (String shopName : outlets) {
 				searchs.put("shopName", shopName);
+				searchs.put("shopNameSummary", shopName);
 				String dateFrom = request.params.get("sSearch_2");
 				Date today = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
