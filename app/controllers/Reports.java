@@ -805,13 +805,18 @@ public class Reports extends Basic {
 
 		}
 
-		shop = Shop.findByName((String) searchs.get("shopName"));
-		if (shop != null) {
-			pagination = ReportTransactionSummary.search(searchs, shop);
+		List<Shop> shops = Shop.findByNames((List<String>) searchs.get("shopName"));
+		Pagination paginations = new Pagination();
+		if (shops != null) {
+			for(Shop s : shops){
+				searchs.put("shopNameSummary", s.name);
+				pagination = ReportTransactionSummary.search(searchs, s);
+				paginations.recordList.addAll(pagination.recordList);
+				paginations.iTotalRecords += paginations.iTotalRecords;
+			}
 		}
-		
-		if(pagination.recordList != null && pagination.recordList.size() > 0){
-			JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
+		if(paginations.recordList != null && paginations.recordList.size() > 0){
+			JRDataSource dataSource = new JRBeanCollectionDataSource(paginations.recordList);
 			JasperPrint print = null;
 			try {
 				Map parameters = new HashMap();
@@ -822,6 +827,8 @@ public class Reports extends Basic {
 				logger.error("Error", e);
 			}
 		}
+		
+		
 		
 	}
 
