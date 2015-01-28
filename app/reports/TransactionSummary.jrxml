@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-28T22:39:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionSummary" pageWidth="725" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="725" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4746e223-0a05-4add-92d0-e48fc8727bb3">
 	<property name="ireport.zoom" value="1.0000000000000016"/>
 	<property name="ireport.x" value="0"/>
@@ -8,6 +10,7 @@
 	<field name="item" class="java.lang.String"/>
 	<field name="totalPrice" class="java.lang.Double"/>
 	<field name="totalQuantity" class="java.lang.Long"/>
+	<field name="type" class="java.lang.String"/>
 	<variable name="sumQuantity" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalQuantity}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -36,7 +39,7 @@
 				<text><![CDATA[Outlet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="52" y="0" width="239" height="20" uuid="72825976-ade9-4878-8537-ed5318c399ff"/>
+				<reportElement x="52" y="0" width="187" height="20" uuid="72825976-ade9-4878-8537-ed5318c399ff"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -56,6 +59,13 @@
 				</textElement>
 				<text><![CDATA[Total Price (S$)]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="239" y="0" width="52" height="20" uuid="7a2971fd-58f6-4602-aa3d-54729b35eef5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -65,7 +75,7 @@
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="52" y="0" width="239" height="20" uuid="9a2d39a8-f58e-454c-8455-ae2ecf9a73cd"/>
+				<reportElement x="52" y="0" width="187" height="20" uuid="9a2d39a8-f58e-454c-8455-ae2ecf9a73cd"/>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
@@ -75,12 +85,16 @@
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="538" y="0" width="75" height="20" uuid="0114608b-34b8-4978-9c79-86d748dc4a38"/>
-				<textElement textAlignment="Center" />
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{totalQuantity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="291" y="0" width="247" height="20" uuid="0d9a9815-de28-4e98-82a4-21c32f6082f7"/>
 				<textFieldExpression><![CDATA[$F{shopName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="0" width="52" height="20" uuid="816726ef-4d94-4226-8fe6-ef1cee8c6def"/>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

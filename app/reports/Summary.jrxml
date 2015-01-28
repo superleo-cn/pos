@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2014-12-14T00:38:58 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionSummary" pageWidth="725" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="725" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4746e223-0a05-4add-92d0-e48fc8727bb3">
+<!-- 2015-01-28T23:34:35 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TransactionSummary" pageWidth="900" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="900" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4746e223-0a05-4add-92d0-e48fc8727bb3">
 	<property name="ireport.zoom" value="1.0000000000000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="shopName" class="java.lang.String"/>
 	<field name="item" class="java.lang.String"/>
@@ -13,6 +22,8 @@
 	<field name="retailPrice" class="java.lang.Double"/>
 	<field name="gst" class="java.lang.Double"/>
 	<field name="sc" class="java.lang.Double"/>
+	<field name="card" class="java.lang.Double"/>
+	<field name="cash" class="java.lang.Double"/>
 	<variable name="sumQuantity" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalQuantity}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -25,7 +36,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="52" height="20" uuid="19cde3d7-e246-4d1b-853e-b8f0692c477d"/>
 				<textElement>
@@ -41,7 +52,7 @@
 				<text><![CDATA[Outlet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="613" y="0" width="112" height="20" uuid="7536afb4-1807-4c3e-94f6-dcc21843533e"/>
+				<reportElement x="788" y="0" width="112" height="20" uuid="7536afb4-1807-4c3e-94f6-dcc21843533e"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
@@ -75,16 +86,30 @@
 				</textElement>
 				<text><![CDATA[Service Charge (S$)]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="613" y="0" width="85" height="20" uuid="d242c078-cef5-45d3-a9c9-d2bca6ebaaf8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cash (S$)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="698" y="0" width="90" height="20" uuid="7eed0e1b-a0c1-497d-beed-7c76e025c517"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Card (S$)]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="52" height="20" uuid="9ac09cae-cc86-42e3-b1d9-027febd40c85"/>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="613" y="0" width="112" height="20" uuid="8771bb5a-fafa-4565-bfe3-4d89b9243fec"/>
+				<reportElement x="788" y="0" width="112" height="20" uuid="8771bb5a-fafa-4565-bfe3-4d89b9243fec"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{totalPrice}]]></textFieldExpression>
 			</textField>
@@ -108,9 +133,17 @@
 				<reportElement x="493" y="0" width="120" height="20" uuid="b4f0d953-d10d-4838-b324-7823b7932dd2"/>
 				<textFieldExpression><![CDATA[$F{sc}]]></textFieldExpression>
 			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="698" y="0" width="90" height="20" uuid="c3a7d06f-f016-4078-8553-70f627f5fb34"/>
+				<textFieldExpression><![CDATA[$F{card}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="613" y="0" width="85" height="20" uuid="782e00fe-14b2-401b-956c-793245e85b17"/>
+				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="9"/>
+		<band height="82"/>
 	</pageFooter>
 </jasperReport>

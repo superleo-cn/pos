@@ -260,13 +260,14 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [4 ]
+                            "aTargets": [4]
                         }
                     ],
                     "aoColumns": [
                         { "mData": "no",  "bSortable": false  },
                         //{ "mData": "itemCategory",  "bSortable": false  },
                         { "mData": "item",  "bSortable": false  },
+                        { "mData": "type",  "bSortable": false  },
                         { "mData": "shopName",  "bSortable": false  },
                         { "mData": "totalQuantity" ,  "bSortable": false,"sClass":"number_tac" },
                         { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
@@ -291,7 +292,7 @@ define([
                             "mRender": function ( data, type, row ) {
                                 return data.toFixed(2);
                             },
-                            "aTargets": [3, 4, 5, 6]
+                            "aTargets": [3, 4, 5, 6, 7, 8]
                         }
                     ],
                     "aoColumns": [
@@ -301,6 +302,8 @@ define([
                         { "mData": "retailPrice" ,  "bSortable": false,"sClass":"number_tac" },
                         { "mData": "gst" ,  "bSortable": false,"sClass":"number_tac" },
                         { "mData": "sc" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "cash" ,  "bSortable": false,"sClass":"number_tac" },
+                        { "mData": "card" ,  "bSortable": false,"sClass":"number_tac" },
                         { "mData": "totalPrice",  "bSortable": false,"sClass":"number_tar"  }
                     ],
                     "sAjaxSource": "/reports/transactionSummary"

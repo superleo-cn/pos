@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class ReportTransactionDetail {
 	@Transient
 	public Long no;
 	public Date createDate, orderDate;
-	public String categoryName, categoryNameZh, foodName, foodNameZh, shopName;
+	public String categoryName, categoryNameZh, foodName, foodNameZh, shopName, type;
 
 	@Transient
 	public String item, itemCategory;
@@ -58,7 +57,7 @@ public class ReportTransactionDetail {
 				} else {
 					values = (List<String>) obj;
 				}
-				
+
 				if (key.equalsIgnoreCase("food")) {
 					expList.where().or(Expr.like("foodName", "%" + value + "%"), Expr.like("foodNameZh", "%" + value + "%"));
 				} else if (key.equalsIgnoreCase("shopName")) {
@@ -92,10 +91,10 @@ public class ReportTransactionDetail {
 				report.no = no;
 				if (pagination.zh) {
 					report.item = report.foodNameZh;
-					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>","");
+					report.itemCategory = report.categoryNameZh.replaceAll("\\<.*?>", "");
 				} else {
 					report.item = report.foodName;
-					report.itemCategory = report.categoryName.replaceAll("\\<.*?>","");
+					report.itemCategory = report.categoryName.replaceAll("\\<.*?>", "");
 				}
 				no++;
 			}
@@ -163,5 +162,9 @@ public class ReportTransactionDetail {
 
 	public Date getOrderDate() {
 		return orderDate;
+	}
+
+	public String getType() {
+		return type;
 	}
 }

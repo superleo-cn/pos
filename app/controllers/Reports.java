@@ -350,14 +350,14 @@ public class Reports extends Basic {
 		List<String> outlets = getShops(outlet);
 
 		searchs.put("shopName", outlets);
-		String dateFrom = request.params.get("sSearch_2");
+		String dateFrom = request.params.get("sSearch_3");
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (StringUtils.isEmpty(dateFrom) || "undefined".equalsIgnoreCase(dateFrom)) {
 			dateFrom = sdf.format(today) + " 00:00:00";
 		}
 		searchs.put("dateFrom", dateFrom);
-		String dateTo = request.params.get("sSearch_3");
+		String dateTo = request.params.get("sSearch_4");
 		if (StringUtils.isEmpty(dateTo) || "undefined".equalsIgnoreCase(dateTo)) {
 			dateTo = sdf.format(today) + " 23:59:59";
 		}
@@ -402,15 +402,19 @@ public class Reports extends Basic {
 						summary.sc = 0.0;
 						summary.totalQuantity = 0L;
 						summary.totalPrice = 0.0;
-						summary.no = 0L;
+						summary.card = 0.0;
+						summary.cash = 0.0;
+						summary.no = Long.valueOf(pagination.recordCount+1);
 						pagination.recordList.add(summary);
 					} else {
+						ReportTransactionSummary summary = (ReportTransactionSummary) myPage.recordList.get(0);
+						summary.no = Long.valueOf(pagination.recordCount+1);
 						pagination.recordList.addAll(myPage.recordList);
 					}
 					pagination.recordCount++;
 				}
 			}
-			searchs.put("shopName", outlets);
+			session.put("shopName", outlet);
 			session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
 		}
 		renderJSON(pagination);
@@ -775,22 +779,20 @@ public class Reports extends Basic {
 	public static void exportSummary() throws IOException {
 
 		InputStream is = Reports.getControllerClass().getClassLoader().getResourceAsStream("reports/Summary.jasper");
-
 		Pagination pagination = new Pagination();
 		pagination.all = true;
 		pagination.currentPage = 1;
-		Shop shop = null;
+
 		Map searchs = new HashMap();
-		if (session.get("reportTransactionSearchs") != null)
+		List<String> outlets = new ArrayList<>();
+		
+		if(session.get("reportTransactionSearchs") != null){
+			String outlet = (String) session.get("shopName");
+			outlets = getShops(outlet);
 			searchs = new ObjectMapper().readValue(session.get("reportTransactionSearchs"), Map.class);
-		else {
-
+		}else{
 			String outlet = request.params.get("sSearch_1");
-			if (StringUtils.isEmpty(outlet) || "undefined".equalsIgnoreCase(outlet) || "ALL".equalsIgnoreCase(outlet)) {
-				outlet = session.get("shopname");
-			}
-
-			searchs.put("shopName", Arrays.asList(new String[]{outlet}));
+			outlets = getShops(outlet);
 			String dateFrom = request.params.get("sSearch_2");
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -803,22 +805,39 @@ public class Reports extends Basic {
 				dateTo = sdf.format(today) + " 23:59:59";
 			}
 			searchs.put("dateTo", dateTo);
-			session.put("reportTransactionSearchs", new ObjectMapper().writeValueAsString(searchs));
-
 		}
 
-		List<Shop> shops = Shop.findByNames((List<String>) searchs.get("shopName"));
-		Pagination paginations = new Pagination();
-		if (shops != null) {
-			for(Shop s : shops){
-				searchs.put("shopNameSummary", s.name);
-				pagination = ReportTransactionSummary.search(searchs, s);
-				paginations.recordList.addAll(pagination.recordList);
-				paginations.iTotalRecords += paginations.iTotalRecords;
+		if (outlets != null && outlets.size() > 0) {
+			for (String shopName : outlets) {
+				Shop shop = Shop.findByName(shopName);
+				searchs.put("shopName", shopName);
+				searchs.put("shopNameSummary", shopName);
+				if (shop != null) {
+					Pagination myPage = ReportTransactionSummary.search(searchs, shop);
+					if (myPage.iTotalRecords == 0) {
+						ReportTransactionSummary summary = new ReportTransactionSummary();
+						summary.shopName = shopName;
+						summary.gst = 0.0;
+						summary.retailPrice = 0.0;
+						summary.sc = 0.0;
+						summary.totalQuantity = 0L;
+						summary.totalPrice = 0.0;
+						summary.card = 0.0;
+						summary.cash = 0.0;
+						summary.no = Long.valueOf(pagination.recordCount+1);
+						pagination.recordList.add(summary);
+					} else {
+						ReportTransactionSummary summary = (ReportTransactionSummary) myPage.recordList.get(0);
+						summary.no = Long.valueOf(pagination.recordCount+1);
+						pagination.recordList.addAll(myPage.recordList);
+					}
+					pagination.recordCount++;
+				}
 			}
 		}
-		if(paginations.recordList != null && paginations.recordList.size() > 0){
-			JRDataSource dataSource = new JRBeanCollectionDataSource(paginations.recordList);
+		
+		if(pagination.recordList != null && pagination.recordList.size() > 0){
+			JRDataSource dataSource = new JRBeanCollectionDataSource(pagination.recordList);
 			JasperPrint print = null;
 			try {
 				Map parameters = new HashMap();
@@ -829,8 +848,6 @@ public class Reports extends Basic {
 				logger.error("Error", e);
 			}
 		}
-		
-		
 		
 	}
 
