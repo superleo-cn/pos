@@ -323,4 +323,8 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 		return cash;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 }
