@@ -188,19 +188,15 @@ public class ReportTransactionSummary implements Comparable<ReportTransactionSum
 	}
 
 	public static Pagination search(Map search, Shop shop) {
-		String sql = "select id, shop_name, quantity, retail_price, gst, sc, total_price from (" + "SELECT id, " + "shop_name, " + " quantity,  " + " retail_price, " + " gst, "
-				+ " sc, " + " retail_price+gst+sc AS total_price " + "FROM " + " ( " + "     SELECT id, " + "        shop_name, "
-				+ "        SUM(quantity)                  AS quantity, " + "        SUM(total_retail_price)        AS retail_price, " + "        SUM(total_retail_price) * "
-				+ (Integer.parseInt(shop.gstRate) / 100.0) + " AS gst, " + "        SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc "
-				+ "    FROM " + "        report_transaction_detail " + "    WHERE " + "        order_date >= :dateFrom and order_date <= :dateTo " + "        GROUP BY "
-				+ "            shop_name ) b" + ")a";
+		String sql = "select id, shop_name, quantity, retail_price, gst, sc, total_price from ( SELECT id, shop_name, quantity, retail_price,  gst, "
+				+ " sc, retail_price+gst+sc AS total_price  FROM  (   SELECT id,     shop_name,   SUM(quantity)   AS quantity,  SUM(total_retail_price) AS retail_price, "
+				+ "SUM(total_retail_price) * " + ((Integer.parseInt(shop.gstRate) + Integer.parseInt(shop.serviceRate)) / 100.0) + " AS gst,  SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc "
+				+ " FROM report_transaction_detail WHERE order_date >= :dateFrom and order_date <= :dateTo GROUP BY shop_name ) b)a";
 
-		String sql2 = "select id, shop_name, quantity, retail_price, gst, sc, total_price, type from (" + "SELECT id, " + "shop_name, " + " quantity,  " + " retail_price, "
-				+ " gst, " + " sc, " + " retail_price+gst+sc AS total_price, type " + "FROM " + " ( " + "     SELECT id, " + "        shop_name, "
-				+ "        SUM(quantity)                  AS quantity, " + "        SUM(total_retail_price)        AS retail_price, " + "        SUM(total_retail_price) * "
-				+ (Integer.parseInt(shop.gstRate) / 100.0) + " AS gst, " + "        SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc, "
-				+ " type  FROM " + "        report_transaction_detail " + "    WHERE " + "        order_date >= :dateFrom and order_date <= :dateTo " + "        GROUP BY "
-				+ "            shop_name, type ) b" + ")a";
+		String sql2 = "select id, shop_name, quantity, retail_price, gst, sc, total_price, type from ( SELECT id, shop_name, quantity, retail_price, gst, sc, retail_price+gst+sc AS total_price, type "
+				+ "FROM ( SELECT id,  shop_name, SUM(quantity) AS quantity,  SUM(total_retail_price) AS retail_price, SUM(total_retail_price) * "
+				+ ((Integer.parseInt(shop.gstRate) + Integer.parseInt(shop.serviceRate)) / 100.0) + " AS gst, SUM(total_retail_price) * " + (Integer.parseInt(shop.serviceRate) / 100.0) + " AS sc, "
+				+ " type FROM report_transaction_detail WHERE order_date >= :dateFrom and order_date <= :dateTo GROUP BY shop_name, type ) b" + ")a";
 
 		RawSql rawSql = RawSqlBuilder.parse(sql)
 				// map resultSet columns to bean properties
